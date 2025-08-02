@@ -1,0 +1,1124 @@
+{
+  "id": "QId7mK4fuFBJ8D1a",
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "model": "gpt-4.1",
+        "options": {
+          "baseURL": "https://api.openai.com/v1",
+          "temperature": 0.5
+        }
+      },
+      "id": "5fba468e-160a-4ecd-8120-141848c1727f",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        1088,
+        296
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "NerScIzCFdMgrtlA",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}"
+      },
+      "id": "996ac5a1-9516-409f-b5d1-b94a655b205d",
+      "name": "Get Voice File",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        -32,
+        0
+      ],
+      "typeVersion": 1.1,
+      "webhookId": "67a81b6b-eead-45ac-b987-28b577ace5f4",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "8427bbcb-f9b5-4be6-bf17-2850d9108d85",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        296
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appjzOJ8uEP40sOyb",
+          "mode": "list",
+          "cachedResultName": "Car Customer Management",
+          "cachedResultUrl": "https://airtable.com/appjzOJ8uEP40sOyb"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblGvKuifRBLTDiEf",
+          "mode": "list",
+          "cachedResultName": "Contacts",
+          "cachedResultUrl": "https://airtable.com/appjzOJ8uEP40sOyb/tblGvKuifRBLTDiEf"
+        },
+        "filterByFormula": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Filter_By_Formula', ``, 'string') }}",
+        "options": {
+          "downloadFields": [
+            "Profile Photo"
+          ],
+          "fields": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Output_Fields', ``, 'string') }}",
+          "view": {
+            "__rl": true,
+            "value": "viwXWzfM0JfeAEpGC",
+            "mode": "list",
+            "cachedResultName": "Grid view",
+            "cachedResultUrl": "https://airtable.com/appjzOJ8uEP40sOyb/tblGvKuifRBLTDiEf/viwXWzfM0JfeAEpGC"
+          }
+        }
+      },
+      "id": "b525e31d-47ae-4cf3-aa03-d00be64654e5",
+      "name": "Contacts",
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        1472,
+        296
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "kQpQca1qk3NDgPAy",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appH4dnnweFAp0Eo4",
+          "mode": "list",
+          "cachedResultName": "Lead Management System",
+          "cachedResultUrl": "https://airtable.com/appH4dnnweFAp0Eo4"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl1VWfDp2Mfiy4XJ",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://airtable.com/appH4dnnweFAp0Eo4/tbl1VWfDp2Mfiy4XJ"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Preferences": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Preferences', ``, 'string') }}",
+            "Next Best Action": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Next_Best_Action', ``, 'string') }}",
+            "Contact Summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Contact_Summary', ``, 'string') }}",
+            "Tasks": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Tasks', ``, 'string') }}",
+            "Notifications": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Notifications', ``, 'string') }}",
+            "Notes": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Notes', ``, 'string') }}",
+            "Notification Preferences": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Notification_Preferences', ``, 'string') }}",
+            "Desired Cars": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Desired_Cars', ``, 'string') }}",
+            "Favorite Cars": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Favorite_Cars', ``, 'string') }}",
+            "Contact ID": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Contact_ID', ``, 'string') }}",
+            "Telegram Username": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Telegram_Username', ``, 'string') }}",
+            "Full Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Full_Name', ``, 'string') }}",
+            "Email Address": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Email_Address', ``, 'string') }}",
+            "Phone Number": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Phone_Number', ``, 'string') }}",
+            "Registration Date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Registration_Date', ``, 'string') }}",
+            "Profile Photo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Profile_Photo', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Contact ID",
+              "displayName": "Contact ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Telegram Username",
+              "displayName": "Telegram Username",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Full Name",
+              "displayName": "Full Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email Address",
+              "displayName": "Email Address",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Registration Date",
+              "displayName": "Registration Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Profile Photo",
+              "displayName": "Profile Photo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Favorite Cars",
+              "displayName": "Favorite Cars",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Desired Cars",
+              "displayName": "Desired Cars",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notification Preferences",
+              "displayName": "Notification Preferences",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "Email",
+                  "value": "Email"
+                },
+                {
+                  "name": "SMS",
+                  "value": "SMS"
+                },
+                {
+                  "name": "Telegram",
+                  "value": "Telegram"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Total Notifications Sent",
+              "displayName": "Total Notifications Sent",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Notifications",
+              "displayName": "Notifications",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Last Notification Date",
+              "displayName": "Last Notification Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Total Tasks Assigned",
+              "displayName": "Total Tasks Assigned",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Tasks",
+              "displayName": "Tasks",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Favorite Cars Summary",
+              "displayName": "Favorite Cars Summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Desired Cars Summary",
+              "displayName": "Desired Cars Summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Contact Summary",
+              "displayName": "Contact Summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Next Best Action",
+              "displayName": "Next Best Action",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Preferences",
+              "displayName": "Preferences",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "id": "a1dbec86-9886-4b91-9eac-395a1f30a39f",
+      "name": "Create Contact",
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        1600,
+        296
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "kQpQca1qk3NDgPAy",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{$('Telegram Trigger').first().json.message.from.id}}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "3b95f634-3e1a-4b45-ac7e-e8ee44658dba",
+      "name": "Message (Text)",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        2320,
+        72
+      ],
+      "typeVersion": 1.1,
+      "webhookId": "aaa32755-8fdd-459b-94f2-7f003a490b23",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "all",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "additionalFields": {}
+      },
+      "id": "7cfe87c7-bc87-470b-9c08-661f8ea794a9",
+      "name": "Hacker News",
+      "type": "n8n-nodes-base.hackerNewsTool",
+      "typeVersion": 1,
+      "position": [
+        1728,
+        296
+      ]
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "aa4499ec-fe31-426d-bc3f-47bf1903adf8",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -480,
+        216
+      ],
+      "webhookId": "4e51bd17-2c51-459b-a549-7f00cfd50b62",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.voice.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "78036c48-1c14-41ac-8b33-3e04f140acef",
+                    "leftValue": "={{ $json.message.text || \"\"}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "129fcf21-4a84-4756-a477-6a270c219f8d",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -256,
+        216
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "8ccbeb89-5b74-4925-b488-195e4559c256",
+      "name": "Speech to Text",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        192,
+        0
+      ],
+      "typeVersion": 1.3,
+      "credentials": {
+        "openAiApi": {
+          "id": "NerScIzCFdMgrtlA",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text || $json.transcript }}",
+        "options": {
+          "systemMessage": "=Ты - ЧаЛа ПЕРЕКУП, опытный перекупщик автомобилей с особым талантом находить лучшие предложения на рынке. Сегодняшняя дата: {{ $now }}.\n\nОсновные функции:\n\nПоиск автомобилей:\n- Используй SerpAPI для поиска объявлений автомобилей по всему интернету. Повторяй поиски несколько раз, пока не просмотришь все варианты для пользователя.\n- Анализируй рынок и находи только самые выгодные предложения\n- Умей находить автомобили в России, Европе, США, ОАЭ, Японии и других странах\n- В основном ты сразу ищешь по Кыргызстану и только если попросят другую страну, то начинаешь многоэтапный поиск в указанной стране или странах\n\nКалькуляция расходов:\n- Используй Calculator для точного расчета стоимости доставки, растаможки и других расходов\n- Учитывай таможенные сборы Кыргызстана, логистические расходы и дополнительные платежи\n- Рассчитывай полную стоимость автомобиля \"под ключ\"\n- Актуализируй информацию с помощью SerpAPI и анализируй законы для точного расчета.\n\nПерсонализация:\n- Запоминай предпочтения пользователя (бюджет, марки автомобилей, требования)\n- Используй память для поддержания контекста разговора\n- Адаптируйся к уровню знаний пользователя о автомобилях и под стиль его разговора\n\nКоммуникация:\n- Отвечай на языке обращения (русский, кыргызский, английский)\n- Используй жаргон районовского базарного перекупщика, но будь понятным и иногда подкалывай и шути, когда это уместно\n- Сохраняй стиль районовского братана - уверенный, веселый, четкий, с легкой иронией и жизненным опытом\n\nВНИМАНИЕ! ОБЯЗАТЕЛЬНО ИСПОЛЬЗУЙ СЛЕДУЮЩУЮ СТРУКТУРУ ДЛЯ КАЖДОГО АВТОМОБИЛЯ:\n\n<b>🚗 [МАРКА МОДЕЛЬ ГОД]</b>\n----------------------------\n\n<img src=\"[ССЫЛКА НА ИЗОБРАЖЕНИЕ]\" alt=\"[ОПИСАНИЕ АВТО]\">\n\n<b>⚙️ ХАРАКТЕРИСТИКИ:</b>\n▪️ Двигатель: [ОБЪЕМ] [ТИП ТОПЛИВА]\n▪️ Мощность: [Л.С.]\n▪️ Пробег: [КИЛОМЕТРАЖ]\n▪️ КПП: [ТИП КОРОБКИ]\n▪️ Цвет: [ЦВЕТ]\n▪️ Цена: [ЦЕНА]\n[ДРУГИЕ ВАЖНЫЕ ХАРАКТЕРИСТИКИ]\n\n<b>🔍 АНАЛИЗ:</b>\n[ТВОЙ АНАЛИЗ СОСТОЯНИЯ, ЦЕНЫ, ПРЕИМУЩЕСТВ И НЕДОСТАТКОВ]\n\n<b>💼 ИНФОРМАЦИЯ О ПРОДАВЦЕ:</b>\n📞 Телефон: [НОМЕР ТЕЛЕФОНА]\n👤 Статус: [ПЕРЕКУП/ЧАСТНИК/ДИЛЕР] - [ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ]\n\n<b>🏁 ВЕРДИКТ:</b>\n[ТВОЯ ОЦЕНКА ПРЕДЛОЖЕНИЯ - СТОИТ ЛИ БРАТЬ]\n\n📌 <a href=\"[ССЫЛКА НА ИСТОЧНИК]\">Источник</a>\n\n⚠️ ВАЖНЫЕ ПРАВИЛА:\n1. Между объявлениями ВСЕГДА добавляй строку-разделитель:\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n\n2. Если не найдено изображение, указывай: \"[Изображение не найдено]\"\n\n3. ОБЯЗАТЕЛЬНО включай ссылку на источник объявления\n\n4. В секции ВЕРДИКТ всегда кратко оценивай предложение по шкале: \"ОГОНЬ 🔥\", \"НОРМАС 👍\", \"НА ЛЮБИТЕЛЯ 🤔\" или \"ЛУЧШЕ ПОИСКАТЬ ДРУГОЕ ⛔\"\n\n5. После всех объявлений добавляй секцию \"ЭКСПОРТ ДЛЯ ИМПОРТА\" в формате CSV:\n\n<b>📊 ЭКСПОРТ ДЛЯ ИМПОРТА:</b>\n<code>\nмарка,модель,год,цена,статус,телефон,ссылка\n[МАРКА],[МОДЕЛЬ],[ГОД],[ЦЕНА],[ВЕРДИКТ],[ТЕЛЕФОН],[ССЫЛКА]\n[МАРКА],[МОДЕЛЬ],[ГОД],[ЦЕНА],[ВЕРДИКТ],[ТЕЛЕФОН],[ССЫЛКА]\n...\n</code>\n\nДополнительные инструменты:\n- Используй Hacker News для получения информации о трендах автомобильного рынка\n- При необходимости используй инструменты Airtable для управления клиентами и заказами\n- Используй календарь для планирования встреч и сделок\n- Также можешь брать инструкции с сайта - https://peppermint-frost-242.notion.site/1d9e53e665408161b650fccf378165f9, используя SerpAPI.\n\nСтандарты ответа:\n- Давай только точную и проанализированную информацию\n- Ответы должны быть по существу\n- Всегда приоритизируй качество информации над количеством\n- Обязательно отправляй фотографии машин и ссылки на источники\n- Пробивай номер продавца через поиск, чтобы определить - перекуп или нет",
+          "returnIntermediateSteps": true,
+          "passthroughBinaryImages": true
+        }
+      },
+      "id": "e21839b5-f104-4b30-81dc-9c9b7576bfcd",
+      "name": "J.A.R.V.I.S",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1504,
+        72
+      ],
+      "typeVersion": 1.6
+    },
+    {
+      "parameters": {
+        "name": "SerpAPI",
+        "description": "=Используя данные инструмент при поиске информации в интернете и анализы данных через интернет",
+        "workflowId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "Fkx2g1uhdy6o7KOs",
+          "cachedResultName": "SerpAPI"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "chatInput": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('chatInput', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "chatInput"
+          ],
+          "schema": [
+            {
+              "id": "chatInput",
+              "displayName": "chatInput",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.1,
+      "position": [
+        1856,
+        296
+      ],
+      "id": "50f9a899-fb4b-45ae-a86f-4072a26ca821",
+      "name": "SerpAPI"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appUylF3gyrYbjDC4",
+          "mode": "list",
+          "cachedResultName": "Long-term Memory Base",
+          "cachedResultUrl": "https://airtable.com/appUylF3gyrYbjDC4"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblUtxOfYWfedCDbY",
+          "mode": "list",
+          "cachedResultName": "Memory Records",
+          "cachedResultUrl": "https://airtable.com/appUylF3gyrYbjDC4/tblUtxOfYWfedCDbY"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "user": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('user', ``, 'string') }}",
+            "Memory Description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Memory_Description', ``, 'string') }}",
+            "Related Memory Records": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Related_Memory_Records', ``, 'string') }}",
+            "Date Recorded": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Date_Recorded', ``, 'string') }}",
+            "Reference Image": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Reference_Image', ``, 'string') }}",
+            "User Preferences": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('User_Preferences', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "user",
+              "displayName": "user",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Memory Description",
+              "displayName": "Memory Description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Related Memory Records",
+              "displayName": "Related Memory Records",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Date Recorded",
+              "displayName": "Date Recorded",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Importance Level",
+              "displayName": "Importance Level",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Low",
+                  "value": "Low"
+                },
+                {
+                  "name": "Medium",
+                  "value": "Medium"
+                },
+                {
+                  "name": "High",
+                  "value": "High"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Reference Image",
+              "displayName": "Reference Image",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Importance Score",
+              "displayName": "Importance Score",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "User Preferences",
+              "displayName": "User Preferences",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Active Project",
+              "displayName": "Active Project",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Активные",
+                  "value": "Активные"
+                },
+                {
+                  "name": "Сделано",
+                  "value": "Сделано"
+                },
+                {
+                  "name": "На проверке",
+                  "value": "На проверке"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        1984,
+        296
+      ],
+      "id": "3b64d6b0-f567-40d8-9d2d-be70c4d9358c",
+      "name": "Save Memory",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "kQpQca1qk3NDgPAy",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appBKI9rwef3WP2pm",
+          "mode": "list",
+          "cachedResultName": "Agent memory",
+          "cachedResultUrl": "https://airtable.com/appBKI9rwef3WP2pm"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblY34B4GeV173Mvf",
+          "mode": "list",
+          "cachedResultName": "Savorik",
+          "cachedResultUrl": "https://airtable.com/appBKI9rwef3WP2pm/tblY34B4GeV173Mvf"
+        },
+        "filterByFormula": "({User} = 'Sali')",
+        "options": {
+          "fields": [
+            "Memory",
+            "Created",
+            "User"
+          ]
+        },
+        "sort": {
+          "property": [
+            {
+              "field": "Created"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        72
+      ],
+      "id": "ca77b430-3ed7-4ed7-850e-67b98d028964",
+      "name": "Get Memories",
+      "alwaysOutputData": true,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "kQpQca1qk3NDgPAy",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "memory"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        640,
+        72
+      ],
+      "id": "ff695106-ca23-4c0f-ae5b-953c1e34df4e",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {
+          "fuzzyCompare": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        864,
+        72
+      ],
+      "id": "46135ca6-19a2-45b5-8fbd-8a8c579403fe",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.text || $json.transcript }}",
+        "sessionTTL": 5,
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        1216,
+        296
+      ],
+      "id": "31d4960e-6fa6-4b86-afaf-cf09093a86ae",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "FrLpEjb7lRXq1OFP",
+          "name": "Redis account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Get Voice File": {
+      "main": [
+        [
+          {
+            "node": "Speech to Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contacts": {
+      "ai_tool": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Contact": {
+      "ai_tool": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hacker News": {
+      "ai_tool": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Get Voice File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Memories",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Speech to Text": {
+      "main": [
+        [
+          {
+            "node": "Get Memories",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "J.A.R.V.I.S": {
+      "main": [
+        [
+          {
+            "node": "Message (Text)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Memory": {
+      "ai_tool": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Memories": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "9cd17c31-e990-4da1-9a40-806b35e35558",
+  "owner": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}
