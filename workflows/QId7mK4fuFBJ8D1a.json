@@ -1,6 +1,6 @@
 {
   "id": "QId7mK4fuFBJ8D1a",
-  "name": "My workflow 2",
+  "name": "Mashina",
   "nodes": [
     {
       "parameters": {
@@ -584,49 +584,6 @@
     },
     {
       "parameters": {
-        "name": "SerpAPI",
-        "description": "=Используя данные инструмент при поиске информации в интернете и анализы данных через интернет",
-        "workflowId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "Fkx2g1uhdy6o7KOs",
-          "cachedResultName": "SerpAPI"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "chatInput": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('chatInput', ``, 'string') }}"
-          },
-          "matchingColumns": [
-            "chatInput"
-          ],
-          "schema": [
-            {
-              "id": "chatInput",
-              "displayName": "chatInput",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": true
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "typeVersion": 2.1,
-      "position": [
-        1856,
-        304
-      ],
-      "id": "50f9a899-fb4b-45ae-a86f-4072a26ca821",
-      "name": "SerpAPI"
-    },
-    {
-      "parameters": {
         "operation": "create",
         "base": {
           "__rl": true,
@@ -806,75 +763,6 @@
     },
     {
       "parameters": {
-        "operation": "search",
-        "base": {
-          "__rl": true,
-          "value": "appBKI9rwef3WP2pm",
-          "mode": "list",
-          "cachedResultName": "Agent memory",
-          "cachedResultUrl": "https://airtable.com/appBKI9rwef3WP2pm"
-        },
-        "table": {
-          "__rl": true,
-          "value": "tblY34B4GeV173Mvf",
-          "mode": "list",
-          "cachedResultName": "Savorik",
-          "cachedResultUrl": "https://airtable.com/appBKI9rwef3WP2pm/tblY34B4GeV173Mvf"
-        },
-        "filterByFormula": "({User} = 'Sali')",
-        "options": {
-          "fields": [
-            "Memory",
-            "Created",
-            "User"
-          ]
-        },
-        "sort": {
-          "property": [
-            {
-              "field": "Created"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.airtable",
-      "typeVersion": 2.1,
-      "position": [
-        416,
-        80
-      ],
-      "id": "ca77b430-3ed7-4ed7-850e-67b98d028964",
-      "name": "Get Memories",
-      "alwaysOutputData": true,
-      "credentials": {
-        "airtableTokenApi": {
-          "id": "kQpQca1qk3NDgPAy",
-          "name": "Airtable Personal Access Token account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "fieldsToAggregate": {
-          "fieldToAggregate": [
-            {
-              "fieldToAggregate": "memory"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.aggregate",
-      "typeVersion": 1,
-      "position": [
-        640,
-        80
-      ],
-      "id": "ff695106-ca23-4c0f-ae5b-953c1e34df4e",
-      "name": "Aggregate"
-    },
-    {
-      "parameters": {
         "mode": "combine",
         "combineBy": "combineAll",
         "options": {
@@ -888,7 +776,8 @@
         80
       ],
       "id": "46135ca6-19a2-45b5-8fbd-8a8c579403fe",
-      "name": "Merge"
+      "name": "Merge",
+      "disabled": true
     },
     {
       "parameters": {
@@ -921,11 +810,42 @@
       "typeVersion": 2,
       "position": [
         144,
-        144
+        528
       ],
       "id": "11c6185e-5ed8-46b9-b9e4-2b821ab01c40",
       "name": "Webhook",
       "webhookId": "0e98140a-b238-4254-a1ae-19045447428c"
+    },
+    {
+      "parameters": {
+        "model": "sonar",
+        "messages": {
+          "message": [
+            {
+              "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('message0_Text', ``, 'string') }}"
+            }
+          ]
+        },
+        "simplify": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Simplify_Output', ``, 'boolean') }}",
+        "options": {
+          "returnImages": true
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.perplexityTool",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        320
+      ],
+      "id": "eaf3d6ce-1dc1-4e97-9d14-61e8310324ea",
+      "name": "SerpAPI",
+      "credentials": {
+        "perplexityApi": {
+          "id": "QCngGjfaZomZRYwI",
+          "name": "Perplexity account"
+        }
+      }
     }
   ],
   "connections": {
@@ -1017,14 +937,14 @@
         ],
         [
           {
-            "node": "Get Memories",
+            "node": "Merge",
             "type": "main",
             "index": 0
           },
           {
             "node": "Merge",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -1033,14 +953,14 @@
       "main": [
         [
           {
-            "node": "Get Memories",
+            "node": "Merge",
             "type": "main",
             "index": 0
           },
           {
             "node": "Merge",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -1056,17 +976,6 @@
         ]
       ]
     },
-    "SerpAPI": {
-      "ai_tool": [
-        [
-          {
-            "node": "J.A.R.V.I.S",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Save Memory": {
       "ai_tool": [
         [
@@ -1074,28 +983,6 @@
             "node": "J.A.R.V.I.S",
             "type": "ai_tool",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Memories": {
-      "main": [
-        [
-          {
-            "node": "Aggregate",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Aggregate": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 1
           }
         ]
       ]
@@ -1121,13 +1008,26 @@
           }
         ]
       ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "timezone": "Asia/Bishkek",
+    "callerPolicy": "workflowsFromSameOwner"
   },
   "triggerCount": 2,
-  "versionId": "4ad507b3-96e1-40ec-a071-f0e66ad7a29c",
+  "versionId": "c4e69a94-8aad-4a53-b39b-65ac9a58a9e7",
   "owner": {
     "type": "team",
     "teamId": "Y9ptJBVPq77b0JLs",
