@@ -1,0 +1,14 @@
+{
+  "id": "kQpQca1qk3NDgPAy",
+  "name": "Airtable Personal Access Token account",
+  "type": "airtableTokenApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  }
+}
