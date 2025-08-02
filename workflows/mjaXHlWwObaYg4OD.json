@@ -1,0 +1,446 @@
+{
+  "id": "mjaXHlWwObaYg4OD",
+  "name": "My workflow 4",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3004b598-07d7-4b76-90f0-c585f3001913",
+      "name": "Google Gemini Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        1200,
+        128
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "MxiusrUzPMEPHiIg",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "711c3910-e30c-461c-be83-f2da13e68f29",
+      "name": "Workout Guide",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1168,
+        -96
+      ],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "c201ffda-32a4-4897-aee4-58f0952906e2",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        1648,
+        672
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "MxiusrUzPMEPHiIg",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "e599217a-343e-4c37-a808-9c37c52d69b8",
+      "name": "Workout Guide thorugh Image",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1488,
+        528
+      ],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.0-flash-lite-preview-02-05",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.0-flash-lite-preview-02-05"
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "acc1a57f-1813-4556-9fcb-7dbe6c3df1f8",
+      "name": "Analyze image",
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "position": [
+        2016,
+        304
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "MxiusrUzPMEPHiIg",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "*"
+        ],
+        "additionalFields": {}
+      },
+      "id": "137cad6b-644a-4aa7-b171-756490cfd51a",
+      "name": "Receive a Message",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "position": [
+        720,
+        156
+      ],
+      "webhookId": "199485eb-626f-4920-8de0-dbe6b90bcf38",
+      "typeVersion": 1.2,
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "400888d1-4ccb-4fb9-8e1b-5f8cf0a4265f",
+      "name": "Text Vs Photo",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        944,
+        156
+      ],
+      "typeVersion": 3.2
+    },
+    {
+      "parameters": {},
+      "id": "374eb800-9474-4c82-97ea-d95416e9d7a9",
+      "name": "Clean up Workout plane and Make User freindly And Visually appealing",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1568,
+        8
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "ff739228-fd1d-4563-b3ac-6839e74d2915",
+      "name": "Send A Workout Planes",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1792,
+        8
+      ],
+      "webhookId": "c4f4fa48-f487-485e-99a7-2ea0820d92b3",
+      "typeVersion": 1.2,
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "5fdcc8f7-66f0-4280-bd70-72241bf1978a",
+      "name": "Change Mime Type",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1792,
+        304
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "cead2613-ddfa-428e-a2e4-7a1e98fc0d60",
+      "name": "Clean up Workout plane and Make User freindly And Visually appealing1",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1040,
+        816
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "77ff5e68-f2e3-4a87-87d1-776d98d96231",
+      "name": "Send A Workout Planes1",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        928,
+        464
+      ],
+      "webhookId": "9c14ddd1-03fd-4913-8c14-de1740af84e4",
+      "typeVersion": 1.2,
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "912800cc-75d7-4a04-80a3-a4c243fbd34d",
+      "name": "Fetch Image Path",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1472,
+        288
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "5397cd9a-40a1-4124-ac62-ed03c67136c9",
+      "name": "Get a Image",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1256,
+        304
+      ],
+      "webhookId": "8f601801-097b-468f-beec-cb8c706001bf",
+      "typeVersion": 1.2,
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "c684dfa6-18a1-431c-9e5b-489c768d619e",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        1328,
+        128
+      ],
+      "typeVersion": 1.3
+    }
+  ],
+  "connections": {
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Workout Guide",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workout Guide": {
+      "main": [
+        [
+          {
+            "node": "Clean up Workout plane and Make User freindly And Visually appealing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Workout Guide thorugh Image",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workout Guide thorugh Image": {
+      "main": [
+        [
+          {
+            "node": "Clean up Workout plane and Make User freindly And Visually appealing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze image": {
+      "main": [
+        [
+          {
+            "node": "Workout Guide thorugh Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Receive a Message": {
+      "main": [
+        [
+          {
+            "node": "Text Vs Photo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Vs Photo": {
+      "main": [
+        [
+          {
+            "node": "Workout Guide",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get a Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean up Workout plane and Make User freindly And Visually appealing": {
+      "main": [
+        [
+          {
+            "node": "Send A Workout Planes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Change Mime Type": {
+      "main": [
+        [
+          {
+            "node": "Analyze image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean up Workout plane and Make User freindly And Visually appealing1": {
+      "main": [
+        [
+          {
+            "node": "Send A Workout Planes1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Image Path": {
+      "main": [
+        [
+          {
+            "node": "Change Mime Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a Image": {
+      "main": [
+        [
+          {
+            "node": "Fetch Image Path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Workout Guide",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Workout Guide thorugh Image",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "4d65455e-fa33-4e83-b000-3ee23adbcbaa",
+  "owner": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}
