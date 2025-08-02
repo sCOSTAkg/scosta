@@ -1,0 +1,18 @@
+{
+  "id": "FYDSIfLtkumebEF9",
+  "name": "My workflow",
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "445a9495-a5db-492f-9d2a-ba4af9ce3d5b",
+  "owner": {
+    "type": "team",
+    "teamId": "Mt7vmpCwrBvc84W7",
+    "teamName": "My project"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}
