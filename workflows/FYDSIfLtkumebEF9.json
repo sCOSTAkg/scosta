@@ -17,7 +17,7 @@
       "typeVersion": 1.1,
       "position": [
         -800,
-        952
+        960
       ],
       "id": "a4c23139-44d2-4bf8-9c01-70292b950417",
       "name": "Telegram Trigger",
@@ -58,47 +58,6 @@
     },
     {
       "parameters": {
-        "sseEndpoint": "https://salicost.up.railway.app/mcp/salicosta/sse",
-        "include": "selected",
-        "includeTools": [
-          "search_contact_data",
-          "update_contact_data",
-          "Update_Line",
-          "Search_All_Lines",
-          "Search_Single_Line",
-          "Delete_Row",
-          "Create_Row",
-          "Create",
-          "Update",
-          "Search",
-          "Delete",
-          "Get",
-          "bloks",
-          "creat_page",
-          "get_database",
-          "get_many_database",
-          "Update_a_task",
-          "Reopen_a_task",
-          "Close_a_task",
-          "Create_a_task",
-          "Get_a_task",
-          "Delete_a_task",
-          "Move_a_task",
-          "Get_many_tasks"
-        ]
-      },
-      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
-      "typeVersion": 1,
-      "position": [
-        -800,
-        1656
-      ],
-      "id": "0a85ff4f-3421-40f2-aaf2-e2207f2f90aa",
-      "name": "MCP Client",
-      "disabled": true
-    },
-    {
-      "parameters": {
         "resource": "audio",
         "operation": "transcribe",
         "options": {
@@ -108,8 +67,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        -128,
-        664
+        -256,
+        592
       ],
       "id": "f54bb3ca-ca93-42b1-b9b2-0fc0f4ea0723",
       "name": "Transcribe Audio",
@@ -128,8 +87,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -352,
-        856
+        -128,
+        864
       ],
       "id": "e4631f9d-5a40-4000-a964-7020961a1deb",
       "name": "Send Typing Status",
@@ -155,57 +114,10 @@
       "name": "Get Current Date",
       "type": "n8n-nodes-base.dateTimeTool",
       "position": [
-        492,
+        496,
         1024
       ],
       "typeVersion": 2
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "TK1cha8wSLykTEwq",
-          "mode": "list",
-          "cachedResultName": "Build a 11Document RAG System with Mistral OCR, Qdrant and Gemini AI 2"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {},
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "data",
-              "displayName": "data",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "chat_id",
-              "displayName": "chat_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": true
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
-      "position": [
-        -352,
-        1048
-      ],
-      "id": "73b7f5a7-e7dd-4273-a5f1-4dd0f601a4a8",
-      "name": "Process Document"
     },
     {
       "parameters": {
@@ -220,7 +132,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1308,
+        1312,
         496
       ],
       "id": "c548314d-3536-46fa-b5b4-2b69b70354e7",
@@ -243,8 +155,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -352,
-        664
+        -384,
+        576
       ],
       "id": "f6c9d245-4117-4d98-b1c3-24807dd98c8f",
       "name": "Get Voice File1",
@@ -264,7 +176,7 @@
       "type": "@tavily/n8n-nodes-tavily.tavilyTool",
       "typeVersion": 1,
       "position": [
-        620,
+        624,
         1024
       ],
       "id": "277d6f2f-b17d-43f0-bd11-c1500ecd079d",
@@ -284,7 +196,7 @@
       "type": "@tavily/n8n-nodes-tavily.tavilyTool",
       "typeVersion": 1,
       "position": [
-        748,
+        752,
         1024
       ],
       "id": "ab68ef98-d5f7-4130-91ce-908424b3cb89",
@@ -304,7 +216,7 @@
       "type": "@tavily/n8n-nodes-tavily.tavilyTool",
       "typeVersion": 1,
       "position": [
-        876,
+        880,
         1024
       ],
       "id": "856b399b-a225-4145-ba95-ff7c1707bbb6",
@@ -481,7 +393,7 @@
       "typeVersion": 3.2,
       "position": [
         -576,
-        872
+        880
       ],
       "id": "20f97c67-0117-4548-bd8b-07242a7bfaf2",
       "name": "Message Router",
@@ -520,7 +432,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1084,
+        1088,
         496
       ],
       "id": "48acc673-d318-4981-837d-1e127405c4b4",
@@ -537,163 +449,6 @@
     },
     {
       "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "r4Z3tBvj3qlR91Ev",
-          "mode": "list",
-          "cachedResultName": "ФОТО OCR"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "data": "={{ $json.message.photo[0].file_id }}",
-            "chat_id": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "data",
-              "displayName": "data",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "chat_id",
-              "displayName": "chat_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": true,
-          "convertFieldsToString": true
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
-      "position": [
-        -352,
-        1432
-      ],
-      "id": "016db901-c77f-4404-8c28-bbebd5117cea",
-      "name": "Process Document1",
-      "executeOnce": true,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "description": "используй инструмент для генерации изображений",
-        "workflowId": {
-          "__rl": true,
-          "value": "WcN4Kj1G5dBGpwOW",
-          "mode": "list",
-          "cachedResultName": "Free AI Image Generator - n8n Automation Workflow with Gemini/ChatGPT"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "prompt": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('prompt', ``, 'string') }}",
-            "chat_id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('chat_id', ``, 'string') }}",
-            "aspect_ratio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('aspect_ratio', ``, 'string') }}",
-            "enhance": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('enhance', ``, 'boolean') }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "prompt",
-              "displayName": "prompt",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "chat_id",
-              "displayName": "chat_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "enhance",
-              "displayName": "enhance",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "boolean",
-              "removed": false
-            },
-            {
-              "id": "aspect_ratio",
-              "displayName": "aspect_ratio",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "typeVersion": 2.2,
-      "position": [
-        -800,
-        1864
-      ],
-      "id": "96af41d0-dd7f-4007-8685-0b905435f6af",
-      "name": "Call n8n Workflow Tool",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "ZeuwoSPb5ImuFG4m",
-          "mode": "list",
-          "cachedResultName": "My workflow 21"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {},
-          "matchingColumns": [],
-          "schema": [],
-          "attemptToConvertTypes": true,
-          "convertFieldsToString": true
-        },
-        "options": {
-          "waitForSubWorkflow": false
-        }
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
-      "position": [
-        -352,
-        1240
-      ],
-      "id": "02245b99-35f0-4079-9459-21fbc56cebe5",
-      "name": "Process Document2",
-      "executeOnce": true,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
         "model": {
           "__rl": true,
           "value": "gpt-4.1",
@@ -707,7 +462,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        364,
+        368,
         1024
       ],
       "id": "4b0d1ac1-76a0-48e5-8241-65271dce67bb",
@@ -728,7 +483,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        1084,
+        1088,
         688
       ],
       "id": "650dc0f9-6788-4cce-8ee5-9fb9e4964afb",
@@ -749,7 +504,7 @@
       "type": "@n8n/n8n-nodes-langchain.memoryZep",
       "typeVersion": 1.3,
       "position": [
-        236,
+        240,
         1024
       ],
       "id": "0ffe9da9-8c9d-488a-b7a1-dbabf828bf85",
@@ -773,8 +528,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.7,
       "position": [
-        96,
-        592
+        592,
+        624
       ],
       "id": "a25d2cbc-e745-4a8b-a0b9-4dc6fc9ecef7",
       "name": "Universal AI Agent1",
@@ -792,7 +547,7 @@
       "type": "@n8n/n8n-nodes-langchain.agentTool",
       "typeVersion": 2.2,
       "position": [
-        460,
+        464,
         816
       ],
       "id": "19126daa-a436-4e77-a634-0e4a47cbee0f",
@@ -806,8 +561,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        148,
-        816
+        64,
+        784
       ],
       "id": "1929acf3-17c9-4c21-9c92-ae907a8a512d",
       "name": "Google Gemini Chat Model",
@@ -829,11 +584,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "MCP Client": {
-      "ai_tool": [
-        []
       ]
     },
     "Transcribe Audio": {
@@ -895,28 +645,10 @@
             "index": 0
           }
         ],
-        [
-          {
-            "node": "Process Document1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Process Document",
-            "type": "main",
-            "index": 0
-          }
-        ],
         [],
-        [
-          {
-            "node": "Process Document2",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        [],
+        [],
+        []
       ]
     },
     "Send Typing Status1": {
@@ -932,11 +664,6 @@
     },
     "Send Response1": {
       "main": [
-        []
-      ]
-    },
-    "Call n8n Workflow Tool": {
-      "ai_tool": [
         []
       ]
     },
@@ -1007,13 +734,7 @@
     },
     "AI Agent Tool": {
       "ai_tool": [
-        [
-          {
-            "node": "Universal AI Agent1",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Google Gemini Chat Model": {
@@ -1031,11 +752,6 @@
       "main": [
         [
           {
-            "node": "Generate audio",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "Send Typing Status1",
             "type": "main",
             "index": 0
@@ -1048,7 +764,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "cefc860d-15c0-4130-8de7-c9f3ec2d2e61",
+  "versionId": "095c34de-c878-4991-870f-bc61cf2461db",
   "owner": {
     "type": "team",
     "teamId": "Mt7vmpCwrBvc84W7",
