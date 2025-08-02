@@ -15,7 +15,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
         1088,
-        296
+        304
       ],
       "typeVersion": 1,
       "credentials": {
@@ -54,7 +54,7 @@
       "typeVersion": 1,
       "position": [
         1344,
-        296
+        304
       ]
     },
     {
@@ -95,7 +95,7 @@
       "typeVersion": 2.1,
       "position": [
         1472,
-        296
+        304
       ],
       "credentials": {
         "airtableTokenApi": {
@@ -402,7 +402,7 @@
       "typeVersion": 2.1,
       "position": [
         1600,
-        296
+        304
       ],
       "credentials": {
         "airtableTokenApi": {
@@ -426,7 +426,7 @@
       "type": "n8n-nodes-base.telegram",
       "position": [
         2320,
-        72
+        80
       ],
       "typeVersion": 1.1,
       "webhookId": "aaa32755-8fdd-459b-94f2-7f003a490b23",
@@ -449,7 +449,7 @@
       "typeVersion": 1,
       "position": [
         1728,
-        296
+        304
       ]
     },
     {
@@ -465,7 +465,7 @@
       "typeVersion": 1.1,
       "position": [
         -480,
-        216
+        224
       ],
       "webhookId": "4e51bd17-2c51-459b-a549-7f00cfd50b62",
       "credentials": {
@@ -539,7 +539,7 @@
       "typeVersion": 3.2,
       "position": [
         -256,
-        216
+        224
       ]
     },
     {
@@ -578,7 +578,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
         1504,
-        72
+        80
       ],
       "typeVersion": 1.6
     },
@@ -620,7 +620,7 @@
       "typeVersion": 2.1,
       "position": [
         1856,
-        296
+        304
       ],
       "id": "50f9a899-fb4b-45ae-a86f-4072a26ca821",
       "name": "SerpAPI"
@@ -793,7 +793,7 @@
       "typeVersion": 2.1,
       "position": [
         1984,
-        296
+        304
       ],
       "id": "3b64d6b0-f567-40d8-9d2d-be70c4d9358c",
       "name": "Save Memory",
@@ -841,7 +841,7 @@
       "typeVersion": 2.1,
       "position": [
         416,
-        72
+        80
       ],
       "id": "ca77b430-3ed7-4ed7-850e-67b98d028964",
       "name": "Get Memories",
@@ -868,7 +868,7 @@
       "typeVersion": 1,
       "position": [
         640,
-        72
+        80
       ],
       "id": "ff695106-ca23-4c0f-ae5b-953c1e34df4e",
       "name": "Aggregate"
@@ -885,7 +885,7 @@
       "typeVersion": 3,
       "position": [
         864,
-        72
+        80
       ],
       "id": "46135ca6-19a2-45b5-8fbd-8a8c579403fe",
       "name": "Merge"
@@ -901,7 +901,7 @@
       "typeVersion": 1.5,
       "position": [
         1216,
-        296
+        304
       ],
       "id": "31d4960e-6fa6-4b86-afaf-cf09093a86ae",
       "name": "Redis Chat Memory",
@@ -911,6 +911,21 @@
           "name": "Redis account"
         }
       }
+    },
+    {
+      "parameters": {
+        "path": "N8N",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        144,
+        144
+      ],
+      "id": "11c6185e-5ed8-46b9-b9e4-2b821ab01c40",
+      "name": "Webhook",
+      "webhookId": "0e98140a-b238-4254-a1ae-19045447428c"
     }
   ],
   "connections": {
@@ -1111,13 +1126,12 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "triggerCount": 0,
-  "versionId": "9cd17c31-e990-4da1-9a40-806b35e35558",
+  "triggerCount": 2,
+  "versionId": "4ad507b3-96e1-40ec-a071-f0e66ad7a29c",
   "owner": {
-    "type": "personal",
-    "projectId": "4u7zt7bOYo5vK3bD",
-    "projectName": "Sali Costa <withabakirov@gmail.com>",
-    "personalEmail": "withabakirov@gmail.com"
+    "type": "team",
+    "teamId": "Y9ptJBVPq77b0JLs",
+    "teamName": "My project"
   },
   "parentFolderId": null,
   "isArchived": false
