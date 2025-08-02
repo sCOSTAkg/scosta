@@ -1,0 +1,13 @@
+{
+  "id": "bRtnxneEgvSWdsIe",
+  "name": "Ассистент по маркетингу",
+  "type": "telegramApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "Mt7vmpCwrBvc84W7",
+    "teamName": "My project"
+  }
+}

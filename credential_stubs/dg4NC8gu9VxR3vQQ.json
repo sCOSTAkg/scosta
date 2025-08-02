@@ -1,0 +1,14 @@
+{
+  "id": "dg4NC8gu9VxR3vQQ",
+  "name": "Zep Api account",
+  "type": "zepApi",
+  "data": {
+    "apiKey": "",
+    "cloud": true
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "Mt7vmpCwrBvc84W7",
+    "teamName": "My project"
+  }
+}

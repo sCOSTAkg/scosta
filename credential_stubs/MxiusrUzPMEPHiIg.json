@@ -1,0 +1,13 @@
+{
+  "id": "MxiusrUzPMEPHiIg",
+  "name": "Google Gemini(PaLM) Api account",
+  "type": "googlePalmApi",
+  "data": {
+    "apiKey": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "Mt7vmpCwrBvc84W7",
+    "teamName": "My project"
+  }
+}
