@@ -1,0 +1,930 @@
+{
+  "name": "Advanced Medium API MCP Server",
+  "nodes": [
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "be5f1858-22b8-41d0-8bea-a3b4ada7529d",
+      "name": "Advanced Warning",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "db54af98-d56e-4a5d-b787-53a9293e5a2b",
+      "name": "Setup Instructions",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        660
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "7ae43c73-900a-44af-8470-b383710bd945",
+      "name": "Workflow Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        260,
+        660
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "path": "663c4f7a-310a-46ae-b594-6ba1090a7742"
+      },
+      "id": "fca0af82-f4b7-4cda-a083-d20ccc09da03",
+      "name": "Medium MCP Server",
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "position": [
+        760,
+        660
+      ],
+      "webhookId": "663c4f7a-310a-46ae-b594-6ba1090a7742",
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "82f4f931-43f6-46bc-97ea-3a20ea2285bd",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        720,
+        800
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "7860bc8b-306c-4628-a511-592afeded6d5",
+      "name": "Get Welcome Message",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        860,
+        840
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "98631e81-d9dd-475e-8eed-7fc0fd5f97d7",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        720,
+        1040
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a588a7ff-dec2-4187-9989-25a0221d30c3",
+      "name": "Get Article Details",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        860,
+        1080
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3820beb6-5f25-4a52-b41d-0c44c4119262",
+      "name": "Get Article Content",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1060,
+        1080
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0d81c34c-fd08-4a45-9be3-916df70b8469",
+      "name": "Get Article Fans",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1260,
+        1080
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ffe03ce1-20df-463c-b348-d914c0faf13e",
+      "name": "Get Article Markdown",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1460,
+        1080
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "5402ab91-de9e-4158-be0c-a66bbeea0cc9",
+      "name": "Get Related Articles",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1660,
+        1080
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a8d760d9-e7e2-474f-bbaa-7b127ac26a81",
+      "name": "Get Article Responses",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1860,
+        1080
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "20eaffde-5fd9-4f67-b75a-4a110886b1c9",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        720,
+        1280
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "06002120-cb40-4894-b794-009fb4f61717",
+      "name": "Get Latest Posts",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        860,
+        1320
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ebc3a6f5-6f9b-4113-b879-3e5dddafa40e",
+      "name": "Get Related Tags",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1060,
+        1320
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "e822d872-67f6-4151-94ec-1266e8236bb3",
+      "name": "Get Top Writers",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1260,
+        1320
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "50016724-cfda-4cb9-abcc-146e235c1487",
+      "name": "Get Top Feeds",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1460,
+        1320
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "89a5533f-8592-4902-ac3d-69b49fa14b20",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        720,
+        1520
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3066c5f8-e3f6-4fd1-93fa-c6e366232a15",
+      "name": "Get List Details",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        860,
+        1560
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d3d3b4ed-b90a-4b82-8063-ae33036b6454",
+      "name": "Get List Articles",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1060,
+        1560
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "5df69cb4-a17f-4185-a7bd-c0480653f4fa",
+      "name": "Get List Responses",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1260,
+        1560
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "04f3b713-5598-4de4-9d5f-86e93a23dc6a",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        720,
+        1760
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a6e07f6c-1e8c-42a3-a831-5dea77569644",
+      "name": "Get Publication ID",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        860,
+        1800
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "1f799f26-35dc-482f-aa64-eefa03a5b274",
+      "name": "Get Publication Details",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1060,
+        1800
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "330d06bc-2458-46b7-817b-4f8b3231fa86",
+      "name": "Get Publication Articles",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1260,
+        1800
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3b92eab0-da43-4d71-a379-7aee69564ab4",
+      "name": "Get Publication Newsletter",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1460,
+        1800
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "f04da5b8-6509-448c-8d4e-ed2ceb0ef352",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        720,
+        2000
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "f8aca2b1-c544-4b42-b16f-002b0ea49a83",
+      "name": "Search Articles",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        860,
+        2040
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "94aedfff-7ce7-480f-9148-d303f4fbff63",
+      "name": "Search Lists",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1060,
+        2040
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "8deee0b4-e262-4310-a148-4b5da012b7c9",
+      "name": "Search Publications",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1260,
+        2040
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "b1d2bf06-f305-49eb-a5d5-718479b05a5b",
+      "name": "Search Tags",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1460,
+        2040
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d9774244-c0a1-4d7d-b624-ae06962c33a2",
+      "name": "Search Users",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1660,
+        2040
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "2edbecc5-2045-4cc1-b694-8210250f59ab",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        720,
+        2240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "68436852-f944-4ba4-aac8-11806344bcac",
+      "name": "Get User ID",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        860,
+        2280
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "19244382-f653-494f-b769-afec83af4d09",
+      "name": "Get User Details",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1060,
+        2280
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3382b473-9363-44d3-a1b8-70fe064df45d",
+      "name": "Get User Articles",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1260,
+        2280
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "13f19847-d129-4fe6-9173-d0009820f775",
+      "name": "Get User Followers",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1460,
+        2280
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "8b9d3e8b-4fc7-4bb2-871b-5e26ce441575",
+      "name": "Get User Following",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1660,
+        2280
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a3fefede-a8f2-44bb-8ff2-d1b7cf6c627c",
+      "name": "Get User Interests",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        1860,
+        2280
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "f76aec55-60e7-4053-a48e-5fca8d259f75",
+      "name": "Get User Lists",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        2060,
+        2280
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "4427b9de-f6c2-409e-b369-fcc2aa3d9363",
+      "name": "Get User Publications",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        2260,
+        2280
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3802b917-cc1e-493d-be44-8d50725480d7",
+      "name": "Get User Top Articles",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        2460,
+        2280
+      ],
+      "typeVersion": 4.2
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get Welcome Message": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Article Details": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Article Content": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Article Fans": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Article Markdown": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Related Articles": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Article Responses": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Latest Posts": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Related Tags": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Top Writers": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Top Feeds": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get List Details": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get List Articles": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get List Responses": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Publication ID": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Publication Details": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Publication Articles": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Publication Newsletter": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Articles": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Lists": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Publications": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Tags": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Users": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User ID": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Details": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Articles": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Followers": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Following": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Interests": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Lists": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Publications": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Top Articles": {
+      "ai_tool": [
+        [
+          {
+            "node": "Medium MCP Server",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fa9d7148-5aef-49cb-975c-8d008f6bf1a9",
+  "meta": {
+    "instanceId": "576d4a2cf0586874c52480fdcfafcdb1b3887a6461bd309e383e1bb88195a4ec"
+  },
+  "id": "CL56ZBEE2onhbQTK",
+  "tags": []
+}

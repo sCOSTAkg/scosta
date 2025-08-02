@@ -1,0 +1,4948 @@
+{
+  "name": "@salicostaai",
+  "nodes": [
+    {
+      "parameters": {
+        "pageId": {
+          "__rl": true,
+          "mode": "url",
+          "value": ""
+        },
+        "options": {}
+      },
+      "id": "731c929a-b44e-4063-9f5c-7a99817197e9",
+      "name": "Get My Weekly Meal Planner",
+      "type": "n8n-nodes-base.notionTool",
+      "position": [
+        -3580,
+        1980
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "pageId": {
+          "__rl": true,
+          "mode": "url",
+          "value": ""
+        },
+        "options": {}
+      },
+      "id": "6a2c3595-58d3-4c95-bde5-1c5bc82a1044",
+      "name": "Get My Meals",
+      "type": "n8n-nodes-base.notionTool",
+      "position": [
+        -3400,
+        1980
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "pageId": {
+          "__rl": true,
+          "mode": "url",
+          "value": ""
+        },
+        "options": {}
+      },
+      "id": "93998c63-ea45-4add-bf5b-f218f22f1372",
+      "name": "Get Habits",
+      "type": "n8n-nodes-base.notionTool",
+      "position": [
+        -3240,
+        1980
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "pageId": {
+          "__rl": true,
+          "mode": "url",
+          "value": ""
+        },
+        "options": {}
+      },
+      "id": "7c4c90ed-81fa-4b60-a574-87c8d99b4aca",
+      "name": "Create Meal",
+      "type": "n8n-nodes-base.notionTool",
+      "position": [
+        -3080,
+        1980
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {},
+      "id": "9741d45a-8930-4a1d-8689-1662cb5f596e",
+      "name": "Window Buffer Memory6",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -3740,
+        1980
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "e6365066-4ebf-4580-96b5-368578fe9763",
+      "name": "Notion Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -3620,
+        1800
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6b190fcc-4c91-436d-8e46-b246ff78b7a0",
+      "name": "Google Gemini Chat Model6",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -3900,
+        1980
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "28294038-b472-43a1-9f6f-b513c1a9cd66",
+      "name": "Create Task",
+      "type": "n8n-nodes-base.googleTasksTool",
+      "position": [
+        -2520,
+        1980
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "0817da1b-74a3-4bdd-8694-f254ea5a63e7",
+      "name": "Close Task",
+      "type": "n8n-nodes-base.googleTasksTool",
+      "position": [
+        -2360,
+        1980
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "0d2efd1d-b68f-43b8-8ae4-0b05d2f0b96d",
+      "name": "Update Task",
+      "type": "n8n-nodes-base.googleTasksTool",
+      "position": [
+        -2080,
+        1980
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "2409e2b9-b776-4c31-be7b-3624aaf165f3",
+      "name": "Delete Task",
+      "type": "n8n-nodes-base.googleTasksTool",
+      "position": [
+        -2220,
+        1980
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "d91675e1-42cc-4944-a6aa-a4fe469303ea",
+      "name": "Get All Tasks",
+      "type": "n8n-nodes-base.googleTasksTool",
+      "position": [
+        -1920,
+        1980
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "4a22d437-533b-4d5a-9196-7c3a2c254900",
+      "name": "Window Buffer Memory7",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -2680,
+        1980
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "80912695-c53b-41f9-851b-eaecba4670fa",
+      "name": "Tasks Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2560,
+        1780
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "fa2fba0d-7638-479c-9936-5be464f81a4e",
+      "name": "Google Gemini Chat Model7",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -2860,
+        1980
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "6ab96638-12cd-4852-9864-ee080bd00b9e",
+      "name": "Check Flights",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -1380,
+        1980
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "8aace447-2b7a-458d-a03c-8aaed56be758",
+      "name": "Get Airport Code",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -1220,
+        1980
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "3d28161b-6c48-4d97-bd67-9700e665ceea",
+      "name": "Window Buffer Memory8",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -1540,
+        1980
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "id": "d9d6dee3-a425-422a-862e-e3ec8934b1cd",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1720,
+        1980
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "4b8a400c-4d5f-4872-bbf0-b07653ee7445",
+      "name": "Travel Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -1560,
+        1800
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "c1b9216a-ba36-4ab5-b571-63f36bf7cb5e",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4000,
+        1720
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "1faa3dd4-a1e8-4f70-8a88-76841093e87b",
+      "name": "Request Posting to Facebook",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -3560,
+        2460
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "639cea1b-e0f9-4946-8c67-c2dafe158e04",
+      "name": "Request Posting to X Twitter",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -3380,
+        2460
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "4f5d2d2b-f92a-4678-93df-530b0848f5e5",
+      "name": "Request Posting to Instagram",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -3000,
+        2460
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "43ae27f7-9bbb-4860-87bc-77a84379abac",
+      "name": "Request Posting to LinkedIn",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -3180,
+        2460
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "4041af68-95e2-4af2-a2a1-6b263093d7c2",
+      "name": "Window Buffer Memory10",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -3740,
+        2460
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a24a5827-97d3-4855-9b7f-9e3c5d7aa407",
+      "name": "Social Media Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -3600,
+        2260
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "9d9e9dd1-dd3c-4834-a533-27080ba48374",
+      "name": "Google Gemini Chat Model9",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -3920,
+        2460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "0013574a-3f7e-4a40-984f-efcdcf8e357d",
+      "name": "Generate AI Image",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -2220,
+        2460
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "bdf5286e-97dc-42b2-a03c-1d1a74312f3a",
+      "name": "Fetch Stock Image",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -2420,
+        2460
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "e56ac6de-a011-436a-813b-7cd7db260fd8",
+      "name": "Window Buffer Memory11",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -2600,
+        2460
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3d272929-ff21-4cb2-a424-350c5ab5416f",
+      "name": "Image Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2620,
+        2240
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0addd600-ef59-4824-9a03-8b7052da27dc",
+      "name": "Google Gemini Chat Model10",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -2760,
+        2460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "c4df2faf-dd8d-4815-bb43-d52b4c5863a0",
+      "name": "Create Wordpress Post",
+      "type": "n8n-nodes-base.wordpressTool",
+      "position": [
+        -1600,
+        2460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "fbaa255a-5c43-4ea3-9c92-4cf6098636e0",
+      "name": "Search Wordpress",
+      "type": "n8n-nodes-base.wordpressTool",
+      "position": [
+        -1420,
+        2460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "942f1f33-1b20-4b65-83e6-8d2a38be6e54",
+      "name": "Get All Users",
+      "type": "n8n-nodes-base.wordpressTool",
+      "position": [
+        -1260,
+        2460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "bf2a48ee-c1c2-4e52-a996-9ed33eb21c70",
+      "name": "Window Buffer Memory12",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -1760,
+        2460
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ddfb17e0-ddba-48ed-8699-361de5d1baa0",
+      "name": "Wordpress Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -1740,
+        2260
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "fd658550-d582-4d59-8ce0-5a3661cbbaf0",
+      "name": "Google Gemini Chat Model11",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -1940,
+        2460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "725fc5d3-43e4-4154-b5d2-06ea62b43088",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4000,
+        2180
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "89b00f9d-8796-42cb-9c31-58b665fa6aa4",
+      "name": "Search Emails",
+      "type": "n8n-nodes-base.gmailTool",
+      "position": [
+        -3600,
+        2940
+      ],
+      "webhookId": "b8c9b1d2-f56e-40b7-ae04-bef0f6ae7005",
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6630bf86-845a-40b8-b919-4c18b87f6d29",
+      "name": "Draft Email",
+      "type": "n8n-nodes-base.gmailTool",
+      "position": [
+        -3480,
+        2940
+      ],
+      "webhookId": "afa67851-b257-4077-b759-9be4ff3d4ddc",
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d0b2953c-12ec-42ee-ac54-ed9b0dadc64a",
+      "name": "Get All Labels",
+      "type": "n8n-nodes-base.gmailTool",
+      "position": [
+        -3360,
+        2940
+      ],
+      "webhookId": "679552eb-669e-48e7-9c05-85f86ea7d724",
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0b59f480-2c81-4453-bcce-fcee8138120d",
+      "name": "Add Label to Email",
+      "type": "n8n-nodes-base.gmailTool",
+      "position": [
+        -3220,
+        2940
+      ],
+      "webhookId": "d80efdeb-d294-480b-807c-ca021c6ad7ce",
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {},
+      "id": "4673ffba-8a8e-454b-a2e4-b0f4cd4dbdfc",
+      "name": "Window Buffer Memory22",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -3740,
+        2940
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d946df26-6a3b-45ce-9c1f-0e7fee455c9c",
+      "name": "Email Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -3720,
+        2760
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "b61abc4f-0121-4a74-8def-c693dfa42eed",
+      "name": "Google Gemini Chat Model21",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -3900,
+        2940
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "daee1566-366e-47a7-add5-76bdcb24050b",
+      "name": "Search X Twitter",
+      "type": "n8n-nodes-base.twitterTool",
+      "position": [
+        -2740,
+        2940
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "868bfa4d-4c16-4af2-8f33-a7723040026a",
+      "name": "Send a DM to a Username",
+      "type": "n8n-nodes-base.twitterTool",
+      "position": [
+        -2600,
+        2940
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "062a8713-a332-48c2-892b-645265717198",
+      "name": "Get a User by Username",
+      "type": "n8n-nodes-base.twitterTool",
+      "position": [
+        -2460,
+        2940
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "fb5a6044-a830-4c82-8f9f-bc69b7f44092",
+      "name": "Window Buffer Memory23",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -2880,
+        2940
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "1fd4c472-f032-474b-8654-b8bea65a18a9",
+      "name": "X Twitter Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2880,
+        2760
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a5d95be3-b45d-451d-805c-55df76274a74",
+      "name": "Google Gemini Chat Model22",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -3020,
+        2940
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "otherOptions": {}
+      },
+      "id": "fd129912-5308-43cc-81fa-26a48c9da0b6",
+      "name": "Get Users Status",
+      "type": "n8n-nodes-base.slackTool",
+      "position": [
+        -1840,
+        2940
+      ],
+      "webhookId": "db365bda-a5e2-4764-82f9-797d81af7e97",
+      "typeVersion": 2.3
+    },
+    {
+      "parameters": {
+        "otherOptions": {}
+      },
+      "id": "bbc3dee1-ce16-44a7-9970-ccc5e6a15b0c",
+      "name": "Send Message to User",
+      "type": "n8n-nodes-base.slackTool",
+      "position": [
+        -1680,
+        2940
+      ],
+      "webhookId": "db365bda-a5e2-4764-82f9-797d81af7e97",
+      "typeVersion": 2.3
+    },
+    {
+      "parameters": {
+        "otherOptions": {}
+      },
+      "id": "33cf1ec8-4c57-4f06-86fc-64a8f63e302b",
+      "name": "Send Message to Channel",
+      "type": "n8n-nodes-base.slackTool",
+      "position": [
+        -1520,
+        2940
+      ],
+      "webhookId": "db365bda-a5e2-4764-82f9-797d81af7e97",
+      "typeVersion": 2.3
+    },
+    {
+      "parameters": {
+        "otherOptions": {}
+      },
+      "id": "134ea5b2-9a70-4030-825c-135848fc2659",
+      "name": "Get Slack Channels",
+      "type": "n8n-nodes-base.slackTool",
+      "position": [
+        -1200,
+        2940
+      ],
+      "webhookId": "db365bda-a5e2-4764-82f9-797d81af7e97",
+      "typeVersion": 2.3
+    },
+    {
+      "parameters": {
+        "otherOptions": {}
+      },
+      "id": "c367cffc-aef8-4869-8f56-426eae83c044",
+      "name": "Check Recent Channel Messages",
+      "type": "n8n-nodes-base.slackTool",
+      "position": [
+        -1360,
+        2940
+      ],
+      "webhookId": "db365bda-a5e2-4764-82f9-797d81af7e97",
+      "typeVersion": 2.3
+    },
+    {
+      "parameters": {},
+      "id": "6415b1f5-9d4d-4572-a89d-12d48eeb6dcf",
+      "name": "Window Buffer Memory24",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -2120,
+        2940
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "254b670b-9392-432a-a5ce-01b7701a595a",
+      "name": "Slack Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -1860,
+        2740
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "otherOptions": {}
+      },
+      "id": "7d4187ec-7249-433f-8239-f05eedb825a4",
+      "name": "Get All Users1",
+      "type": "n8n-nodes-base.slackTool",
+      "position": [
+        -1980,
+        2940
+      ],
+      "webhookId": "db365bda-a5e2-4764-82f9-797d81af7e97",
+      "typeVersion": 2.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "59f63f72-9066-414c-80dd-4ec89daeac56",
+      "name": "Google Gemini Chat Model23",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -2280,
+        2940
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "714a0f92-504c-45b5-a0bf-cfb7c133912a",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4000,
+        2660
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "additionalFields": {}
+      },
+      "id": "e33507d2-3ec6-4596-87de-3e94e5482bdb",
+      "name": "View Calendar Events",
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "position": [
+        -2700,
+        4200
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "additionalFields": {}
+      },
+      "id": "d2cb0470-254d-4cd4-87d0-557d612a16ad",
+      "name": "Create Event",
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "position": [
+        -2560,
+        4200
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "additionalFields": {}
+      },
+      "id": "1b83f4d3-cdb0-466b-a785-a92cfdaff879",
+      "name": "Check Availability",
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "position": [
+        -2420,
+        4200
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "additionalFields": {}
+      },
+      "id": "c6cdbcee-0178-44e7-8370-366a7c1ff445",
+      "name": "Delete Event",
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "position": [
+        -2160,
+        4200
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "additionalFields": {}
+      },
+      "id": "cdea4cb9-aa8f-4c8a-8f39-c5ad3cfda933",
+      "name": "Update Event",
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "position": [
+        -2280,
+        4200
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {},
+      "id": "704cce12-6194-464a-9730-f73b4b47259f",
+      "name": "Window Buffer Memory14",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -2840,
+        4200
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "8b342a34-42c9-4fb8-ac70-e8a7560a3c0a",
+      "name": "Calendar Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2760,
+        4020
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6da571bd-46ff-4826-aeff-27615016e45b",
+      "name": "Google Gemini Chat Model13",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -3000,
+        4200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "id": "4f2542aa-7a67-456b-9322-55a336a5f148",
+      "name": "Create Basic Text File",
+      "type": "n8n-nodes-base.googleDriveTool",
+      "position": [
+        -1700,
+        4200
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "id": "a3d47d7c-9e44-4d8b-89e9-1d94a033fc37",
+      "name": "Create Folder",
+      "type": "n8n-nodes-base.googleDriveTool",
+      "position": [
+        -1440,
+        4200
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "id": "4c708feb-2aa8-4352-95bf-d904bbefc7c6",
+      "name": "Update File",
+      "type": "n8n-nodes-base.googleDriveTool",
+      "position": [
+        -1320,
+        4200
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "id": "2298fceb-ee27-4c4a-a7d7-73ddd1bc5093",
+      "name": "Move a File",
+      "type": "n8n-nodes-base.googleDriveTool",
+      "position": [
+        -1200,
+        4200
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "id": "10619526-24c7-47b1-9501-4dc4e581e268",
+      "name": "Search for Files Folders",
+      "type": "n8n-nodes-base.googleDriveTool",
+      "position": [
+        -1560,
+        4200
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {},
+      "id": "3632f9b6-0209-46d3-9aea-b96f7a9abc12",
+      "name": "Window Buffer Memory15",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -1840,
+        4200
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "24431553-e8ef-4812-9821-c99e2d9691f9",
+      "name": "Drive Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -1700,
+        4000
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d7c59224-9bb3-4fcc-86ec-dde8ec674183",
+      "name": "Google Gemini Chat Model14",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -1980,
+        4200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "a95bd614-480e-4210-8ae2-028bb47d8a5b",
+      "name": "Create Document",
+      "type": "n8n-nodes-base.googleDocsTool",
+      "position": [
+        -1000,
+        4640
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "8fdd470e-e8e7-4012-9899-387ee7320f27",
+      "name": "Update Doc",
+      "type": "n8n-nodes-base.googleDocsTool",
+      "position": [
+        -840,
+        4640
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "71919f4c-a10e-4992-989f-54aa9133302c",
+      "name": "Get Doc",
+      "type": "n8n-nodes-base.googleDocsTool",
+      "position": [
+        -1140,
+        4640
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "705c6a52-67b3-4724-8f01-e10a9ea3b8bc",
+      "name": "Create Google Doc",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -1300,
+        4640
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "3ee5c9c7-1526-43c7-8f18-3fff1d156f58",
+      "name": "Window Buffer Memory16",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -1460,
+        4640
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d51e3f0e-c367-4351-a2a9-457e12c2e1a0",
+      "name": "Docs Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -1380,
+        4440
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "236305cc-48b6-4a2d-91b7-b21e7549bfa4",
+      "name": "Google Gemini Chat Model15",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -1620,
+        4640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "ab631220-ca64-4271-b262-10badcbabb5c",
+      "name": "Create Clickup Task",
+      "type": "n8n-nodes-base.clickUpTool",
+      "position": [
+        -3620,
+        4200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6deb89b1-07a7-414f-9ecc-32e19a426ecd",
+      "name": "Clickup Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -3700,
+        4020
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {},
+      "id": "f9663b6d-17ef-4138-abe7-bdb870c5145e",
+      "name": "Window Buffer Memory17",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -3780,
+        4200
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "ff227673-cd20-412e-ad8e-e6c877703d8b",
+      "name": "Get All Tasks1",
+      "type": "n8n-nodes-base.clickUpTool",
+      "position": [
+        -3460,
+        4200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "33d60e35-9f32-4736-b17c-1e8add3441bd",
+      "name": "Update Task1",
+      "type": "n8n-nodes-base.clickUpTool",
+      "position": [
+        -3320,
+        4200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "56fa0422-9116-4f28-be16-9fd215c31956",
+      "name": "Delete Task1",
+      "type": "n8n-nodes-base.clickUpTool",
+      "position": [
+        -3180,
+        4200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "2657c257-7643-44c1-b24f-d1000b681e6c",
+      "name": "Google Gemini Chat Model16",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -3940,
+        4200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "id": "24bb31a1-9316-4133-835d-0b166dcf3e8d",
+      "name": "Create a Google Sheet",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        -3920,
+        4640
+      ],
+      "typeVersion": 4.5
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "id": "e8176dd5-8bdd-4813-8013-e3eade5f47bc",
+      "name": "Retrieve Rows from Google Sheet",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        -3780,
+        4640
+      ],
+      "typeVersion": 4.5
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "id": "8430ec03-b24b-4adc-97c3-f1ffbd4a480b",
+      "name": "Get a Google Sheet",
+      "type": "n8n-nodes-base.googleDriveTool",
+      "position": [
+        -3460,
+        4640
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "id": "aac3c448-24d1-4665-b785-1ec771318738",
+      "name": "Add to Household Expenses Sheet",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "position": [
+        -3620,
+        4640
+      ],
+      "typeVersion": 4.5
+    },
+    {
+      "parameters": {},
+      "id": "d88836f0-3e1d-45dd-8b2f-3b621803c38e",
+      "name": "Window Buffer Memory18",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -4040,
+        4640
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "11b8c75e-25d0-4cdd-b90b-3e5d406e111e",
+      "name": "Sheets Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -3960,
+        4460
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "1531b6a6-a9e9-43f9-844a-b26f0818a399",
+      "name": "Google Gemini Chat Model17",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -4180,
+        4640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "b2bdb152-6f66-4a13-bc3d-d390cb54f624",
+      "name": "Create Update Lead",
+      "type": "n8n-nodes-base.zohoCrmTool",
+      "position": [
+        -2960,
+        4640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "49b72030-f66b-463d-9f89-3f1ddec3f84f",
+      "name": "Get All Leads",
+      "type": "n8n-nodes-base.zohoCrmTool",
+      "position": [
+        -2820,
+        4640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "a24c1377-afeb-4b9c-9d88-efc61e4002e4",
+      "name": "Delete a Lead",
+      "type": "n8n-nodes-base.zohoCrmTool",
+      "position": [
+        -2700,
+        4640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "8ba8e548-1ad6-473f-ab77-e95881cb06ae",
+      "name": "Create Update Quote",
+      "type": "n8n-nodes-base.zohoCrmTool",
+      "position": [
+        -2580,
+        4640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "2ff469bc-b0aa-4254-b87c-4eefa13ac067",
+      "name": "Window Buffer Memory19",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -3100,
+        4640
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "70b317fa-54d5-4374-84dd-30dbeff98ced",
+      "name": "CRM Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -3060,
+        4460
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "cad7c9d2-bc32-4285-9be0-d0d817a6f896",
+      "name": "Google Gemini Chat Model18",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -3260,
+        4640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "id": "8d80e9ea-9cf1-4df3-8452-fbb57a52a8a2",
+      "name": "Airtable Get Bases",
+      "type": "n8n-nodes-base.airtableTool",
+      "position": [
+        -2140,
+        4640
+      ],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "id": "a6cf2904-e6db-4074-8676-5f1a64550a7e",
+      "name": "Airtable Get Base Schema",
+      "type": "n8n-nodes-base.airtableTool",
+      "position": [
+        -2000,
+        4640
+      ],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "id": "6861403d-be9e-4b37-920f-93952bac2b43",
+      "name": "Search Airtable Base",
+      "type": "n8n-nodes-base.airtableTool",
+      "position": [
+        -1840,
+        4640
+      ],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {},
+      "id": "d5adfaad-65ee-4c37-8f49-b3674b3524bc",
+      "name": "Window Buffer Memory20",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -2280,
+        4640
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "180e76f6-9e62-44f1-bc40-35fdb07fba9d",
+      "name": "Airtable Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2220,
+        4460
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "dc8aeab1-7dc2-4549-8518-fc2b64e7d96b",
+      "name": "Google Gemini Chat Model19",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -2420,
+        4640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "b446afdd-bfe9-447a-9b4f-54d3aeff9d56",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4300,
+        3960
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "f2b9118b-486f-4c10-a58c-7a9826fc326b",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -3600,
+        3400
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {},
+      "id": "7ab46d66-e88b-4a7b-b2c0-ed3e0f274098",
+      "name": "Fetch Markdown via Jina AI",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -3080,
+        3400
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "fd70829e-eb95-4159-95f4-b1c632577cbd",
+      "name": "Google Search via DataForSEO",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -3440,
+        3400
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "b791dcdd-d07f-45e7-84b6-bb945148988a",
+      "name": "Google News via DataForSEO",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -3260,
+        3400
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0f2fea75-54fe-482f-bec4-7353dae0eb0d",
+      "name": "News & Search Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -3480,
+        3220
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {},
+      "id": "98675379-8017-4aa2-ad26-76542c298616",
+      "name": "Deep Research via Jina AI",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -2900,
+        3400
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "7f166203-788a-4218-8680-bca71b46a454",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -3760,
+        3400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "07e2877f-c259-4394-b186-5fb5995810f5",
+      "name": "Get Youtube Trends Data",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -2160,
+        3400
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "66a8c7bf-618b-4940-85b1-7c4932b62434",
+      "name": "Get Google Trends Data",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -2000,
+        3400
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "86197f66-5a20-42ec-8a91-bbaa6a4ae70d",
+      "name": "Get Keyword Search Volume",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -1840,
+        3400
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "527021c7-95d3-47b8-b71d-b3782f1067d9",
+      "name": "Content Analysis",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -1680,
+        3400
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "be4a7ea5-5bd0-4f34-a30e-57457f0d2a92",
+      "name": "Get Google My Business Data",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -1540,
+        3400
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "4f83bd88-7b06-422c-9890-646d74772e85",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "position": [
+        -1400,
+        3400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "a01bf2a3-65c9-4c1f-8638-ff4e192004a4",
+      "name": "Window Buffer Memory2",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -2320,
+        3400
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "92b035a4-42f5-4757-a8cc-a834fe786c25",
+      "name": "SEO Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2120,
+        3200
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "c1a99c58-532a-4e7f-ab48-a63d7944170b",
+      "name": "Google Gemini Chat Model2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -2480,
+        3400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "83f4162a-e090-429a-8d85-37510b600041",
+      "name": "Check Markets",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -3320,
+        3780
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "97280f24-f5a0-4eaa-9e5c-39f086afc10c",
+      "name": "Symbol Lookup",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -3160,
+        3780
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "513fa2a1-ed9b-4ceb-b461-cd03006979ed",
+      "name": "Window Buffer Memory3",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -3480,
+        3780
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "118b9583-63fe-4207-86c9-03bcb8d8d2b6",
+      "name": "Financial Markets Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -3460,
+        3600
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {},
+      "id": "3c26ce4f-f67b-4b0c-bc6e-0ee6f54697ab",
+      "name": "Calculator1",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "position": [
+        -3020,
+        3780
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "efdac252-fd40-421e-ab41-032ea699f970",
+      "name": "Google Gemini Chat Model3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -3660,
+        3780
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "541ac3d4-670d-445b-b9a6-9481f46e4fc0",
+      "name": "Google Analytics Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2080,
+        3580
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "propertyId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "metricsGA4": {
+          "metricValues": [
+            {}
+          ]
+        },
+        "dimensionsGA4": {
+          "dimensionValues": [
+            {}
+          ]
+        },
+        "additionalFields": {}
+      },
+      "id": "8b000d9b-b90a-43b0-94f5-7a025c56f034",
+      "name": "Country Report",
+      "type": "n8n-nodes-base.googleAnalyticsTool",
+      "position": [
+        -1920,
+        3780
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "propertyId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "metricsGA4": {
+          "metricValues": [
+            {}
+          ]
+        },
+        "dimensionsGA4": {
+          "dimensionValues": [
+            {}
+          ]
+        },
+        "additionalFields": {}
+      },
+      "id": "82f8637e-2842-4ae1-bfb1-746a7255a39c",
+      "name": "User Session Page View Report",
+      "type": "n8n-nodes-base.googleAnalyticsTool",
+      "position": [
+        -2100,
+        3780
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "propertyId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "metricsGA4": {
+          "metricValues": [
+            {}
+          ]
+        },
+        "dimensionsGA4": {
+          "dimensionValues": [
+            {}
+          ]
+        },
+        "additionalFields": {}
+      },
+      "id": "dc7f8fce-389e-4689-a561-b381a1887a78",
+      "name": "Browser Report",
+      "type": "n8n-nodes-base.googleAnalyticsTool",
+      "position": [
+        -1760,
+        3780
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "propertyId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "metricsGA4": {
+          "metricValues": [
+            {}
+          ]
+        },
+        "dimensionsGA4": {
+          "dimensionValues": [
+            {}
+          ]
+        },
+        "additionalFields": {}
+      },
+      "id": "ca9dd226-8a63-4efe-a1b5-48763094b07a",
+      "name": "Top Pages",
+      "type": "n8n-nodes-base.googleAnalyticsTool",
+      "position": [
+        -1620,
+        3780
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "propertyId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "metricsGA4": {
+          "metricValues": [
+            {}
+          ]
+        },
+        "dimensionsGA4": {
+          "dimensionValues": [
+            {}
+          ]
+        },
+        "additionalFields": {}
+      },
+      "id": "2ab4ad2d-397d-4d27-a7bd-d7b0c27b35b6",
+      "name": "Source Medium Breakdown",
+      "type": "n8n-nodes-base.googleAnalyticsTool",
+      "position": [
+        -1480,
+        3780
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "935c7d8a-419f-4434-bd68-2e3010b613b2",
+      "name": "Window Buffer Memory4",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -2260,
+        3780
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {},
+      "id": "2150e59b-be21-4167-96e8-798d81f1dff9",
+      "name": "Calculator2",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "position": [
+        -1340,
+        3780
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ac558a09-23e3-43a6-89f5-e8962bbdb408",
+      "name": "Google Gemini Chat Model4",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -2440,
+        3780
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "26cceb2c-87df-4886-84da-1df371d95a96",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4000,
+        3180
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "ff9c4a8e-7df3-40c4-8a0c-08658e87e2f6",
+      "name": "Notion Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -4640,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "a5089b0a-80c1-42d4-b1df-981d3dc2001a",
+      "name": "Tasks Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -4500,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "273d25a6-b940-4261-9d97-cddeb389805a",
+      "name": "Travel Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -4360,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "b527a92f-462d-44a4-87fc-ff8b7c5775e5",
+      "name": "Window Buffer Memory5",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -4780,
+        1500
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6acd9dd2-e616-4bca-9649-0493617c11cc",
+      "name": "Lifestyle Supervisor1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -4780,
+        1320
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "7bb072e0-dea3-495c-844e-9a77f0988195",
+      "name": "Google Gemini Chat Model5",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -4960,
+        1500
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "4ada127b-02d1-47b8-80a2-2feba30447f7",
+      "name": "Social Media Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -3780,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "d219d4aa-8c75-4728-b349-42fe7d5ca3fc",
+      "name": "Image Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -3620,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "4c8bc04d-9c30-4813-9b06-301dbadf073a",
+      "name": "Wordpress Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -3280,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "36f143c9-450f-4711-ac29-65d845b9e68d",
+      "name": "Window Buffer Memory9",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -3940,
+        1500
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "76e93f62-a9ac-4ed7-884b-7a6a4924d8d3",
+      "name": "Publishing Supervisor1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -3840,
+        1320
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {},
+      "id": "b08e216f-ecfd-49f5-9fd5-73563951cbea",
+      "name": "Fetch Markdown via Jina AI1",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        -3460,
+        1500
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "9a454d68-0ec1-43e0-8e1d-4eac9fd168a5",
+      "name": "Google Gemini Chat Model8",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -4120,
+        1500
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "e06f1f94-ef4e-455c-884c-0308af4246a9",
+      "name": "Email Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -2700,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "79a814d0-7003-4d71-8d4f-d54e4f9a54aa",
+      "name": "Slack Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -2560,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "e6166929-6499-4ccc-9fef-144cbde01457",
+      "name": "X Twitter Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -2420,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "04a775fa-f1ee-46bf-9eff-8b94f171dcd6",
+      "name": "Window Buffer Memory21",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -2860,
+        1500
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "64c36d48-df26-4fa2-a333-d6814a95609a",
+      "name": "Communication Supervisor1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2880,
+        1320
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ab3dc8bb-a38f-4fd5-b21e-a697ae8230be",
+      "name": "Google Gemini Chat Model20",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -3040,
+        1500
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "a0bdd2b7-82c0-40c5-bd86-006635e49b8f",
+      "name": "Calendar Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -1860,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "33cebea8-88dd-44a8-bf9c-59b5c9d5363c",
+      "name": "Drive Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -1720,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "f241459e-ae69-4e76-9811-e49bd4a15322",
+      "name": "Docs Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -1600,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "1531c296-ce91-4f8d-a900-af731488679f",
+      "name": "Sheets Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -1460,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "490be597-128c-49ec-aeca-6a4faf2bf742",
+      "name": "ClickUp Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -1300,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "1d988921-8b45-46d2-8622-2de84cda5415",
+      "name": "CRM Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -1160,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "19044984-62f2-4792-94d3-0a68b7be259c",
+      "name": "Airtable Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -1020,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "05baad80-fb9d-43d5-a67d-a4046776037f",
+      "name": "Productivity Supervisor1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -1780,
+        1320
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {},
+      "id": "1084f77c-9e9e-4b36-a046-ad111fee4793",
+      "name": "Window Buffer Memory13",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -2020,
+        1500
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d623447e-eb63-4107-8138-7e1cf301562f",
+      "name": "Google Gemini Chat Model12",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -2200,
+        1500
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "96d389dc-882e-4d4f-8144-268df77adafe",
+      "name": "SEO Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -340,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "6f5f9b13-6522-4a2c-a10d-453bd1014ec8",
+      "name": "Financial Markets Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -180,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "ed1cfa80-1881-4bec-80f7-83dce2508d63",
+      "name": "Google Analytics",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -20,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "cc6ac7c6-3952-4618-9ca6-01b585dee415",
+      "name": "News and Search Agent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -500,
+        1500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "378102cf-9b68-44a5-9cfa-645558aaad6a",
+      "name": "Window Buffer Memory1",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -660,
+        1500
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "de7f3c3d-06fd-4878-aa28-39cc57efdbaa",
+      "name": "Insights Supervisor1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -580,
+        1320
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "f19baede-5096-4641-9586-3c2ef8e86bfe",
+      "name": "Google Gemini Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        -820,
+        1500
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "8bf022be-3d70-4399-9b91-c9e12cddee67",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -5040,
+        1080
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "eeef3ffc-dc0a-4fbd-9adc-9d26e4d979c1",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -3600,
+        900
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {},
+      "id": "6f15e283-ec3b-49cc-9c0a-abd6495a0cf4",
+      "name": "WhatsApp Business Cloud1",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        -1580,
+        380
+      ],
+      "webhookId": "1a0f1dd3-c665-4b04-a542-0488a2cca053",
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "19b28244-6e2b-4a86-81ce-851a4cdaf63f",
+      "name": "Productivity Supervisor",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -1860,
+        680
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "c5fc2c44-c07e-47af-9e04-00942a99b387",
+      "name": "Communication Supervisor",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -1720,
+        680
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "90f5d809-bb52-431e-a903-b8f513fc2c3c",
+      "name": "Insights Supervisor",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -1400,
+        680
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "56b3372f-4fed-4c80-a0f3-825af80c4dca",
+      "name": "Publishing Supervisor",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -1260,
+        680
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "da4cfa59-b717-4297-a6b2-bd3c85ba14b6",
+      "name": "Lifestyle Supervisor",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        -1560,
+        680
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0740e2d0-3e19-40b0-9525-f0ac5625d5fa",
+      "name": "WhatsApp Trigger",
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "position": [
+        -3980,
+        600
+      ],
+      "webhookId": "e1696460-69cf-4df0-aae6-eb9c74683c5c",
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "id": "6a7f4670-b7ad-4bf4-a093-20eb0895b22f",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -2180,
+        780
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "b541ac17-19a1-420d-9449-efdda10f2ead",
+      "name": "Donna",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2020,
+        380
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {},
+      "id": "530e7e4c-1601-4381-845e-1d44990e756c",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -2040,
+        680
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "08926d86-998b-482e-9fec-5610a15244e7",
+      "name": "Fields mapper2",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -2880,
+        360
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "34670cb7-5d8e-4ea9-8421-f5a45bff6446",
+      "name": "OpenAI5",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        -3060,
+        360
+      ],
+      "typeVersion": 1.8
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "dd339a0d-4be2-4f4e-b3d6-9c005e93c0b3",
+      "name": "HTTP Request9",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -3240,
+        360
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d7795a31-8dc3-44be-bf72-9f6f87672702",
+      "name": "Extract url from binary3",
+      "type": "n8n-nodes-base.extractFromFile",
+      "position": [
+        -3420,
+        360
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "aa7c72ff-6795-48ac-9499-6e0e93670ead",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -2360,
+        720
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "afc0ce97-869e-431c-b689-8e8a7e6b5ca3",
+      "name": "OpenAI9",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        -2700,
+        720
+      ],
+      "typeVersion": 1.8
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ea9e83ce-7581-4869-9b54-49e1051352dd",
+      "name": "Get audio binary ",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -3600,
+        360
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "7d165f57-be0c-4ac7-9f8b-e746c030f2c7",
+      "name": "OpenAI8",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        -2880,
+        720
+      ],
+      "typeVersion": 1.8
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "a71021b5-a361-4f56-8a42-ce47bf15ba80",
+      "name": "OpenAI7",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        -3060,
+        720
+      ],
+      "typeVersion": 1.8
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a0ac5df8-1d77-4987-9253-d62f41685412",
+      "name": "Fields mapper3",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -2880,
+        540
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "6a1787ee-520b-46e9-a185-689048c9d244",
+      "name": "OpenAI6",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        -3060,
+        540
+      ],
+      "typeVersion": 1.8
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "fe119124-7166-4f48-92b2-126085ae4aa1",
+      "name": "HTTP Request10",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -3240,
+        540
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d72b566b-acee-408b-8770-c88eb4e588b5",
+      "name": "HTTP Request8",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -3240,
+        720
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "08008acd-16b5-4e8d-bc90-fde9aa3d1e7f",
+      "name": "Extract url from binary5",
+      "type": "n8n-nodes-base.extractFromFile",
+      "position": [
+        -3420,
+        720
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "b84f0884-80a3-4e46-b737-c230ae9cda43",
+      "name": "Extract url from binary4",
+      "type": "n8n-nodes-base.extractFromFile",
+      "position": [
+        -3420,
+        540
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ba23ad63-3578-43f2-8d47-525eb324e21c",
+      "name": "HTTP Request7",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -3600,
+        720
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "14528496-f871-4f7c-8ba0-09284f238233",
+      "name": "HTTP Request6",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -3600,
+        540
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dfe13557-ee91-446f-b43d-342609b7bf9d",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        -3800,
+        580
+      ],
+      "typeVersion": 3.2
+    },
+    {
+      "parameters": {
+        "content": ""
+      },
+      "id": "907acd1a-5294-4ab2-ac09-5073f8305658",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4040,
+        300
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get My Weekly Meal Planner": {
+      "ai_tool": [
+        [
+          {
+            "node": "Notion Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get My Meals": {
+      "ai_tool": [
+        [
+          {
+            "node": "Notion Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Habits": {
+      "ai_tool": [
+        [
+          {
+            "node": "Notion Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Meal": {
+      "ai_tool": [
+        [
+          {
+            "node": "Notion Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory6": {
+      "ai_memory": [
+        [
+          {
+            "node": "Notion Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Notion Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Task": {
+      "ai_tool": [
+        [
+          {
+            "node": "Tasks Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Close Task": {
+      "ai_tool": [
+        [
+          {
+            "node": "Tasks Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Task": {
+      "ai_tool": [
+        [
+          {
+            "node": "Tasks Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Task": {
+      "ai_tool": [
+        [
+          {
+            "node": "Tasks Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "Tasks Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory7": {
+      "ai_memory": [
+        [
+          {
+            "node": "Tasks Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model7": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Tasks Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Flights": {
+      "ai_tool": [
+        [
+          {
+            "node": "Travel Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Airport Code": {
+      "ai_tool": [
+        [
+          {
+            "node": "Travel Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory8": {
+      "ai_memory": [
+        [
+          {
+            "node": "Travel Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Travel Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Posting to Facebook": {
+      "ai_tool": [
+        [
+          {
+            "node": "Social Media Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Posting to X Twitter": {
+      "ai_tool": [
+        [
+          {
+            "node": "Social Media Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Posting to Instagram": {
+      "ai_tool": [
+        [
+          {
+            "node": "Social Media Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Posting to LinkedIn": {
+      "ai_tool": [
+        [
+          {
+            "node": "Social Media Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory10": {
+      "ai_memory": [
+        [
+          {
+            "node": "Social Media Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model9": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Social Media Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate AI Image": {
+      "ai_tool": [
+        [
+          {
+            "node": "Image Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Stock Image": {
+      "ai_tool": [
+        [
+          {
+            "node": "Image Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory11": {
+      "ai_memory": [
+        [
+          {
+            "node": "Image Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model10": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Image Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Wordpress Post": {
+      "ai_tool": [
+        [
+          {
+            "node": "Wordpress Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Wordpress": {
+      "ai_tool": [
+        [
+          {
+            "node": "Wordpress Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Users": {
+      "ai_tool": [
+        [
+          {
+            "node": "Wordpress Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory12": {
+      "ai_memory": [
+        [
+          {
+            "node": "Wordpress Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model11": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Wordpress Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Emails": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft Email": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Labels": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Label to Email": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory22": {
+      "ai_memory": [
+        [
+          {
+            "node": "Email Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model21": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Email Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search X Twitter": {
+      "ai_tool": [
+        [
+          {
+            "node": "X Twitter Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a DM to a Username": {
+      "ai_tool": [
+        [
+          {
+            "node": "X Twitter Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a User by Username": {
+      "ai_tool": [
+        [
+          {
+            "node": "X Twitter Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory23": {
+      "ai_memory": [
+        [
+          {
+            "node": "X Twitter Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model22": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "X Twitter Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Users Status": {
+      "ai_tool": [
+        [
+          {
+            "node": "Slack Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Message to User": {
+      "ai_tool": [
+        [
+          {
+            "node": "Slack Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Message to Channel": {
+      "ai_tool": [
+        [
+          {
+            "node": "Slack Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Slack Channels": {
+      "ai_tool": [
+        [
+          {
+            "node": "Slack Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Recent Channel Messages": {
+      "ai_tool": [
+        [
+          {
+            "node": "Slack Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory24": {
+      "ai_memory": [
+        [
+          {
+            "node": "Slack Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Users1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Slack Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model23": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Slack Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "View Calendar Events": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Availability": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory14": {
+      "ai_memory": [
+        [
+          {
+            "node": "Calendar Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model13": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Calendar Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Basic Text File": {
+      "ai_tool": [
+        [
+          {
+            "node": "Drive Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Folder": {
+      "ai_tool": [
+        [
+          {
+            "node": "Drive Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update File": {
+      "ai_tool": [
+        [
+          {
+            "node": "Drive Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move a File": {
+      "ai_tool": [
+        [
+          {
+            "node": "Drive Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search for Files Folders": {
+      "ai_tool": [
+        [
+          {
+            "node": "Drive Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory15": {
+      "ai_memory": [
+        [
+          {
+            "node": "Drive Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model14": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Drive Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Document": {
+      "ai_tool": [
+        [
+          {
+            "node": "Docs Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Doc": {
+      "ai_tool": [
+        [
+          {
+            "node": "Docs Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Doc": {
+      "ai_tool": [
+        [
+          {
+            "node": "Docs Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Google Doc": {
+      "ai_tool": [
+        [
+          {
+            "node": "Docs Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory16": {
+      "ai_memory": [
+        [
+          {
+            "node": "Docs Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model15": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Docs Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Clickup Task": {
+      "ai_tool": [
+        [
+          {
+            "node": "Clickup Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory17": {
+      "ai_memory": [
+        [
+          {
+            "node": "Clickup Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Tasks1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Clickup Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Task1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Clickup Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Task1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Clickup Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model16": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Clickup Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a Google Sheet": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sheets Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Rows from Google Sheet": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sheets Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a Google Sheet": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sheets Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add to Household Expenses Sheet": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sheets Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory18": {
+      "ai_memory": [
+        [
+          {
+            "node": "Sheets Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model17": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Sheets Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Update Lead": {
+      "ai_tool": [
+        [
+          {
+            "node": "CRM Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Leads": {
+      "ai_tool": [
+        [
+          {
+            "node": "CRM Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a Lead": {
+      "ai_tool": [
+        [
+          {
+            "node": "CRM Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Update Quote": {
+      "ai_tool": [
+        [
+          {
+            "node": "CRM Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory19": {
+      "ai_memory": [
+        [
+          {
+            "node": "CRM Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model18": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "CRM Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable Get Bases": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable Get Base Schema": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Airtable Base": {
+      "ai_tool": [
+        [
+          {
+            "node": "Airtable Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory20": {
+      "ai_memory": [
+        [
+          {
+            "node": "Airtable Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model19": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Airtable Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "News & Search Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Markdown via Jina AI": {
+      "ai_tool": [
+        [
+          {
+            "node": "News & Search Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Search via DataForSEO": {
+      "ai_tool": [
+        [
+          {
+            "node": "News & Search Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google News via DataForSEO": {
+      "ai_tool": [
+        [
+          {
+            "node": "News & Search Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deep Research via Jina AI": {
+      "ai_tool": [
+        [
+          {
+            "node": "News & Search Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "News & Search Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Youtube Trends Data": {
+      "ai_tool": [
+        [
+          {
+            "node": "SEO Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Google Trends Data": {
+      "ai_tool": [
+        [
+          {
+            "node": "SEO Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Keyword Search Volume": {
+      "ai_tool": [
+        [
+          {
+            "node": "SEO Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content Analysis": {
+      "ai_tool": [
+        [
+          {
+            "node": "SEO Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Google My Business Data": {
+      "ai_tool": [
+        [
+          {
+            "node": "SEO Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "SEO Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "SEO Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "SEO Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Markets": {
+      "ai_tool": [
+        [
+          {
+            "node": "Financial Markets Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Symbol Lookup": {
+      "ai_tool": [
+        [
+          {
+            "node": "Financial Markets Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory3": {
+      "ai_memory": [
+        [
+          {
+            "node": "Financial Markets Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Financial Markets Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Financial Markets Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Country Report": {
+      "ai_tool": [
+        [
+          {
+            "node": "Google Analytics Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User Session Page View Report": {
+      "ai_tool": [
+        [
+          {
+            "node": "Google Analytics Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Browser Report": {
+      "ai_tool": [
+        [
+          {
+            "node": "Google Analytics Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Top Pages": {
+      "ai_tool": [
+        [
+          {
+            "node": "Google Analytics Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Source Medium Breakdown": {
+      "ai_tool": [
+        [
+          {
+            "node": "Google Analytics Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory4": {
+      "ai_memory": [
+        [
+          {
+            "node": "Google Analytics Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator2": {
+      "ai_tool": [
+        [
+          {
+            "node": "Google Analytics Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Google Analytics Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Lifestyle Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tasks Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Lifestyle Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Travel Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Lifestyle Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory5": {
+      "ai_memory": [
+        [
+          {
+            "node": "Lifestyle Supervisor1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Lifestyle Supervisor1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Social Media Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Publishing Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Publishing Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wordpress Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Publishing Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory9": {
+      "ai_memory": [
+        [
+          {
+            "node": "Publishing Supervisor1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Markdown via Jina AI1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Publishing Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model8": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Publishing Supervisor1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Communication Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Communication Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "X Twitter Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Communication Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory21": {
+      "ai_memory": [
+        [
+          {
+            "node": "Communication Supervisor1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model20": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Communication Supervisor1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calendar Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Productivity Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Drive Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Productivity Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Docs Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Productivity Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Productivity Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Productivity Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CRM Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Productivity Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Productivity Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory13": {
+      "ai_memory": [
+        [
+          {
+            "node": "Productivity Supervisor1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model12": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Productivity Supervisor1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SEO Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Insights Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Financial Markets Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Insights Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Analytics": {
+      "ai_tool": [
+        [
+          {
+            "node": "Insights Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "News and Search Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Insights Supervisor1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Insights Supervisor1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Insights Supervisor1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Donna",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Productivity Supervisor": {
+      "ai_tool": [
+        [
+          {
+            "node": "Donna",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Communication Supervisor": {
+      "ai_tool": [
+        [
+          {
+            "node": "Donna",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insights Supervisor": {
+      "ai_tool": [
+        [
+          {
+            "node": "Donna",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publishing Supervisor": {
+      "ai_tool": [
+        [
+          {
+            "node": "Donna",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lifestyle Supervisor": {
+      "ai_tool": [
+        [
+          {
+            "node": "Donna",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Donna",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Donna": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Business Cloud1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Donna",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fields mapper2": {
+      "main": [
+        [
+          {
+            "node": "Donna",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI5": {
+      "main": [
+        [
+          {
+            "node": "Fields mapper2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request9": {
+      "main": [
+        [
+          {
+            "node": "OpenAI5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract url from binary3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Donna",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI9": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get audio binary ": {
+      "main": [
+        [
+          {
+            "node": "Extract url from binary3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI8": {
+      "main": [
+        [
+          {
+            "node": "OpenAI9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI7": {
+      "main": [
+        [
+          {
+            "node": "OpenAI8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fields mapper3": {
+      "main": [
+        [
+          {
+            "node": "Donna",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI6": {
+      "main": [
+        [
+          {
+            "node": "Fields mapper3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request10": {
+      "main": [
+        [
+          {
+            "node": "OpenAI6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request8": {
+      "main": [
+        [
+          {
+            "node": "OpenAI7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract url from binary5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract url from binary4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request7": {
+      "main": [
+        [
+          {
+            "node": "Extract url from binary5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request6": {
+      "main": [
+        [
+          {
+            "node": "Extract url from binary4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Get audio binary ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4503ebb4-689a-40c6-86aa-6348d7cedcdc",
+  "meta": {
+    "instanceId": "576d4a2cf0586874c52480fdcfafcdb1b3887a6461bd309e383e1bb88195a4ec"
+  },
+  "id": "DfjNUwHfwDlFWECu",
+  "tags": []
+}

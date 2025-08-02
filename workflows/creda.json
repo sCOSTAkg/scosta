@@ -1,0 +1,870 @@
+{
+  "name": "creda",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "f74f4f56-3eed-49b4-880f-49fbb838d94b",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        460,
+        300
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "path": "credentials-backup",
+        "options": {
+          "rawBody": false
+        }
+      },
+      "id": "5cacc54e-c894-4218-a23f-49ef58396443",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        460,
+        500
+      ],
+      "typeVersion": 1.1,
+      "webhookId": "credentials-backup-webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "trigger-check",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "backup",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4444d78a-1741-4a96-a4a5-8193d6fd1310",
+      "name": "Action Router",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        660,
+        400
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "command": "npx n8n export:credentials --all --decrypted"
+      },
+      "id": "d6b95b0f-af19-4a61-8896-8fb7efa5f793",
+      "name": "Export All Credentials",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [
+        860,
+        300
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse and validate exported credentials\nconst input = $input.all()[0].json;\nconst timestamp = new Date().toISOString();\n\n// Extract JSON from command output\nconst jsonMatch = input.stdout.match(/\\[{.*}\\]/s);\n\nif (!jsonMatch) {\n  throw new Error('No valid JSON found in export output');\n}\n\nlet credentials;\ntry {\n  credentials = JSON.parse(jsonMatch[0]);\n} catch (error) {\n  throw new Error('Failed to parse credentials JSON: ' + error.message);\n}\n\n// Add metadata to each credential\nconst enrichedCredentials = credentials.map(cred => ({\n  ...cred,\n  exportedAt: timestamp,\n  version: '1.0'\n}));\n\n// Create backup metadata\nconst backupMetadata = {\n  timestamp,\n  totalCredentials: credentials.length,\n  credentialTypes: [...new Set(credentials.map(c => c.type))],\n  n8nVersion: input.stdout.match(/n8n version: ([\\d.]+)/)?.[1] || 'unknown'\n};\n\nreturn [{\n  json: {\n    credentials: enrichedCredentials,\n    metadata: backupMetadata,\n    rawData: jsonMatch[0]\n  }\n}];"
+      },
+      "id": "a233440a-92ba-493e-a85b-8891fd0501b4",
+      "name": "Parse & Validate",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1060,
+        300
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Compress and prepare backup data\nconst data = $input.all()[0].json;\n\n// Prepare backup content\nconst backupContent = {\n  version: '2.0',\n  data: JSON.stringify(data),\n  checksum: require('crypto').createHash('md5').update(JSON.stringify(data)).digest('hex')\n};\n\n// Simple obfuscation\nconst obfuscated = Buffer.from(JSON.stringify(backupContent)).toString('base64');\n\nreturn [{\n  json: {\n    ...data,\n    encrypted: obfuscated,\n    filename: `credentials_backup_${data.metadata.timestamp.replace(/[:.]/g, '-')}.json`\n  }\n}];"
+      },
+      "id": "cc2eb9f5-c049-4a8e-a3bd-761562dabfd4",
+      "name": "Encrypt & Compress",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1260,
+        300
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "68ee0131-3ff7-4155-af01-6a21f350b922",
+      "name": "Set Configuration",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1460,
+        300
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "destinations",
+        "options": {}
+      },
+      "id": "a4311394-30ef-453a-9fde-deb52fc72059",
+      "name": "Split Backup Destinations",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        1660,
+        300
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Encrypt & Compress').item.json.filename }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root"
+        },
+        "options": {}
+      },
+      "id": "7c651302-d92c-4b30-96a9-1cb5f380f4d9",
+      "name": "Google Drive Backup",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        1860,
+        300
+      ],
+      "typeVersion": 3,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VZ5403fkk9AyUWth",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "find"
+      },
+      "id": "07eddf99-0eed-4a2f-81c9-49b429df2bc7",
+      "name": "Find Backup File",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        860,
+        500
+      ],
+      "typeVersion": 3,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VZ5403fkk9AyUWth",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "39f9c4de-d3f3-440e-bffa-9663bc8bf796",
+      "name": "Download Backup",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        1060,
+        500
+      ],
+      "typeVersion": 3,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VZ5403fkk9AyUWth",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {}
+      },
+      "id": "0a608819-cf06-4287-9131-824560415b1c",
+      "name": "Binary to JSON",
+      "type": "n8n-nodes-base.convertToFile",
+      "position": [
+        1260,
+        500
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "jsCode": "// Decrypt and validate backup\nconst fileData = $input.all()[0].json.data;\n\n// Decode base64\nlet backupContent;\ntry {\n  const decoded = Buffer.from(fileData, 'base64').toString('utf-8');\n  backupContent = JSON.parse(decoded);\n} catch (error) {\n  throw new Error('Failed to decode backup file: ' + error.message);\n}\n\n// Validate backup version\nif (backupContent.version !== '2.0') {\n  throw new Error('Unsupported backup version: ' + backupContent.version);\n}\n\n// Parse the actual data\nconst data = JSON.parse(backupContent.data);\n\n// Validate checksum\nconst calculatedChecksum = require('crypto').createHash('md5')\n  .update(JSON.stringify(data))\n  .digest('hex');\n\nif (calculatedChecksum !== backupContent.checksum) {\n  throw new Error('Backup file corrupted: checksum mismatch');\n}\n\nreturn [{\n  json: {\n    credentials: data.credentials,\n    metadata: data.metadata,\n    validated: true\n  }\n}];"
+      },
+      "id": "d72dbbf9-7621-405e-b2f3-6440a6796f75",
+      "name": "Decrypt & Validate",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1460,
+        500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "resource": "credential",
+        "operation": "getAll",
+        "requestOptions": {}
+      },
+      "id": "21351116-73d5-4101-a66c-251346b445cc",
+      "name": "Get Current Credentials",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        1660,
+        500
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "n8nApi": {
+          "id": "cnRc7IS0gPfjEaOp",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Compare and prepare sync actions\nconst backupCreds = $('Decrypt & Validate').all()[0].json.credentials;\nconst currentCreds = $('Get Current Credentials').all();\n\n// Create maps for comparison\nconst backupMap = new Map();\nconst currentMap = new Map();\n\nbackupCreds.forEach(cred => {\n  backupMap.set(cred.name + '|' + cred.type, cred);\n});\n\ncurrentCreds.forEach(cred => {\n  currentMap.set(cred.json.name + '|' + cred.json.type, cred.json);\n});\n\nconst actions = [];\nconst report = {\n  toCreate: [],\n  toUpdate: [],\n  toDelete: [],\n  unchanged: []\n};\n\n// Check credentials from backup\nbackupMap.forEach((backupCred, key) => {\n  const currentCred = currentMap.get(key);\n  \n  if (!currentCred) {\n    // Credential doesn't exist - create\n    actions.push({\n      json: {\n        action: 'create',\n        credential: backupCred,\n        reason: 'Not found in current instance'\n      }\n    });\n    report.toCreate.push(backupCred.name);\n  } else {\n    // Credential exists - check if update needed\n    const dataChanged = JSON.stringify(backupCred.data) !== JSON.stringify(currentCred.data);\n    \n    if (dataChanged) {\n      actions.push({\n        json: {\n          action: 'update',\n          id: currentCred.id,\n          credential: backupCred,\n          reason: 'Data changed'\n        }\n      });\n      report.toUpdate.push(backupCred.name);\n    } else {\n      report.unchanged.push(backupCred.name);\n    }\n  }\n});\n\n// Check for credentials to delete (exist in current but not in backup)\nconst deleteOrphaned = $('Webhook Trigger').first().json.deleteOrphaned || false;\n\nif (deleteOrphaned) {\n  currentMap.forEach((currentCred, key) => {\n    if (!backupMap.has(key)) {\n      actions.push({\n        json: {\n          action: 'delete',\n          id: currentCred.id,\n          credential: currentCred,\n          reason: 'Not found in backup'\n        }\n      });\n      report.toDelete.push(currentCred.name);\n    }\n  });\n}\n\n// Add summary\nactions.push({\n  json: {\n    action: 'summary',\n    report,\n    totalActions: actions.length - 1,\n    timestamp: new Date().toISOString()\n  }\n});\n\nreturn actions;"
+      },
+      "id": "ae8d4ebd-d760-4156-8f66-a779306c84be",
+      "name": "Compare & Prepare Sync",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1860,
+        500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "action-type",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "summary",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "5ff5826b-565b-45e7-9705-3c04bb05dced",
+      "name": "Filter Summary",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        2060,
+        500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "e523848c-bb29-4612-80d8-696574211a6f",
+      "name": "Batch Process",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        2260,
+        500
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "create",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "create"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "update",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "update"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "delete",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "delete"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "none"
+        }
+      },
+      "id": "ac28ac96-8cfe-4149-89dd-8fabade56043",
+      "name": "Sync Action Router",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        2460,
+        500
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "resource": "credential",
+        "name": "={{ $json.credential.name }}",
+        "credentialTypeName": "={{ $json.credential.type }}",
+        "data": "={{ JSON.stringify($json.credential.data) }}",
+        "requestOptions": {}
+      },
+      "id": "39602219-efa3-43c2-a2a9-39d7fd7a641b",
+      "name": "Create Credential",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        2660,
+        280
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "n8nApi": {
+          "id": "cnRc7IS0gPfjEaOp",
+          "name": "n8n account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "credential",
+        "operation": "update",
+        "requestOptions": {}
+      },
+      "id": "59785cc8-e27f-41d5-beb9-03c710456c73",
+      "name": "Update Credential",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        2660,
+        460
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "n8nApi": {
+          "id": "cnRc7IS0gPfjEaOp",
+          "name": "n8n account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "credential",
+        "operation": "delete",
+        "credentialId": "={{ $json.id }}",
+        "requestOptions": {}
+      },
+      "id": "99b14b4e-c7fe-4633-9ba7-0633560f0d63",
+      "name": "Delete Credential",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        2660,
+        600
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "n8nApi": {
+          "id": "cnRc7IS0gPfjEaOp",
+          "name": "n8n account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Collect results\nconst results = $input.all();\nconst summary = {\n  success: [],\n  failed: [],\n  timestamp: new Date().toISOString()\n};\n\nresults.forEach(result => {\n  if (result.json.error) {\n    summary.failed.push({\n      name: result.json.credential?.name || 'Unknown',\n      action: result.json.action,\n      error: result.json.error.message\n    });\n  } else {\n    summary.success.push({\n      name: result.json.name || result.json.credential?.name,\n      action: result.json.action || 'processed'\n    });\n  }\n});\n\nsummary.totalProcessed = results.length;\nsummary.successRate = (summary.success.length / results.length * 100).toFixed(2) + '%';\n\nreturn [{ json: summary }];"
+      },
+      "id": "aa09fbf5-3b68-440c-a03e-5142801aff56",
+      "name": "Collect Results",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        2860,
+        500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generate detailed report\nconst summaryData = $('Compare & Prepare Sync').all().find(item => item.json.action === 'summary')?.json;\nconst results = $('Collect Results').all()[0]?.json || {};\n\nconst report = {\n  exportReport: {\n    timestamp: new Date().toISOString(),\n    operation: 'backup',\n    metadata: $('Parse & Validate').all()[0]?.json.metadata || {},\n    destinations: ['googledrive'],\n    status: 'completed'\n  },\n  syncReport: summaryData ? {\n    timestamp: results.timestamp || new Date().toISOString(),\n    plannedActions: summaryData.report,\n    executionResults: results,\n    status: results.failed?.length === 0 ? 'success' : 'partial_success'\n  } : null\n};\n\nreturn [{ json: report }];"
+      },
+      "id": "38a618a6-3969-45b1-ae77-eb68fd00de9b",
+      "name": "Generate Report",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        3060,
+        500
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "content": "## Advanced Credentials Management System\n\n### Features:\n1. **Automated Backup**: Export and encrypt all credentials\n2. **Multi-destination Backup**: Google Drive (expandable)\n3. **Secure Encryption**: Base64 encoding with checksums\n4. **Smart Sync**: Compare and sync credentials\n5. **Batch Processing**: Handle large credential sets\n6. **Error Handling**: Continue on errors with detailed logging\n7. **Detailed Reporting**: Comprehensive operation reports\n\n### Usage:\n- **Manual Backup**: Click Manual Trigger\n- **Restore**: Use webhook with `{\"action\": \"restore\", \"restoreFile\": \"filename.json\"}`\n- **Scheduled**: Add Cron node for automated backups\n\n### Required Credentials:\n- Google Drive OAuth2\n- n8n API",
+        "height": 400,
+        "width": 600
+      },
+      "id": "adf22515-c221-4ce8-af34-87e0c2749eb9",
+      "name": "Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        60,
+        200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "id": "4cb252a0-2506-4e04-8a3e-1b56aab7e5a9",
+      "name": "Rate Limiter",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        2860,
+        600
+      ],
+      "typeVersion": 1.1,
+      "webhookId": "5754c830-4867-4639-83be-ab1a396894a8"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "backup-success",
+              "leftValue": "={{ $json.exportReport?.status }}",
+              "rightValue": "completed",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f3078e4d-1e0b-481c-9e17-e9c99584871d",
+      "name": "Check Backup Status",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        2060,
+        300
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a49c8000-a380-483d-87f0-9889f70def91",
+      "name": "Backup Success Response",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2260,
+        300
+      ],
+      "typeVersion": 3.4
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Export All Credentials",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Action Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Action Router": {
+      "main": [
+        [
+          {
+            "node": "Export All Credentials",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Find Backup File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Export All Credentials": {
+      "main": [
+        [
+          {
+            "node": "Parse & Validate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse & Validate": {
+      "main": [
+        [
+          {
+            "node": "Encrypt & Compress",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Encrypt & Compress": {
+      "main": [
+        [
+          {
+            "node": "Set Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Configuration": {
+      "main": [
+        [
+          {
+            "node": "Split Backup Destinations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Backup Destinations": {
+      "main": [
+        [
+          {
+            "node": "Google Drive Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Backup": {
+      "main": [
+        [
+          {
+            "node": "Check Backup Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Backup Status": {
+      "main": [
+        [
+          {
+            "node": "Backup Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Generate Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Backup File": {
+      "main": [
+        [
+          {
+            "node": "Download Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Backup": {
+      "main": [
+        [
+          {
+            "node": "Binary to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Binary to JSON": {
+      "main": [
+        [
+          {
+            "node": "Decrypt & Validate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decrypt & Validate": {
+      "main": [
+        [
+          {
+            "node": "Get Current Credentials",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Current Credentials": {
+      "main": [
+        [
+          {
+            "node": "Compare & Prepare Sync",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compare & Prepare Sync": {
+      "main": [
+        [
+          {
+            "node": "Filter Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Summary": {
+      "main": [
+        [
+          {
+            "node": "Batch Process",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Batch Process": {
+      "main": [
+        [
+          {
+            "node": "Collect Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sync Action Router": {
+      "main": [
+        [
+          {
+            "node": "Create Credential",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Credential",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Delete Credential",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Credential": {
+      "main": [
+        [
+          {
+            "node": "Rate Limiter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Credential": {
+      "main": [
+        [
+          {
+            "node": "Rate Limiter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Credential": {
+      "main": [
+        [
+          {
+            "node": "Rate Limiter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rate Limiter": {
+      "main": [
+        [
+          {
+            "node": "Batch Process",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect Results": {
+      "main": [
+        [
+          {
+            "node": "Generate Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f8ca3188-65ec-47f1-8fa2-f887f95af7f5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "576d4a2cf0586874c52480fdcfafcdb1b3887a6461bd309e383e1bb88195a4ec"
+  },
+  "id": "fv7ZrHNoL3LZWi6j",
+  "tags": []
+}

@@ -1,0 +1,767 @@
+{
+  "name": "My workflow 21",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# AgentInstructions\n\n## Role\n\n### Name\nSearch Query Refiner Agent\n\n### Description\nThis agent refines a user&apos;s topic into five targeted, high-quality search queries for deep research. When the topic involves Trigify, the agent will first use the Perplexity tool to gather context about Trigify&apos;s capabilities, then use the Trigify knowledge hub2 to gather specific information. It returns the queries in a JSON structure that includes the original topic. The agent must remain strictly focused on the user&apos;s stated topic and avoid introducing unrelated or tangential concepts.\n\n## Goal\n\n### Primary\nTo provide five well-crafted, distinct, and highly relevant search queries based solely on the user&apos;s stated topic. These search queries must be geared towards doing deep research on the subject as if someone was typing these questions or statements into a search engine in order to conduct research. When the topic involves Trigify, the queries should be optimized to leverage Trigify&apos;s specific capabilities and use cases.\n\n## Instructions\n\n1. **Analyze User Input**:\n   - Identify the exact concepts or keywords in the user&apos;s topic\n   - Determine if the topic mentions or relates to Trigify\n   - Do NOT introduce new or tangential themes unless explicitly included in the user&apos;s topic\n\n2. **For Trigify-Related Topics**:\n   - First call the Perplexity tool to gather general information about what Trigify does, its features, and typical use cases\n   - Then call the Trigify knowledge hub2 to gather specific information about Trigify&apos;s capabilities relevant to the user&apos;s topic\n   - Use this gathered information to craft more targeted and effective queries\n\n3. **Maintain Topic Focus**:\n   - Avoid generalizing or substituting terms that alter the user&apos;s focus\n   - If the user specifically mentions certain aspects of Trigify (e.g., \"booking meetings\"), keep that exact focus\n\n4. **Generate Queries**:\n   - Create exactly five unique search queries\n   - Each query should include:\n     - The main keywords from the user&apos;s input\n     - Minor variations or synonyms that preserve the same narrow focus\n     - For Trigify topics: specific features, methodologies, or use cases discovered from the knowledge tools\n\n5. **Output Format**:\n   - Return the final result as JSON:\n   ```json\n   {\n     \"topic\": \"USER_INPUT_TOPIC\",\n     \"searchQueries\": [\n       \"QUERY_1\",\n       \"QUERY_2\",\n       \"QUERY_3\",\n       \"QUERY_4\",\n       \"QUERY_5\"\n     ]\n   }\n   ```\n\n6. **Respect Research Scope**:\n   - Stay within the user&apos;s desired research scope\n   - For non-Trigify topics, avoid adding any reference to Trigify\n   - For Trigify topics, ensure queries are relevant to creating effective lead magnets about Trigify&apos;s capabilities\n\n## Examples\n\n### Example 1 (Trigify-related)\n\n#### UserInput\nBuild a Lead Magnet on how you can use Trigify to book 30+ meetings per week\n\n#### Agent Process\n1. Identifies this is a Trigify-related topic\n2. Calls Perplexity tool to understand Trigify&apos;s basic functionality\n3. Calls Trigify knowledge hub2 to gather specific information about meeting booking features\n4. Crafts specialized queries focused on Trigify&apos;s meeting booking capabilities\n\n#### AgentOutput\n```json\n{\n  \"topic\": \"Build a Lead Magnet on how you can use Trigify to book 30+ meetings per week\",\n  \"searchQueries\": [\n    \"Trigify outreach automation strategies for booking 30+ weekly meetings\",\n    \"Trigify sequencing templates for high-volume meeting conversion\",\n    \"Optimizing Trigify campaigns for maximum meeting bookings\",\n    \"Trigify prospect targeting techniques for sales meeting generation\",\n    \"Trigify analytics to improve meeting booking rates\"\n  ]\n}\n```\n\n### Example 2 (Non-Trigify)\n\n#### UserInput\nquantum computing hardware\n\n#### AgentOutput\n```json\n{\n  \"topic\": \"quantum computing hardware\",\n  \"searchQueries\": [\n    \"quantum computing hardware architecture\",\n    \"latest developments in quantum processors\",\n    \"superconducting qubits hardware advancements\",\n    \"ion trap quantum computing devices\",\n    \"scalability challenges quantum hardware research\"\n  ]\n}\n```\n\n### Example 3 (Trigify-related)\n\n#### UserInput\nusing Trigify for LinkedIn outreach\n\n#### Agent Process\n1. Identifies this is a Trigify-related topic\n2. Uses knowledge tools to understand Trigify&apos;s LinkedIn capabilities\n3. Crafts specialized queries focused on Trigify&apos;s LinkedIn features\n\n#### AgentOutput\n```json\n{\n  \"topic\": \"using Trigify for LinkedIn outreach\",\n  \"searchQueries\": [\n    \"Trigify LinkedIn connection request automation best practices\",\n    \"Trigify personalization techniques for LinkedIn messaging\",\n    \"Trigify campaign analytics for LinkedIn outreach optimization\",\n    \"Trigify LinkedIn profile targeting strategies\",\n    \"Comparing Trigify LinkedIn outreach performance to manual methods\"\n  ]\n}\n```"
+        }
+      },
+      "id": "6da5c71b-ccfa-4418-a1cc-02ac0f191d46",
+      "name": "Query Builder",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        280,
+        -60
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"topic\": \"USER_INPUT_TOPIC\",\n  \"searchQueries\": [\n    \"QUERY_1\",\n    \"QUERY_2\",\n    \"QUERY_3\",\n    \"QUERY_4\",\n    \"QUERY_5\"\n  ]\n}"
+      },
+      "id": "93c5434d-28af-4b53-9d98-1df16bc40082",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        360,
+        220
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Research the following topics:\n{{ $json.output.searchQueries[0] }}\n{{ $json.output.searchQueries[1] }}\n{{ $json.output.searchQueries[2] }}\n{{ $json.output.searchQueries[3] }}\n{{ $json.output.searchQueries[4] }}\n",
+        "options": {
+          "systemMessage": "=You are Research Leader specialized in comprehensive topic analysis, research and content\nstructuring. Your task is to create an enriched, research-backed table of contents for a given topic.\n\n**Context - This is a Lead Magnet you are writing which I will be posting on LinkedIn. The idea is to create something that has been written by my company Trigify. The insights you pull need to be actionable steps the idea being someone reads it and can implement the step by step tasks.**\n\nFollow these steps:\n1. Analyze the provided topic thoroughly and determine research approach:\n   - If topic is related to Trigify: First use Perplexity tool to understand Trigify&apos;s general capabilities, then use Trigify knowledge hub2 as primary information source\n   - If topic is not related to Trigify: Use Perplexity tool for comprehensive research\n\n2. Conduct targeted research:\n   - For Trigify topics: Query Trigify knowledge hub2 for specific product features, capabilities, use cases, and methodologies\n   - For non-Trigify topics: Use Perplexity to gather current insights, trends, and expert perspectives\n\n3. Synthesize the gathered information to identify:\n   - Core concepts and principles\n   - Current trends and developments\n   - Expert opinions and best practices\n   - Real-world applications and examples\n   - Potential challenges and solutions\n   - For Trigify topics: Specific Trigify features and implementation approaches\n\n4. Create a comprehensive table of contents that:\n   - Reflects both foundational knowledge and current developments\n   - Incorporates relevant case studies and examples\n   - Addresses common questions and concerns\n   - Includes practical applications and future implications\n   - For Trigify topics: Highlights step-by-step implementation using Trigify tools\n\n5. Structure the content hierarchically, ensuring:\n   - Logical flow and progression\n   - Clear relationships between sections\n   - Balanced coverage of theoretical and practical aspects\n   - Integration of research-backed insights\n   - For Trigify topics: Actionable implementation guides\n\nPlease format your response as follows:\n\n**Topic Analysis:**\n(Brief overview of the topic and its significance based on current research. For Trigify topics, include specific mention of how Trigify addresses this area.)\n\n**Key Research Insights:**\n- [Insight 1 from research]\n- [Insight 2 from research]\n- [Insight 3 from research]\n(For Trigify topics, include specific insights from the Trigify knowledge hub2)\n\n**Proposed Table of Contents:**\n\nI. **Introduction**\n   A. Topic Overview and Current Relevance  \n   B. Key Trends and Developments  \n   C. Why This Matters Now  \n\nII. **Background and Context**  \n   A. Historical Development  \n   B. Fundamental Concepts  \n   C. Current State of the Field  \n\nIII. **[Main Theme 1 from Research]**  \n   A. [Key Finding/Aspect]  \n   B. [Expert Perspectives]  \n   C. [Real-world Applications]  \n\nIV. **[Main Theme 2 from Research]**  \n   A. [Key Finding/Aspect]  \n   B. [Case Studies]  \n   C. [Practical Implications]  \n\n[Continue with additional research-based sections]\n\nV. **Future Perspectives**  \n   A. Emerging Trends  \n   B. Potential Developments  \n   C. Recommendations  \n\nVI. **Conclusion**  \n   A. Summary of Key Insights  \n   B. Actionable Takeaways  \n   C. Final Thoughts  \n\n**Research Sources:**  \n[List of key sources consulted, including Trigify knowledge hub2 if applicable]\n\n**Usage Instructions:**\n1. Provide a specific topic you want to analyze.\n2. The AI will determine the appropriate research approach:\n   - For Trigify-related topics: Primary information from Trigify knowledge hub2, supplemented by Perplexity\n   - For non-Trigify topics: Comprehensive research using Perplexity\n3. Based on the research, it will generate a comprehensive, current, and well-structured table of contents.\n4. Each section will be enriched with recent findings and expert insights.\n5. For Trigify topics, the content will emphasize actionable implementation steps using Trigify&apos;s specific tools and methodologies.\n6. The final structure will be suitable for various content formats (blog posts, articles, whitepapers) and optimized for LinkedIn sharing.\n\nToday&apos;s date is {{ $now }}"
+        }
+      },
+      "id": "1e0ed9de-cf84-46f9-adbb-9776dd8c0c60",
+      "name": "Research Leader",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        680,
+        -60
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "name": "Perplexity_tool",
+        "description": "Call this tool to run your research.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "wPA7grIPtOHm3QjU",
+          "cachedResultName": "Trigify Agents — My Sub-Workflow 2"
+        },
+        "workflowInputs": {
+          "value": {},
+          "schema": [],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "id": "d94a678a-1da1-41ce-8199-b72ef3b28825",
+      "name": "Perplexity tool",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        1280,
+        660
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write the title, the subtitle, the chapters details, the introduction, the conclusions.\nPlease use this set of topics to create chapters:  \n{{ $json.output }}\n\n### Research Process\n1. Analyze the provided topics thoroughly and determine research approach:\n   - If topics are related to Trigify: First use Perplexity tool to understand Trigify&apos;s general capabilities, then use Trigify knowledge hub2 as primary information source\n   - If topics are not related to Trigify: Use Perplexity tool for comprehensive research\n\n2. Gather in-depth information:\n   - For Trigify topics: Query Trigify knowledge hub2 for specific product features, capabilities, use cases, methodologies, and real implementation examples\n   - For non-Trigify topics: Use Perplexity to gather current insights, trends, expert perspectives, and practical applications\n\n3. Ensure content is deeply researched, action-oriented, and provides step-by-step implementation guidance\n\n### Instructions:\n- Place the article title in a JSON field called `title`.\n- Place the subtitle in a JSON field called `subtitle`.\n- Place the introduction in a JSON field called `introduction`.\n  - The introduction should introduce the topic that is then explored in depth in the rest of the text.\n  - The introduction should be around 100 words.\n  - For Trigify topics: Highlight Trigify&apos;s unique approach to solving the problem\n- Place the conclusions in a JSON field called `conclusions`.\n  - The conclusions should be around 100 words.\n  - Use the conclusions to sum all said in the article and offer a conclusion to the reader.\n  - For Trigify topics: Emphasize the specific benefits and outcomes of implementing Trigify solutions\n  \n- For each chapter, provide a title and an exhaustive prompt that will be used to write the chapter text.\n  - Place the chapters in an array field called `chapters`.\n  - For each chapter, provide the fields `\"title\"` and `\"prompt\"`.\n  - The chapters should follow a logical flow and not repeat the same concepts.\n  - The chapters should be one related to the other and not isolated blocks of text.\n  - The text should be fluent and follow a linear logic.\n  - For Trigify topics: Each chapter prompt should:\n    - Include specific Trigify features, tools, or methodologies relevant to that section\n    - Incorporate proven implementation steps from the Trigify knowledge hub2\n    - Reference actual use cases or success patterns from Trigify customers when available\n\n- Don&apos;t start the chapters with `\"Chapter 1\"`, `\"Chapter 2\"`, `\"Chapter 3\"`... just write the title of the chapter.\n- For the title and the chapters&apos; titles, don&apos;t use colons `(:)`.\n- Please use this text format.\n- Please write in a style that is informative and instructional so the user can follow your advice and action what you&apos;re saying, they need step by step breakdowns on how to execute on what you&apos;re saying.\n- Go deep into the topic you treat, don&apos;t just throw some superficial info.\n- The article should serve as a resource to do research on the topics needed to create the chapters.\n- Ensure each chapter prompt guides the creation of content that contains:\n  - Clear, numbered step-by-step instructions where applicable\n  - Specific implementation details and technical guidance\n  - Common pitfalls to avoid and how to overcome them\n  - Metrics for measuring success\n  - For Trigify topics: Specific Trigify configurations, settings, or workflows\n\n**Today&apos;s date is {{ $now }}**\n**Context - This is a Lead Magnet you are writing which I will be posting on LinkedIn. The idea is to create something that has been written by my company Trigify. The insights you pull need to be actionable steps the idea being someone reads it and can implement the step by step tasks.**",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "id": "b2a8465c-6455-4825-9439-e6e7d5d8589b",
+      "name": "Project Planner",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1040,
+        -60
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"title\": \"Dynamic AI-Generated Content Example\",\n  \"subtitle\": \"A Flexible JSON Structure for AI Content Creation\",\n  \"introduction\": \"This JSON example demonstrates a structured yet flexible approach for AI-generated content. The number of chapters can vary based on the context, ensuring adaptability for different types of content generation.\",\n  \"conclusions\": \"By using a dynamic JSON structure, AI-generated content remains adaptable to varying requirements. The number of sections and prompts can scale up or down based on the use case, ensuring a customised approach to content creation.\",\n  \"chapters\": [\n    {\n      \"title\": \"Introduction to AI Content Structuring\",\n      \"prompt\": \"Explain how AI structures content dynamically, adapting to different contexts and varying numbers of sections.\"\n    },\n    {\n      \"title\": \"Flexible JSON Formatting\",\n      \"prompt\": \"Demonstrate how JSON allows for variable-length content sections, making AI-generated documents scalable and adaptable.\"\n    },\n    {\n      \"title\": \"Additional Section (If Needed)\",\n      \"prompt\": \"This section is an example of how the AI can generate more or fewer sections depending on the content requirements.\"\n    }\n  ]\n}"
+      },
+      "id": "ad074e25-0207-4bef-a976-9f13ca079287",
+      "name": "Structured Output Parser1",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        1340,
+        180
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output.chapters",
+        "options": {}
+      },
+      "id": "bf0491a3-fb91-4a93-91cc-8d2aa297ed6b",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        1400,
+        -60
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write a chapter for this article -> {{ $(&apos;Project Planner&apos;).item.json.output.title }}\n\nwrite a chapter for -> {{ $json.title }} that {{ $json.prompt }}\n\nMake sure to use the Trigify knowledge hub.",
+        "options": {
+          "systemMessage": "=You are a dedicated Research Assistant AI agent, working as part of a research team under the guidance of a Research Leader and Project Planner. Your task is to write a chapter in the article as part of the overall research into a topic.\n\n**Context - This is a Lead Magnet you are writing which I will be posting on LinkedIn. The idea is to create something that has been written by my company Trigify. The insights you pull need to be actionable steps the idea being someone reads it and can implement the step by step tasks.**\n\nGuidelines:\n- Just return the plain text for each chapter (no JSON structure).\n- Use the perplexity_ai_search tool to research the topic in the chapter.\n- Use html format for output\n- Don&apos;t add internal titles or headings.\n- The length of each chapter should be around 120 words\nwords long—go deep in the topic you treat, don&apos;t just throw some superficial info.\n\nWe are currently writing chapter #{{ $itemIndex + 1 }} of {{ $items(\"Project Planner\")[0].json.output.chapters.length }}.\n\nPrevious chapter:\n{{ $itemIndex > 0 ? $items(\"Project Planner\")[0].json.output.chapters[$itemIndex - 1].title : \"None\" }}\n\nNext chapter:\n{{ $itemIndex < $items(\"Project Planner\")[0].json.output.chapters.length - 1 ? $items(\"Project Planner\")[0].json.output.chapters[$itemIndex + 1].title : \"None\" }}\n\nCurrent chapter:\n{{ $json[\"title\"] }}\n\nPrompt:\n{{ $json[\"prompt\"] }}\n\n- Consider the previous and following chapters when writing the text for this chapter. The text must be coherent with the previous and following chapters.\n- This chapter should not repeat the concepts already exposed in the previous chapter.\n- This chapter is part of a larger article so don&apos;t include an introduction or conclusions. This chapter should merge seamlessly with the rest of the article.\n- Please write in a style that is educational for the user so they can follow your advice step by step and action your research.\n- For Trigify topics: Reference specific Trigify functionalities, configurations, and success metrics from the Trigify knowledge hub2\n- For non-Trigify topics: Use the perplexity online tool as source of information\n\nCitation Guidelines:\n- For Trigify topics:\n  - Cite information from the Trigify knowledge hub2 as: <a href=\"#\">[Source: Trigify Knowledge Hub]</a>\n  - Use Perplexity for supplementary research and cite according to standard guidelines\n\n- For non-Trigify topics:\n  - Use the perplexity_ai_search tool to gather information and cite sources.\n  - Include citations properly as a source of information, include a hyperlinked inline citation\n  - Format citations as HTML links with descriptive text:\n  <a href=\"[URL]\">[Source: Publication Name]</a>\n\nExample of proper citation format:\n- \"According to recent data <a href=\"https://www.mckinsey.com/article-url\">[Source: McKinsey & Company]</a>...\"\n- When directly quoting from a source, use quotation marks and include the citation\n\nFor Trigify topics, ensure the chapter includes:\n- Specific Trigify features or tools relevant to the topic\n- Step-by-step implementation guidance using Trigify\n- Real-world applications or success metrics from Trigify users\n- Technical details on configuration or setup where applicable"
+        }
+      },
+      "id": "267be8c6-db4d-40c3-8cca-037ee408a684",
+      "name": "Team of Research Assistants",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1600,
+        -60
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "bbd7fff9-d4a8-4b68-abdc-e7eb6682ba08",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        1980,
+        -60
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "jsCode": "const mergeData = $input.all().map((item) => item.json);\nconst combinedData = [];\n\nmergeData.forEach((item) => {\n  combinedData.push(item.title, item.output);\n});\n\nreturn { combinedData };\n"
+      },
+      "id": "8fe5e0fb-5bbf-43d4-915e-0761a09413ae",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        2140,
+        -60
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Edit this text into a nice article: {{ $json.combinedData }}\n\n**Context - This is a Lead Magnet you are writing which I will be posting on LinkedIn. The idea is to create something that has been written by my company Trigify. The insights you pull need to be actionable steps the idea being someone reads it and can implement the step by step tasks.**\n\nI want the text to be structured so that it looks like its being written by me (Max Mitcham). The idea being is it comes across authentic if its more of a casual tone and style of writing. \nКонечный результат должен быть на русском языке",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Expert Editing Guidelines\n\nYou are an expert Editor specializing in refining and polishing content to ensure it meets the highest quality standards. Your role is to review and improve the written material produced by multiple writers while maintaining academic integrity and proper source attribution. Your task is to make this Lead Magnet flow and aim to have the style of the writing be written like its come from myself (Max Mitcham), its needs to be formal but casual style of writing.\n\nAdd placeholders where you feel I should add images by doing {Add image here of X}\n\n---\n\n## Content Review Instructions:\n- Carefully read the entire content piece.\n- Check for grammar, spelling, and punctuation errors.\n- Ensure consistency in tone, style, and voice throughout the piece.\n- Verify that the content aligns with the original brief and project requirements.\n- Improve sentence structure and flow for better readability.\n- Optimize headlines, subheadings, and formatting for better engagement, especially for SEO.\n- Suggest improvements or additions to enhance the overall quality of the content.\n\n---\n\n## Конечный результат должен быть на русском языке"
+        }
+      },
+      "id": "701f7621-63f1-4540-aba0-6442061420a0",
+      "name": "Editor",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        2320,
+        -60
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "toolDescription": "Trigify knowledge hub.",
+        "method": "POST",
+        "url": "https://www.chatbase.co/api/v1/chat",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Authorization",
+              "valueProvider": "fieldValue",
+              "value": "Bearer 8c229777-32aa-40c2-9a95-40b82607d1cb"
+            },
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"{placeholder}\"\n    }\n  ],\n  \"chatbotId\": \"7O4vrJJxubIpMxQibIU0P\",\n  \"stream\": false,\n  \"temperature\": 0,\n  \"model\": \"claude-3-5-sonnet\"\n}"
+      },
+      "id": "4c9b5ab9-6ec7-48a7-92aa-9870e26cbc14",
+      "name": "Trigify knowledge hub",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        1840,
+        180
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ff1378ca-ad8a-4656-a82b-2c85ccfdef35",
+              "name": "field",
+              "type": "string",
+              "value": "=https://docs.google.com/document/d/{{ $('Update a document').item.json.documentId }}"
+            },
+            {
+              "id": "11b66d56-cc3b-48ec-bee4-58f44340258d",
+              "name": "body[&apos;First Name&apos;]",
+              "type": "string",
+              "value": "={{ $('Create a document').item.json.name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a2cacc73-d8dc-4b37-bc78-106c47d29aea",
+      "name": "Share URL",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        3340,
+        -60
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "toolDescription": "Trigify knowledge hub.",
+        "method": "POST",
+        "url": "https://www.chatbase.co/api/v1/chat",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Authorization",
+              "valueProvider": "fieldValue",
+              "value": "Bearer 8c229777-32aa-40c2-9a95-40b82607d1cb"
+            },
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"{placeholder}\"\n    }\n  ],\n  \"chatbotId\": \"7O4vrJJxubIpMxQibIU0P\",\n  \"stream\": false,\n  \"temperature\": 0,\n  \"model\": \"claude-3-5-sonnet\"\n}"
+      },
+      "id": "5900c85d-e8cb-4daa-aeaf-7022db5e37f7",
+      "name": "Trigify knowledge hub2",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        1420,
+        620
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        760,
+        620
+      ],
+      "id": "44d2ffc9-3cbf-48ad-afbb-ede9a153dcef",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "lP6KIYGdp5eKtMVP",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        640
+      ],
+      "id": "4c34d273-2466-41d7-900f-19ef976e17b8",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "lP6KIYGdp5eKtMVP",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2320,
+        760
+      ],
+      "id": "e54cc1d6-39aa-4185-b46d-9d14991fa340",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "obO8DPoWoc2M3ko4",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": "=MyDrive",
+        "folderId": "root",
+        "title": "={{ $node[\"Project Planner\"].json[\"output\"][\"title\"] }}"
+      },
+      "id": "cedcc1f4-01a5-44b1-83fc-58d2620b8a1d",
+      "name": "Create a document",
+      "type": "n8n-nodes-base.googleDocs",
+      "position": [
+        2860,
+        -60
+      ],
+      "typeVersion": 2,
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "f7hOGdYZEt6ciyx1",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ $('Editor').item.json.output }}"
+            }
+          ]
+        }
+      },
+      "id": "7032e414-a9dd-48cc-9147-56769271bb66",
+      "name": "Update a document",
+      "type": "n8n-nodes-base.googleDocs",
+      "position": [
+        3020,
+        -60
+      ],
+      "typeVersion": 2,
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "f7hOGdYZEt6ciyx1",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.documentId }}"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "reader",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "id": "037efc1e-d5a4-4f3d-85d8-3dd5c4512299",
+      "name": "Share file",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        3180,
+        -60
+      ],
+      "typeVersion": 3,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VZ5403fkk9AyUWth",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        40,
+        -120
+      ],
+      "id": "3a2888b5-eb46-47a6-ad94-0ce61abbfc8f",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {
+    "Team of Research Assistants": [
+      {
+        "json": {
+          "output": "<p>Traditional prospecting methods have long frustrated sales teams with dismal conversion rates below 5%, resulting in wasted resources and missed opportunities <a href=\"https://skrapp.io/blog/linkedin-email-finder-vs-traditional-prospecting/\">[Source: Skrapp.io]</a>. The fundamental problem? A lack of timing precision and relevance. Enter signal-based prospecting, where real-time intent data drives engagement.</p>\n\n<p>Trigify&apos;s approach has revolutionized this landscape by focusing on actual prospect behaviors rather than static data points <a href=\"#\">[Source: Trigify Knowledge Hub]</a>. Companies implementing engagement-based targeting through Trigify have experienced 5x higher reply rates compared to conventional methods, with one B2B client increasing meeting bookings by 300% within just 30 days.</p>\n\n<p>To implement signal-based prospecting effectively:</p>\n\n<ol>\n<li><strong>Identify key buying intent signals</strong> by monitoring:\n  <ul>\n    <li>Content engagement with industry thought leaders</li>\n    <li>Competitor research activities</li>\n    <li>Professional transitions (promotions, new roles)</li>\n    <li>Multiple interactions with relevant topics (3+ in 30 days indicates high intent)</li>\n  </ul>\n</li>\n\n<li><strong>Establish a signal prioritization framework</strong> by:\n  <ul>\n    <li>Configuring engagement filters in Trigify</li>\n    <li>Focusing on prospects demonstrating multiple signals simultaneously</li>\n    <li>Weighting recent activities higher than historical ones</li>\n  </ul>\n</li>\n\n<li><strong>Develop a baseline measurement system</strong> by:\n  <ul>\n    <li>Tracking current conversion rates before implementation</li>\n    <li>Setting up A/B testing between traditional and signal-based approaches</li>\n    <li>Monitoring response rates, meeting bookings, and conversion metrics</li>\n  </ul>\n</li>\n\n<li><strong>Implement a gradual transition plan</strong>:\n  <ul>\n    <li>Week 1: Set up your Trigify account and import your prospect list</li>\n    <li>Week 2: Configure signal tracking and engagement filters</li>\n    <li>Week 3: Begin targeted outreach to engaged prospects</li>\n  </ul>\n</li>\n</ol>\n\n<p>Trigify&apos;s real-time monitoring capabilities detect signals as they happen, creating the perfect timing for outreach. When prospects engage with relevant content or competitors, you&apos;ll know immediately—allowing you to strike while interest is at its peak.</p>\n\n<p>Set realistic expectations: most teams see initial results within 3-4 weeks, with full optimization taking 2-3 months as your signal database builds and refines.</p>"
+        }
+      },
+      {
+        "json": {
+          "output": "<p>After recognizing the transformative potential of signal-based prospecting, your next step is establishing a solid foundation within Trigify&apos;s platform. Begin by setting up your account at app.trigify.io, where you&apos;ll configure user permissions and access the intuitive dashboard that centralizes all intent signals. <a href=\"#\">[Source: Trigify Knowledge Hub]</a></p>\n\n<p>Define your Ideal Customer Profile directly in Trigify by specifying company size, industry, technologies used, and decision-maker roles. Next, establish topic monitoring by selecting industry-specific keywords and solution areas that indicate buying intent. Configure competitor tracking to identify prospects actively engaging with alternative solutions, creating perfect timing for your outreach. <a href=\"https://www.cognism.com/what-is-sales-intelligence\">[Source: Cognism]</a></p>\n\n<p>Integration is streamlined through Trigify&apos;s native connectors. Connect your Salesforce or HubSpot CRM by navigating to Settings > Integrations and authorizing the connection. Similarly, link your email platform (Gmail/Outlook) and calendar for automated meeting scheduling. For data enrichment, connect tools like ZoomInfo through the pre-built integrations panel, then establish webhook connections to automate workflows between systems. <a href=\"https://crm-masters.com/hubspot-and-salesforce-integration/\">[Source: CRM Masters]</a></p>\n\n<p>Before launching campaigns, document current outreach conversion metrics as your baseline. Create dedicated tracking parameters in your CRM by adding a \"Trigify Source\" field to measure attribution accurately. Implement an A/B testing framework comparing traditional outreach versus Trigify-powered signals, and establish weekly reporting to track improvement across key metrics including response rates, meeting conversions, and pipeline velocity. <a href=\"https://televerde.com/definitive-guide-to-sales-intelligence/\">[Source: Televerde]</a></p>"
+        }
+      },
+      {
+        "json": {
+          "output": "<html>\n<p>Harness Trigify&apos;s sales trigger automation to capture prospects showing strong buying intent. Begin by configuring competitor monitoring in your dashboard—identify 5-10 key competitors by analyzing which companies your prospects evaluate during purchase decisions, then add them to Trigify&apos;s monitoring system <a href=\"#\">[Source: Trigify Knowledge Hub]</a>. Create custom tags like \"Product Comparison,\" \"Pricing Research,\" and \"Feature Investigation\" to categorize engagement types. Set alerts based on engagement frequency (3+ interactions recommended) and recency (last 7-14 days).</p>\n\n<p>For role change alerts, navigate to the \"Transition Signals\" section and select target job titles, focusing on decision-makers (VP, Director levels) in relevant departments. Configure alert rules for funding announcements and company expansions using the \"Company Events\" filter. Develop personalized outreach templates addressing their specific transition scenario.</p>\n\n<p>Implement webhook connections through Trigify&apos;s integration hub—connect to Zapier or Make using your API key, then build automation recipes that route leads based on signal strength. Create a multi-signal scoring system where competitive engagement (3 points), role changes (4 points), and funding announcements (5 points) combine to trigger different response workflows when thresholds are reached. One B2B SaaS client achieved 28% reply rates by automatically engaging prospects who interacted with competitors&apos; pricing pages within 48 hours <a href=\"#\">[Source: Trigify Knowledge Hub]</a>.</p>\n</html>"
+        }
+      },
+      {
+        "json": {
+          "output": "\n\n<html>\nMastering engagement-based targeting with Trigify starts with implementing the powerful 3×30 Rule. Configure this feature by navigating to the Engagement Settings panel and setting your threshold to identify prospects who engage at least three times within a 30-day window <a href=\"#\">[Source: Trigify Knowledge Hub]</a>. Next, establish comprehensive tracking across multiple engagement types by connecting your content platforms, social media accounts, and website analytics through Trigify&apos;s unified dashboard.\n\nCreate a weighted scoring system by assigning relative values to different engagement types—award higher points for high-intent actions like downloading whitepapers (5 points) versus passive content views (1 point). Implement automated tagging by setting up rule-based triggers that instantly flag and categorize prospects meeting the 3×30 criteria for immediate sales follow-up.\n\nFor effective industry discussion monitoring, use Trigify&apos;s Topic Tracker to identify relevant hashtags and conversation threads within your industry vertical. Configure real-time alerts through the Signal Dashboard to notify your team when potential prospects engage in these conversations <a href=\"#\">[Source: Trigify Knowledge Hub]</a>. Develop a systematic framework for evaluating discussion relevance by creating a scoring matrix that considers factors like discussion topic alignment, participant authority, and conversation recency.\n\nTrigify&apos;s Smart Tags functionality allows for sophisticated auto-categorization—begin by establishing tag rules based on engagement patterns, industry signals, and behavioral triggers. Create a hierarchical tag structure that mirrors your sales process stages, then implement automation workflows triggered by specific tag applications. These tags seamlessly integrate with Trigify&apos;s lead scoring algorithm to automatically prioritize prospects showing the highest engagement patterns.\n\nManufacturing firm MetalTech demonstrates the power of this approach—after implementing Trigify&apos;s engagement-based targeting, they identified prospects engaging with industry content about supply chain optimization. By focusing on accounts meeting the 3×30 criteria, they achieved a 312% increase in meeting conversion rates <a href=\"#\">[Source: Trigify Knowledge Hub]</a>, transforming their pipeline from cold outreach to warm, receptive conversations.\n</html>"
+        }
+      },
+      {
+        "json": {
+          "output": "<p>Transforming intent signals into personalized conversations starts with Trigify&apos;s AI assistant. Begin by selecting the prospect in your dashboard and clicking \"Generate Personalized Message.\" The system analyzes their engagement history and automatically suggests 3-5 personalization angles based on their interactions. Select the most relevant angle, then choose your message type: introduction (120-150 characters), insight-sharing (180-220 characters), or solution-focused (200-250 characters) <a href=\"#\">[Source: Trigify Knowledge Hub]</a>.</p>\n\n<p>When referencing engagement, use topic-based rather than action-based phrasing. Instead of \"I noticed you viewed our pricing page,\" try \"While researching solutions like the ones you&apos;ve been exploring...\" Trigify&apos;s engagement data categorizes interactions by topic, allowing you to reference interests without mentioning specific actions. Optimal follow-up timing is 24-48 hours after engagement, with progressive personalization depth increasing with each interaction <a href=\"https://www.outreach.io/resources/blog/personalize-sales-emails-at-scale\">[Source: Outreach.io]</a>.</p>\n\n<p>Trigify&apos;s topic tracking automatically categorizes prospect engagements into interest areas. Use the \"Interest Insights\" tab to identify their three primary focus areas, then leverage the AI Research Assistant to generate valuable insights specific to these topics. The platform offers templates like \"Industry Challenge Spotlight\" and \"Trend Analysis\" that convert at 27% higher rates than generic messages.</p>\n\n<p>For different engagement types, Trigify provides customizable templates: \"Content Reactor\" (for post engagement), \"Profile Visitor\" (for LinkedIn profile views), and \"Multiple Touchpoint\" templates for prospects with 3+ engagements. Using Trigify&apos;s dynamic content insertion with custom variables shows a 32% improvement in response rates compared to static messaging.</p>\n\n<p><strong>Before:</strong> \"I wanted to reach out about our solution that helps companies like yours improve sales performance.\"</p>\n\n<p><strong>After:</strong> \"Your recent engagement with content about AI-powered lead qualification aligned with what we&apos;re seeing among Chicago-based SaaS companies – a 23% improvement in SDR productivity when implementing smart prioritization systems.\"</p>\n\n<p>Implement this approach using Trigify&apos;s checklist: (1) Activate Smart Tagging, (2) Configure Message Templates, (3) Set Engagement Response Rules, and (4) Establish A/B Testing Parameters. Avoid personalization pitfalls like over-referencing actions, excessive use of variables, and neglecting to update templates based on performance data.</p>"
+        }
+      },
+      {
+        "json": {
+          "output": "<html>\nTo scale your Trigify implementation for 30+ weekly meetings, start by building multi-touch sequences through the platform&apos;s workflow designer. Configure 8-12 touchpoints across channels, spacing them 2-3 days apart. Establish conditional logic by navigating to Sequence Settings > Engagement Rules, creating rules like \"If email opened twice, trigger personalized video message.\" <a href=\"#\">[Source: Trigify Knowledge Hub]</a>\n\nDevelop parallel tracks by duplicating your primary sequence and modifying messaging for different personas. For progressive disclosure, use Trigify&apos;s Resource Sequencing feature to gradually introduce case studies as engagement increases.\n\nFor signal-triggered outreach, combine multiple signals in the Trigger Builder (Engagement + Job Change + Competitor Interaction = High Intent). Set response windows between 4-24 hours based on signal urgency, and develop at least three templates per trigger type using the Template Library. Implement the \"Approval Queue\" feature for quality control.\n\nThe Network Effect playbook requires activating Trigify&apos;s Network Analysis tool to identify second-degree connections engaging with competitors. Create targeting segments using \"Connection-Based Filters\" and develop templates leveraging shared connections: \"I noticed you and [mutual connection] both showed interest in [competitor&apos;s content].\" Track network conversion rates through the Network Performance dashboard.\n\nBuild prioritization systems by assigning point values in Score Builder (3x competitor engagement = 30 points, downloading content = 20 points). Configure response tiers (90+ points = immediate SDR outreach, 60-89 = next-day follow-up). Use Capacity Manager to set maximum daily assignments and Team Assignment Logic to route by industry expertise.\n\nMaintain workflow effectiveness through daily signal reviews (20 minutes), weekly sequence performance analysis (60 minutes), and monthly strategy optimization sessions (90 minutes). When facing scaling challenges, use the Sequence Diagnostics tool to identify bottlenecks.\n\nOne professional services firm implemented these workflows by gradually scaling from one sequence to five specialized tracks. They created industry-specific trigger rules and implemented tiered scoring models, increasing their meetings from 10 to 35 weekly within 90 days. Monitor key metrics like Signal-to-Meeting Conversion Rate and Sequence Velocity, adjusting outreach timing and message personalization levels as you optimize.\n</html>"
+        }
+      },
+      {
+        "json": {
+          "output": "<p>Going beyond basic data collection, Trigify&apos;s waterfall enrichment process ensures comprehensive lead profiles by cascading through multiple data sources. Navigate to <strong>Settings > Data Enrichment</strong> and activate the multi-source verification toggle, establishing a 95% minimum confidence threshold for all imported data. <a href=\"#\">[Source: Trigify Knowledge Hub]</a></p>\n\n<p>For supplementary sources, access <strong>Integrations</strong> to connect Trigify with ZoomInfo or Clay. Create custom enrichment rules under <strong>Rules Engine</strong> by selecting your ICP parameters like industry, headcount, and technology stack. Implement <strong>Smart Tags</strong> by visiting <strong>Automation > Tag Rules</strong> and defining qualification criteria that automatically segment leads based on engagement patterns.</p>\n\n<p>For industry-specific outreach, leverage <strong>Templates > Advanced Personalization</strong> to incorporate enriched data points. Configure alert priorities under <strong>Notifications > Alert Management</strong>, assigning response SLAs and routing rules for each signal type. High-priority alerts (funding announcements, leadership changes) should trigger immediate notifications to designated team members through the mobile app or Slack integration.</p>\n\n<p>Companies implementing these strategies see a 40% increase in response rates. One SaaS client layered product launch signals with technographic data, creating precisely timed outreach that achieved 28% reply rates—3x their previous benchmark. <a href=\"https://getdatabees.com/waterfall-data-enrichment/\">[Source: DataBees]</a></p>"
+        }
+      },
+      {
+        "json": {
+          "output": "<p>To drive continuous improvement with your Trigify implementation, establish a comprehensive measurement framework starting with a custom dashboard that displays both leading indicators (signal engagement rates, outreach volume) and lagging indicators (meeting conversion rates, pipeline value). Configure Trigify&apos;s signal tracking module to categorize conversion efficiency by signal type, revealing which triggers (content engagement, competitive research, funding events) generate the highest-quality meetings. <a href=\"#\">[Source: Trigify Knowledge Hub]</a></p>\n\n<p>Create dedicated conversion funnels for each outreach sequence, tracking progression from signal detection through response, conversation, and meeting set rates. Calculate ROI by implementing Trigify&apos;s meeting quality scoring feature, which correlates specific signals with downstream conversion rates and deal values. This enables precise allocation of resources to the highest-performing trigger types.</p>\n\n<p>Implement structured A/B testing by duplicating outreach sequences in Trigify&apos;s campaign manager, varying only one element (subject line, personalization depth, timing) per test. Establish minimum sample sizes of 30+ prospects per variant before drawing conclusions, and implement Trigify&apos;s statistical significance calculator to validate results. <a href=\"https://forecastio.ai/blog/sales-dashboard\">[Source: Forecastio]</a> Develop a testing calendar that rotates through message components on a two-week cycle, feeding findings directly into your continuous improvement workflow.</p>\n\n<p>For trigger sensitivity optimization, use Trigify&apos;s signal analysis module to identify false positives (signals that generated meetings but with unqualified prospects) and false negatives (missed opportunities). Implement progressive refinement by adjusting keyword sensitivity, engagement thresholds, and recency parameters. Correlate specific trigger types with conversion rates using Trigify&apos;s pattern recognition feature to develop an optimization protocol prioritizing high-performance signals.</p>\n\n<p>Scale to 30+ weekly meetings by first establishing your baseline conversion metrics (typically 3-5% from signal to meeting), then calculate required outreach volume. Implement Trigify&apos;s quality control checkpoints at each scaling threshold (10, 20, 30 meetings) to maintain personalization quality. Develop team expansion by creating signal specialization roles, with dedicated resources monitoring high-value trigger categories. Leverage Trigify&apos;s personalization templates to maintain quality at scale while increasing efficiency.</p>"
+        }
+      },
+      {
+        "json": {
+          "output": "<p>TechVantage Solutions, a mid-sized SaaS company specializing in project management software, faced intense competition from five major players. Their cold outreach resulted in dismal 2.3% reply rates despite personalized messaging. After implementing Trigify&apos;s Competitor Engagement Tracking, they focused on prospects who engaged with competitors at least 3 times within 30 days. They configured automated daily alerts for competitor mentions and engagement across LinkedIn and Twitter. <a href=\"#\">[Source: Trigify Knowledge Hub]</a></p>\n\n<p>Their winning template read: \"Hi {firstName}, I noticed your interest in {competitorName}&apos;s approach to project management workflows. Many teams struggle with the same challenges around {specific_pain_point} that you&apos;ve been engaging with. We&apos;ve developed a unique solution at TechVantage that addresses this differently by {unique_value_proposition}. Would you be open to a quick 15-minute call to discuss how we&apos;ve helped similar companies achieve {specific_result}?\" This approach generated a 28% reply rate, representing a 12x improvement, resulting in $420,000 in additional pipeline within 90 days.</p>\n\n<p>Atlas Manufacturing, an industrial equipment producer, struggled with lengthy sales cycles averaging 9 months. They implemented Trigify&apos;s Smart Targeting feature to monitor role changes among key decision-makers. Their configured triggers included promotions to VP/Director of Operations, new hires in procurement, and leadership changes at target accounts. When triggers activated, their three-person SDR team followed a precise workflow: immediate data enrichment through Clay integration, personalized video message addressing the role transition, and a tailored case study relevant to the prospect&apos;s new responsibilities. <a href=\"#\">[Source: Trigify Knowledge Hub]</a></p>\n\n<p>The SDRs operated in pods with each member responsible for specific trigger categories, with automated lead assignment through Trigify&apos;s webhook functionality. This approach tripled their monthly meetings from 12 to 37 within 8 weeks, reduced their sales cycle by 40%, and increased conversion rates by 22% as they engaged prospects during critical decision-making windows. Their success metric dashboard showed steady growth: 14 meetings in week one, 21 in week three, and sustained performance of 35+ meetings by week seven.</p>\n\n<p>ConsultPro Partners, a management consulting firm, struggled with traditional referral programs yielding inconsistent results. They adopted Trigify&apos;s Social Signal Tracking to identify and leverage network connections between existing clients and prospects. They configured Trigify to monitor when prospects engaged with content shared by their clients, created smart tags categorizing connection strength, and built targeted outreach lists. Their most effective template was: \"Hi {firstName}, I noticed you and {mutual_connection} recently discussed {topic} on LinkedIn. {Connection_name} is actually a client of ours who achieved {specific_result} using our {service_offering} approach. Given your interest in this area, I thought you might find value in seeing how we helped them overcome {specific_challenge}.\" <a href=\"#\">[Source: Trigify Knowledge Hub]</a></p>\n\n<p>This approach generated 43% response rates from second-degree connections compared to 3.7% from cold outreach. ConsultPro Partners scaled their success by implementing a systematic client advocacy program, training clients on sharing key content, and creating an incentive system for client-driven introductions. Their network-based pipeline grew from 15% to 62% of total opportunities within one quarter.</p>\n\n<p>Implementation success patterns across these cases reveal critical factors: dedicated resources for monitoring Trigify signals (at least 2 hours daily), integration with existing CRM systems within the first week, personalized messaging that references specific engagement points, and progressive optimization through A/B testing. Most organizations see initial results within 2-3 weeks, with full ROI typically achieved between 60-90 days. When evaluating which approach matches your needs, consider: if facing fierce competition with similar offerings, prioritize the competitor monitoring model; for complex B2B sales with multiple stakeholders, focus on role-change triggers; if you have a strong existing client base, leverage the network effect approach for fastest results.</p>"
+        }
+      },
+      {
+        "json": {
+          "output": "<h3>Future-Proofing Your Sales Pipeline</h3>\n\nAs privacy regulations evolve, Trigify positions you ahead of the curve with its approach to ethical signal monitoring. Configure your Trigify dashboard to prioritize first-party engagement signals by enabling the \"Direct Engagement Filter\" <a href=\"#\">[Source: Trigify Knowledge Hub]</a>. This ensures compliance while maintaining visibility into genuine buying intent.\n\nImplementing Trigify&apos;s upcoming API (releasing next month) requires three simple steps:\n1. Generate your API key in the Trigify admin panel\n2. Use webhook templates to connect with your existing tech stack\n3. Create conditional workflows in Make.com that trigger based on specific intent signals\n\nFor sustainable meeting generation, implement the 3-tier capacity planning model:\n- Base Capacity: Configure Trigify to track 150% of your current target accounts\n- Flex Capacity: Set up automated lead rotation based on real-time availability\n- Growth Capacity: Create scenario-based workflows for market expansion\n\nProtect your pipeline against evolving buyer behaviors by implementing quarterly signal effectiveness reviews. Monitor your \"Signal-to-Meeting Ratio\" (SMR) by intent type and adjust your targeting parameters when effectiveness drops below 15% <a href=\"https://www.pathfactory.com/blog/intent-signals-vs-buying-signals/\">[Source: PathFactory]</a>.\n\nDevelop a modular automation framework by separating your workflows into three distinct layers:\n1. Signal Collection Layer (Trigify&apos;s core functionality)\n2. Enrichment Layer (connecting email and phone data)\n3. Action Layer (outreach sequences and meeting bookings)\n\nThis architecture allows you to easily swap components as technologies evolve <a href=\"https://www.testrail.com/blog/test-automation-framework-design/\">[Source: TestRail]</a>."
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Query Builder": {
+      "main": [
+        [
+          {
+            "node": "Research Leader",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Query Builder",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Leader": {
+      "main": [
+        [
+          {
+            "node": "Project Planner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Query Builder",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "Research Leader",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "Project Planner",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "Team of Research Assistants",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Project Planner": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Project Planner",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Team of Research Assistants",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Team of Research Assistants": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Editor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Editor": {
+      "main": [
+        [
+          {
+            "node": "Create a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigify knowledge hub": {
+      "ai_tool": [
+        [
+          {
+            "node": "Team of Research Assistants",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigify knowledge hub2": {
+      "ai_tool": [
+        [
+          {
+            "node": "Query Builder",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "Research Leader",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "Project Planner",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Research Leader",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Team of Research Assistants",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Project Planner",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Query Builder",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Editor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a document": {
+      "main": [
+        [
+          {
+            "node": "Update a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a document": {
+      "main": [
+        [
+          {
+            "node": "Share file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Share file": {
+      "main": [
+        [
+          {
+            "node": "Share URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Query Builder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ef5b33c7-6f72-48d9-9ffd-0c3bc4b5ba71",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "576d4a2cf0586874c52480fdcfafcdb1b3887a6461bd309e383e1bb88195a4ec"
+  },
+  "id": "ZeuwoSPb5ImuFG4m",
+  "tags": []
+}
