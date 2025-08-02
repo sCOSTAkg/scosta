@@ -1,13 +1,1054 @@
 {
   "id": "FYDSIfLtkumebEF9",
   "name": "My workflow",
-  "nodes": [],
-  "connections": {},
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message",
+          "edited_message",
+          "*"
+        ],
+        "additionalFields": {
+          "download": true
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -800,
+        952
+      ],
+      "id": "a4c23139-44d2-4bf8-9c01-70292b950417",
+      "name": "Telegram Trigger",
+      "webhookId": "telegram-logistics-bot",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAudio",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "binaryData": true,
+        "additionalFields": {
+          "fileName": "@SALICOSTAAI",
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -800,
+        160
+      ],
+      "id": "647d2766-e494-463b-bf04-6c774ff00617",
+      "name": "Send Response1",
+      "webhookId": "c29ca2b3-033b-411f-b2a1-56d8bb122d4c",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "https://salicost.up.railway.app/mcp/salicosta/sse",
+        "include": "selected",
+        "includeTools": [
+          "search_contact_data",
+          "update_contact_data",
+          "Update_Line",
+          "Search_All_Lines",
+          "Search_Single_Line",
+          "Delete_Row",
+          "Create_Row",
+          "Create",
+          "Update",
+          "Search",
+          "Delete",
+          "Get",
+          "bloks",
+          "creat_page",
+          "get_database",
+          "get_many_database",
+          "Update_a_task",
+          "Reopen_a_task",
+          "Close_a_task",
+          "Create_a_task",
+          "Get_a_task",
+          "Delete_a_task",
+          "Move_a_task",
+          "Get_many_tasks"
+        ]
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        1656
+      ],
+      "id": "0a85ff4f-3421-40f2-aaf2-e2207f2f90aa",
+      "name": "MCP Client",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {
+          "language": "ru"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -128,
+        664
+      ],
+      "id": "f54bb3ca-ca93-42b1-b9b2-0fc0f4ea0723",
+      "name": "Transcribe Audio",
+      "credentials": {
+        "openAiApi": {
+          "id": "KWquZmo9P4lB9Sv1",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendChatAction",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -352,
+        856
+      ],
+      "id": "e4631f9d-5a40-4000-a964-7020961a1deb",
+      "name": "Send Typing Status",
+      "alwaysOutputData": true,
+      "webhookId": "f36d1e31-c0b3-4ca0-af91-a2ddabe658a1",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Получить текущую дату и время",
+        "options": {
+          "timezone": "Asia/Bishkek"
+        }
+      },
+      "id": "22d78c10-8939-45b6-a1cc-b3fdaa4f7b99",
+      "name": "Get Current Date",
+      "type": "n8n-nodes-base.dateTimeTool",
+      "position": [
+        492,
+        1024
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "TK1cha8wSLykTEwq",
+          "mode": "list",
+          "cachedResultName": "Build a 11Document RAG System with Mistral OCR, Qdrant and Gemini AI 2"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -352,
+        1048
+      ],
+      "id": "73b7f5a7-e7dd-4273-a5f1-4dd0f601a4a8",
+      "name": "Process Document"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $('Universal AI Agent1').item.json.output }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1308,
+        496
+      ],
+      "id": "c548314d-3536-46fa-b5b4-2b69b70354e7",
+      "name": "Send Response3",
+      "webhookId": "47d95486-8650-4626-b1ad-4c52d4050784",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -352,
+        664
+      ],
+      "id": "f6c9d245-4117-4d98-b1c3-24807dd98c8f",
+      "name": "Get Voice File1",
+      "webhookId": "7b475b1e-6707-4019-b6c8-b49472f4b09b",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+      "typeVersion": 1,
+      "position": [
+        620,
+        1024
+      ],
+      "id": "277d6f2f-b17d-43f0-bd11-c1500ecd079d",
+      "name": "Search in Tavily1",
+      "credentials": {
+        "tavilyApi": {
+          "id": "4ZjFQzUSn4RT33MH",
+          "name": "Tavily account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+      "typeVersion": 1,
+      "position": [
+        748,
+        1024
+      ],
+      "id": "ab68ef98-d5f7-4130-91ce-908424b3cb89",
+      "name": "Extract in Tavily1",
+      "credentials": {
+        "tavilyApi": {
+          "id": "4ZjFQzUSn4RT33MH",
+          "name": "Tavily account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+      "typeVersion": 1,
+      "position": [
+        876,
+        1024
+      ],
+      "id": "856b399b-a225-4145-ba95-ff7c1707bbb6",
+      "name": "Crawl in Tavily1",
+      "credentials": {
+        "tavilyApi": {
+          "id": "4ZjFQzUSn4RT33MH",
+          "name": "Tavily account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message?.text || $json.edited_message?.text }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "aec4d50c-a56c-4b59-b811-e0f922327790"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message?.voice?.mime_type }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "bd456f63-f4d2-4529-8737-8f315eaf8dd0"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "voice"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message?.photo?.[0] }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "6b3aceaa-f139-407b-974b-af37941adb38"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "photo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message?.document?.mime_type }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "9b5c3e01-1242-4aa9-bd03-70af7ca639be"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "document"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message?.video?.mime_type }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "891ef87f-5d00-4342-834b-6dc9a4adee1c"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "video"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e77a372e-35ef-4d58-b200-823d5a584aab",
+                    "leftValue": "={{ $json.message?.text || $json.edited_message?.text }}",
+                    "rightValue": "ищи",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "searvh"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "fallbackOutput": "extra",
+          "allMatchingOutputs": false
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -576,
+        872
+      ],
+      "id": "20f97c67-0117-4548-bd8b-07242a7bfaf2",
+      "name": "Message Router",
+      "alwaysOutputData": false,
+      "notesInFlow": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "sendChatAction",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "action": "record_audio"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -800,
+        -64
+      ],
+      "id": "0aee0848-77f3-40d5-94de-0e765f29ccfa",
+      "name": "Send Response4",
+      "webhookId": "47d95486-8650-4626-b1ad-4c52d4050784",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "operation": "sendChatAction",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1084,
+        496
+      ],
+      "id": "48acc673-d318-4981-837d-1e127405c4b4",
+      "name": "Send Typing Status1",
+      "alwaysOutputData": true,
+      "webhookId": "f36d1e31-c0b3-4ca0-af91-a2ddabe658a1",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "r4Z3tBvj3qlR91Ev",
+          "mode": "list",
+          "cachedResultName": "ФОТО OCR"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "data": "={{ $json.message.photo[0].file_id }}",
+            "chat_id": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": true,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -352,
+        1432
+      ],
+      "id": "016db901-c77f-4404-8c28-bbebd5117cea",
+      "name": "Process Document1",
+      "executeOnce": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "description": "используй инструмент для генерации изображений",
+        "workflowId": {
+          "__rl": true,
+          "value": "WcN4Kj1G5dBGpwOW",
+          "mode": "list",
+          "cachedResultName": "Free AI Image Generator - n8n Automation Workflow with Gemini/ChatGPT"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "prompt": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('prompt', ``, 'string') }}",
+            "chat_id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('chat_id', ``, 'string') }}",
+            "aspect_ratio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('aspect_ratio', ``, 'string') }}",
+            "enhance": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('enhance', ``, 'boolean') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "enhance",
+              "displayName": "enhance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean",
+              "removed": false
+            },
+            {
+              "id": "aspect_ratio",
+              "displayName": "aspect_ratio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -800,
+        1864
+      ],
+      "id": "96af41d0-dd7f-4007-8685-0b905435f6af",
+      "name": "Call n8n Workflow Tool",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "ZeuwoSPb5ImuFG4m",
+          "mode": "list",
+          "cachedResultName": "My workflow 21"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": true,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -352,
+        1240
+      ],
+      "id": "02245b99-35f0-4079-9459-21fbc56cebe5",
+      "name": "Process Document2",
+      "executeOnce": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {
+          "temperature": 0.5
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        364,
+        1024
+      ],
+      "id": "4b0d1ac1-76a0-48e5-8241-65271dce67bb",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "KWquZmo9P4lB9Sv1",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "input": "={{ $json.output}}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1084,
+        688
+      ],
+      "id": "650dc0f9-6788-4cce-8ee5-9fb9e4964afb",
+      "name": "Generate audio",
+      "credentials": {
+        "openAiApi": {
+          "id": "KWquZmo9P4lB9Sv1",
+          "name": "OpenAi account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=5572422549"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryZep",
+      "typeVersion": 1.3,
+      "position": [
+        236,
+        1024
+      ],
+      "id": "0ffe9da9-8c9d-488a-b7a1-dbabf828bf85",
+      "name": "Zep",
+      "credentials": {
+        "zepApi": {
+          "id": "dg4NC8gu9VxR3vQQ",
+          "name": "Zep Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "You are a helpful assistant",
+          "passthroughBinaryImages": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        96,
+        592
+      ],
+      "id": "a25d2cbc-e745-4a8b-a0b9-4dc6fc9ecef7",
+      "name": "Universal AI Agent1",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "notesInFlow": true,
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        816
+      ],
+      "id": "19126daa-a436-4e77-a634-0e4a47cbee0f",
+      "name": "AI Agent Tool"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-lite-preview-06-17",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        148,
+        816
+      ],
+      "id": "1929acf3-17c9-4c21-9c92-ae907a8a512d",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "MxiusrUzPMEPHiIg",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Message Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Transcribe Audio": {
+      "main": [
+        [
+          {
+            "node": "Universal AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Current Date": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Tool",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Response3": {
+      "main": [
+        []
+      ]
+    },
+    "Get Voice File1": {
+      "main": [
+        [
+          {
+            "node": "Transcribe Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message Router": {
+      "main": [
+        [
+          {
+            "node": "Send Typing Status",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Universal AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Voice File1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Process Document1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Process Document",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [
+          {
+            "node": "Process Document2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Typing Status1": {
+      "main": [
+        [
+          {
+            "node": "Send Response3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Response1": {
+      "main": [
+        []
+      ]
+    },
+    "Call n8n Workflow Tool": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in Tavily1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Tool",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract in Tavily1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Tool",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crawl in Tavily1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Tool",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate audio": {
+      "main": [
+        []
+      ]
+    },
+    "Zep": {
+      "ai_memory": [
+        [
+          {
+            "node": "Universal AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "AI Agent Tool",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Universal AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Universal AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Universal AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Generate audio",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Typing Status1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "settings": {
     "executionOrder": "v1"
   },
-  "triggerCount": 0,
-  "versionId": "445a9495-a5db-492f-9d2a-ba4af9ce3d5b",
+  "triggerCount": 1,
+  "versionId": "cefc860d-15c0-4130-8de7-c9f3ec2d2e61",
   "owner": {
     "type": "team",
     "teamId": "Mt7vmpCwrBvc84W7",
