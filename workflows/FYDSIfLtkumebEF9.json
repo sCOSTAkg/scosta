@@ -126,7 +126,7 @@
         "additionalFields": {
           "appendAttribution": false,
           "disable_web_page_preview": false,
-          "parse_mode": "Markdown"
+          "parse_mode": "HTML"
         }
       },
       "type": "n8n-nodes-base.telegram",
@@ -764,7 +764,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "095c34de-c878-4991-870f-bc61cf2461db",
+  "versionId": "00e84298-5f6d-49b0-bf6b-39877f05cea1",
   "owner": {
     "type": "team",
     "teamId": "Mt7vmpCwrBvc84W7",
