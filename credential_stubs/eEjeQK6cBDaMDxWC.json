@@ -1,0 +1,13 @@
+{
+  "id": "eEjeQK6cBDaMDxWC",
+  "name": "Tavily account 2",
+  "type": "tavilyApi",
+  "data": {
+    "apiKey": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "Mt7vmpCwrBvc84W7",
+    "teamName": "My project"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "QCngGjfaZomZRYwI",
+  "name": "Perplexity account",
+  "type": "perplexityApi",
+  "data": {
+    "apiKey": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "Y9ptJBVPq77b0JLs",
+    "teamName": "My project"
+  }
+}

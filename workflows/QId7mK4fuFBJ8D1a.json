@@ -40,31 +40,26 @@
         "operation": "search",
         "base": {
           "__rl": true,
-          "value": "appjzOJ8uEP40sOyb",
+          "value": "appH4dnnweFAp0Eo4",
           "mode": "list",
-          "cachedResultName": "Car Customer Management",
-          "cachedResultUrl": "https://airtable.com/appjzOJ8uEP40sOyb"
+          "cachedResultName": "Lead Management System",
+          "cachedResultUrl": "https://airtable.com/appH4dnnweFAp0Eo4"
         },
         "table": {
           "__rl": true,
-          "value": "tblGvKuifRBLTDiEf",
+          "value": "tbl1VWfDp2Mfiy4XJ",
           "mode": "list",
-          "cachedResultName": "Contacts",
-          "cachedResultUrl": "https://airtable.com/appjzOJ8uEP40sOyb/tblGvKuifRBLTDiEf"
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://airtable.com/appH4dnnweFAp0Eo4/tbl1VWfDp2Mfiy4XJ"
         },
-        "filterByFormula": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Filter_By_Formula', ``, 'string') }}",
-        "options": {
-          "downloadFields": [
-            "Profile Photo"
-          ],
-          "fields": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Output_Fields', ``, 'string') }}",
-          "view": {
-            "__rl": true,
-            "value": "viwXWzfM0JfeAEpGC",
-            "mode": "list",
-            "cachedResultName": "Grid view",
-            "cachedResultUrl": "https://airtable.com/appjzOJ8uEP40sOyb/tblGvKuifRBLTDiEf/viwXWzfM0JfeAEpGC"
-          }
+        "filterByFormula": "={{ $fromAI('Filter_By_Formula', ``, 'string') }}",
+        "options": {},
+        "sort": {
+          "property": [
+            {
+              "field": "Lead Name"
+            }
+          ]
         }
       },
       "id": "b525e31d-47ae-4cf3-aa03-d00be64654e5",
@@ -100,30 +95,16 @@
           "cachedResultUrl": "https://airtable.com/appH4dnnweFAp0Eo4/tbl1VWfDp2Mfiy4XJ"
         },
         "columns": {
-          "mappingMode": "defineBelow",
+          "mappingMode": "autoMapInputData",
           "value": {
-            "Preferences": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Preferences', ``, 'string') }}",
             "Next Best Action": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Next_Best_Action', ``, 'string') }}",
-            "Contact Summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Contact_Summary', ``, 'string') }}",
-            "Tasks": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Tasks', ``, 'string') }}",
-            "Notifications": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Notifications', ``, 'string') }}",
-            "Notes": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Notes', ``, 'string') }}",
-            "Notification Preferences": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Notification_Preferences', ``, 'string') }}",
-            "Desired Cars": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Desired_Cars', ``, 'string') }}",
-            "Favorite Cars": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Favorite_Cars', ``, 'string') }}",
-            "Contact ID": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Contact_ID', ``, 'string') }}",
-            "Telegram Username": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Telegram_Username', ``, 'string') }}",
-            "Full Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Full_Name', ``, 'string') }}",
-            "Email Address": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Email_Address', ``, 'string') }}",
-            "Phone Number": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Phone_Number', ``, 'string') }}",
-            "Registration Date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Registration_Date', ``, 'string') }}",
-            "Profile Photo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Profile_Photo', ``, 'string') }}"
+            "Notes": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Notes', ``, 'string') }}"
           },
           "matchingColumns": [],
           "schema": [
             {
-              "id": "Contact ID",
-              "displayName": "Contact ID",
+              "id": "Lead Name",
+              "displayName": "Lead Name",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
@@ -133,8 +114,8 @@
               "removed": false
             },
             {
-              "id": "Telegram Username",
-              "displayName": "Telegram Username",
+              "id": "Contact Information",
+              "displayName": "Contact Information",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
@@ -144,104 +125,98 @@
               "removed": false
             },
             {
-              "id": "Full Name",
-              "displayName": "Full Name",
+              "id": "Lead Source",
+              "displayName": "Lead Source",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
               "display": true,
-              "type": "string",
+              "type": "options",
+              "options": [
+                {
+                  "name": "Website",
+                  "value": "Website"
+                },
+                {
+                  "name": "Referral",
+                  "value": "Referral"
+                },
+                {
+                  "name": "Social Media",
+                  "value": "Social Media"
+                },
+                {
+                  "name": "Event",
+                  "value": "Event"
+                },
+                {
+                  "name": "Other",
+                  "value": "Other"
+                }
+              ],
               "readOnly": false,
               "removed": false
             },
             {
-              "id": "Email Address",
-              "displayName": "Email Address",
+              "id": "Status",
+              "displayName": "Status",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
               "display": true,
-              "type": "string",
+              "type": "options",
+              "options": [
+                {
+                  "name": "New",
+                  "value": "New"
+                },
+                {
+                  "name": "Contacted",
+                  "value": "Contacted"
+                },
+                {
+                  "name": "Qualified",
+                  "value": "Qualified"
+                },
+                {
+                  "name": "Proposal Sent",
+                  "value": "Proposal Sent"
+                },
+                {
+                  "name": "Negotiation",
+                  "value": "Negotiation"
+                },
+                {
+                  "name": "Closed Won",
+                  "value": "Closed Won"
+                },
+                {
+                  "name": "Closed Lost",
+                  "value": "Closed Lost"
+                }
+              ],
               "readOnly": false,
               "removed": false
             },
             {
-              "id": "Phone Number",
-              "displayName": "Phone Number",
+              "id": "Estimated Value",
+              "displayName": "Estimated Value",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
               "display": true,
-              "type": "string",
+              "type": "number",
               "readOnly": false,
               "removed": false
             },
             {
-              "id": "Registration Date",
-              "displayName": "Registration Date",
+              "id": "Follow-up Date",
+              "displayName": "Follow-up Date",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
               "display": true,
               "type": "dateTime",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Profile Photo",
-              "displayName": "Profile Photo",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Favorite Cars",
-              "displayName": "Favorite Cars",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Desired Cars",
-              "displayName": "Desired Cars",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Notification Preferences",
-              "displayName": "Notification Preferences",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
-              "options": [
-                {
-                  "name": "Email",
-                  "value": "Email"
-                },
-                {
-                  "name": "SMS",
-                  "value": "SMS"
-                },
-                {
-                  "name": "Telegram",
-                  "value": "Telegram"
-                }
-              ],
               "readOnly": false,
               "removed": false
             },
@@ -257,19 +232,8 @@
               "removed": false
             },
             {
-              "id": "Total Notifications Sent",
-              "displayName": "Total Notifications Sent",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": false
-            },
-            {
-              "id": "Notifications",
-              "displayName": "Notifications",
+              "id": "Lead Photo",
+              "displayName": "Lead Photo",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
@@ -279,30 +243,8 @@
               "removed": false
             },
             {
-              "id": "Last Notification Date",
-              "displayName": "Last Notification Date",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": false
-            },
-            {
-              "id": "Total Tasks Assigned",
-              "displayName": "Total Tasks Assigned",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": false
-            },
-            {
-              "id": "Tasks",
-              "displayName": "Tasks",
+              "id": "Assigned Team Member",
+              "displayName": "Assigned Team Member",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
@@ -312,8 +254,8 @@
               "removed": false
             },
             {
-              "id": "Favorite Cars Summary",
-              "displayName": "Favorite Cars Summary",
+              "id": "Days in Current Status",
+              "displayName": "Days in Current Status",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
@@ -323,8 +265,8 @@
               "removed": false
             },
             {
-              "id": "Desired Cars Summary",
-              "displayName": "Desired Cars Summary",
+              "id": "Lead Source Summary",
+              "displayName": "Lead Source Summary",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
@@ -334,8 +276,8 @@
               "removed": false
             },
             {
-              "id": "Contact Summary",
-              "displayName": "Contact Summary",
+              "id": "Lead Qualification Score",
+              "displayName": "Lead Qualification Score",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
@@ -352,17 +294,6 @@
               "canBeUsedToMatch": true,
               "display": true,
               "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Preferences",
-              "displayName": "Preferences",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
               "readOnly": false,
               "removed": false
             }
@@ -391,32 +322,6 @@
     },
     {
       "parameters": {
-        "chatId": "={{$('Telegram Trigger').first().json.message.from.id}}",
-        "text": "={{ $json.output }}",
-        "additionalFields": {
-          "appendAttribution": false,
-          "disable_web_page_preview": false,
-          "parse_mode": "HTML"
-        }
-      },
-      "id": "3b95f634-3e1a-4b45-ac7e-e8ee44658dba",
-      "name": "Message (Text)",
-      "type": "n8n-nodes-base.telegram",
-      "position": [
-        1504,
-        -944
-      ],
-      "typeVersion": 1.1,
-      "webhookId": "aaa32755-8fdd-459b-94f2-7f003a490b23",
-      "credentials": {
-        "telegramApi": {
-          "id": "bRtnxneEgvSWdsIe",
-          "name": "Ассистент по маркетингу"
-        }
-      }
-    },
-    {
-      "parameters": {
         "resource": "all",
         "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
         "additionalFields": {}
@@ -426,8 +331,8 @@
       "type": "n8n-nodes-base.hackerNewsTool",
       "typeVersion": 1,
       "position": [
-        1280,
-        -720
+        1424,
+        -272
       ]
     },
     {
@@ -546,7 +451,8 @@
         "promptType": "define",
         "text": "={{ $json.message.text || $json.transcript }}",
         "options": {
-          "systemMessage": "=Ты - ЧаЛа ПЕРЕКУП, опытный перекупщик автомобилей с особым талантом находить лучшие предложения на рынке. Сегодняшняя дата: {{ $now }}.\n\nОсновные функции:\n\nПоиск автомобилей:\n- Используй SerpAPI для поиска объявлений автомобилей по всему интернету. Повторяй поиски несколько раз, пока не просмотришь все варианты для пользователя.\n- Анализируй рынок и находи только самые выгодные предложения\n- Умей находить автомобили в России, Европе, США, ОАЭ, Японии и других странах\n- В основном ты сразу ищешь по Кыргызстану и только если попросят другую страну, то начинаешь многоэтапный поиск в указанной стране или странах\n\nКалькуляция расходов:\n- Используй Calculator для точного расчета стоимости доставки, растаможки и других расходов\n- Учитывай таможенные сборы Кыргызстана, логистические расходы и дополнительные платежи\n- Рассчитывай полную стоимость автомобиля \"под ключ\"\n- Актуализируй информацию с помощью SerpAPI и анализируй законы для точного расчета.\n\nПерсонализация:\n- Запоминай предпочтения пользователя (бюджет, марки автомобилей, требования)\n- Используй память для поддержания контекста разговора\n- Адаптируйся к уровню знаний пользователя о автомобилях и под стиль его разговора\n\nКоммуникация:\n- Отвечай на языке обращения (русский, кыргызский, английский)\n- Используй жаргон районовского базарного перекупщика, но будь понятным и иногда подкалывай и шути, когда это уместно\n- Сохраняй стиль районовского братана - уверенный, веселый, четкий, с легкой иронией и жизненным опытом\n\nВНИМАНИЕ! ОБЯЗАТЕЛЬНО ИСПОЛЬЗУЙ СЛЕДУЮЩУЮ СТРУКТУРУ ДЛЯ КАЖДОГО АВТОМОБИЛЯ:\n\n<b>🚗 [МАРКА МОДЕЛЬ ГОД]</b>\n----------------------------\n\n<img src=\"[ССЫЛКА НА ИЗОБРАЖЕНИЕ]\" alt=\"[ОПИСАНИЕ АВТО]\">\n\n<b>⚙️ ХАРАКТЕРИСТИКИ:</b>\n▪️ Двигатель: [ОБЪЕМ] [ТИП ТОПЛИВА]\n▪️ Мощность: [Л.С.]\n▪️ Пробег: [КИЛОМЕТРАЖ]\n▪️ КПП: [ТИП КОРОБКИ]\n▪️ Цвет: [ЦВЕТ]\n▪️ Цена: [ЦЕНА]\n[ДРУГИЕ ВАЖНЫЕ ХАРАКТЕРИСТИКИ]\n\n<b>🔍 АНАЛИЗ:</b>\n[ТВОЙ АНАЛИЗ СОСТОЯНИЯ, ЦЕНЫ, ПРЕИМУЩЕСТВ И НЕДОСТАТКОВ]\n\n<b>💼 ИНФОРМАЦИЯ О ПРОДАВЦЕ:</b>\n📞 Телефон: [НОМЕР ТЕЛЕФОНА]\n👤 Статус: [ПЕРЕКУП/ЧАСТНИК/ДИЛЕР] - [ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ]\n\n<b>🏁 ВЕРДИКТ:</b>\n[ТВОЯ ОЦЕНКА ПРЕДЛОЖЕНИЯ - СТОИТ ЛИ БРАТЬ]\n\n📌 <a href=\"[ССЫЛКА НА ИСТОЧНИК]\">Источник</a>\n\n⚠️ ВАЖНЫЕ ПРАВИЛА:\n1. Между объявлениями ВСЕГДА добавляй строку-разделитель:\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n\n2. Если не найдено изображение, указывай: \"[Изображение не найдено]\"\n\n3. ОБЯЗАТЕЛЬНО включай ссылку на источник объявления\n\n4. В секции ВЕРДИКТ всегда кратко оценивай предложение по шкале: \"ОГОНЬ 🔥\", \"НОРМАС 👍\", \"НА ЛЮБИТЕЛЯ 🤔\" или \"ЛУЧШЕ ПОИСКАТЬ ДРУГОЕ ⛔\"\n\n5. После всех объявлений добавляй секцию \"ЭКСПОРТ ДЛЯ ИМПОРТА\" в формате CSV:\n\n<b>📊 ЭКСПОРТ ДЛЯ ИМПОРТА:</b>\n<code>\nмарка,модель,год,цена,статус,телефон,ссылка\n[МАРКА],[МОДЕЛЬ],[ГОД],[ЦЕНА],[ВЕРДИКТ],[ТЕЛЕФОН],[ССЫЛКА]\n[МАРКА],[МОДЕЛЬ],[ГОД],[ЦЕНА],[ВЕРДИКТ],[ТЕЛЕФОН],[ССЫЛКА]\n...\n</code>\n\nДополнительные инструменты:\n- Используй Hacker News для получения информации о трендах автомобильного рынка\n- При необходимости используй инструменты Airtable для управления клиентами и заказами\n- Используй календарь для планирования встреч и сделок\n- Также можешь брать инструкции с сайта - https://peppermint-frost-242.notion.site/1d9e53e665408161b650fccf378165f9, используя SerpAPI.\n\nСтандарты ответа:\n- Давай только точную и проанализированную информацию\n- Ответы должны быть по существу\n- Всегда приоритизируй качество информации над количеством\n- Обязательно отправляй фотографии машин и ссылки на источники\n- Пробивай номер продавца через поиск, чтобы определить - перекуп или нет",
+          "systemMessage": "=Ты - ЧаЛа ПЕРЕКУП, опытный перекупщик автомобилей с особым талантом находить лучшие предложения на рынке. Сегодняшняя дата: {{ $now }}.\n\nОсновные функции:\n\nПоиск автомобилей:\n\nКалькуляция расходов:\n- Используй Calculator для точного расчета стоимости доставки, растаможки и других расходов\n- Учитывай таможенные сборы Кыргызстана, логистические расходы и дополнительные платежи\n- Рассчитывай полную стоимость автомобиля \"под ключ\"\n- Актуализируй информацию с помощью SerpAPI и анализируй законы для точного расчета.\n\nПерсонализация:\n- Запоминай предпочтения пользователя (бюджет, марки автомобилей, требования)\n- Используй память для поддержания контекста разговора\n- Адаптируйся к уровню знаний пользователя о автомобилях и под стиль его разговора\n\nКоммуникация:\n- используй Агента telegram для взаимодействия и комуникации\n\nОбязательно и при кажом действии использей Агента TELEGRAM",
+          "maxIterations": 7,
           "returnIntermediateSteps": false,
           "passthroughBinaryImages": true
         }
@@ -555,7 +461,7 @@
       "name": "J.A.R.V.I.S",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        1024,
+        864,
         -944
       ],
       "typeVersion": 1.6,
@@ -581,7 +487,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "user": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('user', ``, 'string') }}",
+            "user": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('user', `имя и chat id`, 'string') }}",
             "Memory Description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Memory_Description', ``, 'string') }}",
             "Related Memory Records": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Related_Memory_Records', ``, 'string') }}",
             "Date Recorded": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Date_Recorded', ``, 'string') }}",
@@ -657,7 +563,7 @@
                 }
               ],
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Reference Image",
@@ -715,20 +621,20 @@
                 }
               ],
               "readOnly": false,
-              "removed": false
+              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
           "convertFieldsToString": false
         },
         "options": {
-          "typecast": true
+          "typecast": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Typecast', ``, 'boolean') }}"
         }
       },
       "type": "n8n-nodes-base.airtableTool",
       "typeVersion": 2.1,
       "position": [
-        1408,
+        1280,
         -720
       ],
       "id": "3b64d6b0-f567-40d8-9d2d-be70c4d9358c",
@@ -760,28 +666,6 @@
     },
     {
       "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "={{ $json.message.text || $json.transcript }}",
-        "sessionTTL": 5,
-        "contextWindowLength": 15
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
-      "typeVersion": 1.5,
-      "position": [
-        768,
-        -720
-      ],
-      "id": "31d4960e-6fa6-4b86-afaf-cf09093a86ae",
-      "name": "Redis Chat Memory",
-      "credentials": {
-        "redis": {
-          "id": "FrLpEjb7lRXq1OFP",
-          "name": "Redis account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "path": "N8N",
         "options": {}
       },
@@ -789,43 +673,12 @@
       "typeVersion": 2,
       "position": [
         -480,
-        -608
+        -512
       ],
       "id": "11c6185e-5ed8-46b9-b9e4-2b821ab01c40",
       "name": "Webhook",
       "webhookId": "0e98140a-b238-4254-a1ae-19045447428c",
       "disabled": true
-    },
-    {
-      "parameters": {
-        "model": "sonar",
-        "messages": {
-          "message": [
-            {
-              "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('message0_Text', ``, 'string') }}"
-            }
-          ]
-        },
-        "simplify": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Simplify_Output', ``, 'boolean') }}",
-        "options": {
-          "returnImages": true
-        },
-        "requestOptions": {}
-      },
-      "type": "n8n-nodes-base.perplexityTool",
-      "typeVersion": 1,
-      "position": [
-        1536,
-        -720
-      ],
-      "id": "eaf3d6ce-1dc1-4e97-9d14-61e8310324ea",
-      "name": "SerpAPI",
-      "credentials": {
-        "perplexityApi": {
-          "id": "QCngGjfaZomZRYwI",
-          "name": "Perplexity account"
-        }
-      }
     },
     {
       "parameters": {
@@ -843,6 +696,491 @@
         "googlePalmApi": {
           "id": "epFwCu4CVs447lRe",
           "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', `Четкий запрос по поиску в интернете`, 'string') }}",
+        "options": {
+          "topic": "general",
+          "search_depth": "advanced",
+          "max_results": 3,
+          "include_images": true
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        -272
+      ],
+      "id": "a46a7f5f-904c-4105-8a5f-7224c06d1343",
+      "name": "Search in Tavily",
+      "credentials": {
+        "tavilyApi": {
+          "id": "4ZjFQzUSn4RT33MH",
+          "name": "Tavily account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "AI Agent for search and deepsearch",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', `запрос агенту на поиск машин`, 'string') }}",
+        "options": {
+          "systemMessage": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('System_Message', `Поиск автомобилей:\n- Используй все инструменты для поиска объявлений автомобилей по всему интернету. Повторяй поиски несколько раз, пока не просмотришь все варианты для пользователя.\n- Анализируй рынок и находи только самые выгодные предложения\n- Умей находить автомобили в России, Европе, США, ОАЭ, Японии и других странах\n- В основном ты сразу ищешь по Кыргызстану и только если попросят другую страну, то начинаешь многоэтапный поиск в указанной стране или странах\n`, 'string') }}",
+          "maxIterations": 10,
+          "passthroughBinaryImages": true,
+          "batching": {
+            "batchSize": 3,
+            "delayBetweenBatches": 0
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        1296,
+        -448
+      ],
+      "id": "6e11cd94-8f35-425b-bec2-a466f2a79353",
+      "name": "AI Agent search"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-lite",
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        -272
+      ],
+      "id": "695c2bb4-9296-4839-8f58-f2f8823e2bdf",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "epFwCu4CVs447lRe",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "messages": {
+          "message": [
+            {
+              "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('message0_Text', `поимковой зпрос`, 'string') }}"
+            }
+          ]
+        },
+        "simplify": true,
+        "options": {
+          "temperature": 0.2,
+          "returnImages": true,
+          "searchRecency": "month"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.perplexityTool",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        -272
+      ],
+      "id": "af7abb8d-2e8f-4adc-b44e-ac78a78ce5e7",
+      "name": "Message a model in Perplexity",
+      "credentials": {
+        "perplexityApi": {
+          "id": "QCngGjfaZomZRYwI",
+          "name": "Perplexity account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryZep",
+      "typeVersion": 1.3,
+      "position": [
+        768,
+        -720
+      ],
+      "id": "f04c4e7c-7fb1-49b8-8658-38a4e610d45e",
+      "name": "Zep",
+      "credentials": {
+        "zepApi": {
+          "id": "dg4NC8gu9VxR3vQQ",
+          "name": "Zep Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Агет для ответа пользователю в Телеграм, генерации и редактировании изображений и взаимодействия с пользователем",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', `ответ для отправки пользователю`, 'string') }}",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('System_Message', `Твоя задача правильно и структурированно отвечать и выводить историии, поисковые результаты, отвечать пользователю, отправлять фото, изображении и документы и полность взаимодействать через телеграм инструменты. \nТак же всегда используй действие печатает, отправляет фото, аудио  итд. Всегда старайся максимально казаться что ты обычный человек и так веди себя `, 'string') }}",
+          "maxIterations": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Max_Iterations', ``, 'number') }}",
+          "returnIntermediateSteps": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_Intermediate_Steps', ``, 'boolean') }}",
+          "passthroughBinaryImages": true,
+          "batching": {
+            "batchSize": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Batch_Size', ``, 'number') }}",
+            "delayBetweenBatches": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Delay_Between_Batches', ``, 'number') }}"
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        800,
+        -480
+      ],
+      "id": "99921a0e-9de9-4d64-9611-33495e8b4316",
+      "name": "Telegram agent"
+    },
+    {
+      "parameters": {
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        800,
+        -272
+      ],
+      "id": "aca47317-ab29-45f3-897c-ee086adc2627",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "epFwCu4CVs447lRe",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $fromAI('Text', `текстовый и структурированный и оформленный ответ пользователю!`, 'string') }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTool",
+      "typeVersion": 1.2,
+      "position": [
+        784,
+        -96
+      ],
+      "id": "d2ac01d0-ebdf-4af8-87be-dd9188aefd75",
+      "name": "Send a text message in Telegram",
+      "webhookId": "5189de4a-583e-4c44-b80f-25e4604bd55a",
+      "alwaysOutputData": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "binaryData": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Binary_File', ``, 'boolean') }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTool",
+      "typeVersion": 1.2,
+      "position": [
+        672,
+        -96
+      ],
+      "id": "289a2b54-3c82-4563-b309-0147ee7e421c",
+      "name": "Send a photo message in Telegram1",
+      "webhookId": "5189de4a-583e-4c44-b80f-25e4604bd55a",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendChatAction",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+      },
+      "type": "n8n-nodes-base.telegramTool",
+      "typeVersion": 1.2,
+      "position": [
+        912,
+        -96
+      ],
+      "id": "b20fc42b-574a-4a13-947d-c5b65e86af83",
+      "name": "Send a chat action in Telegram",
+      "webhookId": "5189de4a-583e-4c44-b80f-25e4604bd55a",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendSticker",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "file": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Sticker', `разные стикеры для очеловечивания разговора!`, 'string') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTool",
+      "typeVersion": 1.2,
+      "position": [
+        1024,
+        -96
+      ],
+      "id": "09bfdb3d-9e64-4d93-9d0f-4fc8c7905391",
+      "name": "Send a sticker in Telegram",
+      "webhookId": "5189de4a-583e-4c44-b80f-25e4604bd55a",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-live-2.5-flash-preview",
+          "mode": "list",
+          "cachedResultName": "models/gemini-live-2.5-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $fromAI('values0_Prompt', `данные результатов поиска и ответ пользователю`, 'string') }}"
+            }
+          ]
+        },
+        "jsonOutput": "={{ false }}",
+        "options": {
+          "systemMessage": "={{ $fromAI('System_Message', `твоя задача полность структурировать и максимально очеловечить и дать четкий, человечный и оформленный ответ в формате markdown`, 'string') }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGeminiTool",
+      "typeVersion": 1,
+      "position": [
+        864,
+        80
+      ],
+      "id": "31736e62-1609-4239-81cc-c355a32cc7e0",
+      "name": "Message a model in Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "epFwCu4CVs447lRe",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "value": "models/imagen-4.0-ultra-generate-preview-06-06",
+          "mode": "list",
+          "cachedResultName": "models/imagen-4.0-ultra-generate-preview-06-06"
+        },
+        "prompt": "={{ $fromAI('Prompt', `если пользователь попросил отредактировать или создать фото`, 'string') }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGeminiTool",
+      "typeVersion": 1,
+      "position": [
+        976,
+        80
+      ],
+      "id": "83045c16-d711-455f-913b-18045801be75",
+      "name": "Generate an image in Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "epFwCu4CVs447lRe",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-pro",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-pro"
+        },
+        "text": "What's in this image? get detail analys and answer or write promt for edit input image or creat image",
+        "inputType": "binary",
+        "binaryPropertyName": "={{ $fromAI('Input_Data_Field_Name_s_', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGeminiTool",
+      "typeVersion": 1,
+      "position": [
+        752,
+        80
+      ],
+      "id": "a05e12d0-25c4-4607-b596-d1667d3db5a0",
+      "name": "Analyze image in Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "epFwCu4CVs447lRe",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "additionalFields": {
+          "mimeType": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('MIME_Type', `jpeg or png or jpg mimi type`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTool",
+      "typeVersion": 1.2,
+      "position": [
+        1136,
+        -96
+      ],
+      "id": "0505178d-a723-4982-9576-1f75c7fa2718",
+      "name": "Get a file in Telegram",
+      "webhookId": "5189de4a-583e-4c44-b80f-25e4604bd55a",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', `когда пользователь просит редактировать и или преобразовать изображение , задавай вопрос на который тебе требуется помощь или ответ!`, 'string') }}",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double",
+            "approveLabel": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Approve_Button_Label', ``, 'string') }}",
+            "disapproveLabel": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Disapprove_Button_Label', ``, 'string') }}"
+          }
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegramTool",
+      "typeVersion": 1.2,
+      "position": [
+        560,
+        -96
+      ],
+      "id": "92c76e8d-87dd-4ba4-b38b-8a1564a7368c",
+      "name": "Send message and wait for response in Telegram",
+      "webhookId": "5189de4a-583e-4c44-b80f-25e4604bd55a",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "magistral-small-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        912,
+        -272
+      ],
+      "id": "73947360-13f8-418d-9417-be6b0136dee7",
+      "name": "Mistral Cloud Chat Model",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "mcsLqhbuaCCm02ix",
+          "name": "Mistral Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "extract",
+        "urls": [
+          "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('urls0_URLs', `url для извлечения`, 'string') }}"
+        ],
+        "options": {
+          "include_images": true,
+          "extract_depth": "advanced",
+          "format": "markdown"
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        -96
+      ],
+      "id": "5b9560e6-a5bf-4648-b346-2ad17653deb0",
+      "name": "Extract in Tavily",
+      "credentials": {
+        "tavilyApi": {
+          "id": "4ZjFQzUSn4RT33MH",
+          "name": "Tavily account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "crawl",
+        "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `Корневой URL для начала сканирования`, 'string') }}",
+        "options": {
+          "allow_external": true,
+          "include_images": true,
+          "extract_depth": "advanced",
+          "format": "markdown"
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        -112
+      ],
+      "id": "43ef4e02-5043-488d-bce3-770705ec35f2",
+      "name": "Crawl in Tavily",
+      "credentials": {
+        "tavilyApi": {
+          "id": "4ZjFQzUSn4RT33MH",
+          "name": "Tavily account 2"
         }
       }
     }
@@ -896,7 +1234,7 @@
       "ai_tool": [
         [
           {
-            "node": "J.A.R.V.I.S",
+            "node": "AI Agent search",
             "type": "ai_tool",
             "index": 0
           }
@@ -955,13 +1293,7 @@
     },
     "J.A.R.V.I.S": {
       "main": [
-        [
-          {
-            "node": "Message (Text)",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Save Memory": {
@@ -986,18 +1318,29 @@
         ]
       ]
     },
-    "Redis Chat Memory": {
-      "ai_memory": [
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
         [
           {
             "node": "J.A.R.V.I.S",
-            "type": "ai_memory",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]
       ]
     },
-    "SerpAPI": {
+    "Search in Tavily": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent search",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent search": {
       "ai_tool": [
         [
           {
@@ -1008,12 +1351,188 @@
         ]
       ]
     },
-    "Google Gemini Chat Model1": {
+    "Google Gemini Chat Model": {
       "ai_languageModel": [
         [
           {
-            "node": "J.A.R.V.I.S",
+            "node": "AI Agent search",
             "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model in Perplexity": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent search",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zep": {
+      "ai_memory": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Telegram agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message in Telegram": {
+      "ai_tool": [
+        [
+          {
+            "node": "Telegram agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a photo message in Telegram1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Telegram agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a chat action in Telegram": {
+      "ai_tool": [
+        [
+          {
+            "node": "Telegram agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a sticker in Telegram": {
+      "ai_tool": [
+        [
+          {
+            "node": "Telegram agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model in Google Gemini": {
+      "ai_tool": [
+        [
+          {
+            "node": "Telegram agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate an image in Google Gemini": {
+      "ai_tool": [
+        [
+          {
+            "node": "Telegram agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze image in Google Gemini": {
+      "ai_tool": [
+        [
+          {
+            "node": "Telegram agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a file in Telegram": {
+      "ai_tool": [
+        [
+          {
+            "node": "Telegram agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message and wait for response in Telegram": {
+      "ai_tool": [
+        [
+          {
+            "node": "Telegram agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Cloud Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Telegram agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Extract in Tavily": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent search",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crawl in Tavily": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent search",
+            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -1026,7 +1545,7 @@
     "callerPolicy": "workflowsFromSameOwner"
   },
   "triggerCount": 1,
-  "versionId": "0db8454c-0b77-4176-b142-79f310418f52",
+  "versionId": "be0b0e4c-f86a-46d7-934a-f52e5ab702c8",
   "owner": {
     "type": "personal",
     "projectId": "4u7zt7bOYo5vK3bD",
