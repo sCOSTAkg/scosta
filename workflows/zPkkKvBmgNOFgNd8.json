@@ -1,0 +1,1190 @@
+{
+  "id": "zPkkKvBmgNOFgNd8",
+  "name": "ПРОДАЖНИК",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "7aa96506-6973-4c11-92af-8bba29bdf889",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        3220,
+        700
+      ],
+      "typeVersion": 1.7,
+      "disabled": false
+    },
+    {
+      "parameters": {},
+      "id": "64576caf-c9c7-4fcf-9ac3-f74e7b5f1efe",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        2880,
+        700
+      ],
+      "typeVersion": 1,
+      "disabled": false
+    },
+    {
+      "parameters": {},
+      "id": "3db2cf43-aefb-45a5-8229-919a4636cffe",
+      "name": "Postgres Chat Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "position": [
+        3140,
+        940
+      ],
+      "typeVersion": 1.3,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "c0234309-eeca-4d23-9bef-260f0cdaea45"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c6af9bf4-02a9-4d4a-8b5e-b58a98050a5c",
+      "name": "Handle Message Types",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        1800,
+        460
+      ],
+      "typeVersion": 3.2,
+      "disabled": false
+    },
+    {
+      "parameters": {},
+      "id": "fa9687a0-7fc8-4790-bb8d-c134e365cb7c",
+      "name": "Reply To User1",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        1920,
+        880
+      ],
+      "webhookId": "0e86d9ab-6130-44f5-a7f1-4930bfcad48b",
+      "typeVersion": 1,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a6a8b365-d9c9-473f-b463-3e7b9b2135b9",
+      "name": "Edit Fields - chat1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2260,
+        440
+      ],
+      "typeVersion": 3.4,
+      "disabled": false
+    },
+    {
+      "parameters": {},
+      "id": "0c158e2f-2369-4752-be7a-e240d8b46199",
+      "name": "Reply To  User",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        4220,
+        580
+      ],
+      "webhookId": "3b2ca5bf-7b1d-4012-b68e-ef06653a3c18",
+      "typeVersion": 1,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "c28b5cf8-7dad-4136-8da9-55ef1fb6d7f0",
+      "name": "WhatsApp",
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "position": [
+        1260,
+        680
+      ],
+      "webhookId": "aaf6d81e-dbdd-47e2-a2d4-c496ff92933b",
+      "typeVersion": 1,
+      "disabled": false
+    },
+    {
+      "parameters": {},
+      "id": "26920dbc-1771-40f3-8516-7fd93bff5796",
+      "name": "WhatsApp Business Cloud",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        1920,
+        680
+      ],
+      "webhookId": "5cbf4730-3963-45f9-8457-6f41e648d4fe",
+      "typeVersion": 1,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "9a1e9abd-910e-48a4-bcd5-8c4125b3120d",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        2080,
+        680
+      ],
+      "typeVersion": 4.2,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "dfc5f5ab-1334-4df8-8cea-b69e4489eaa9",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        2240,
+        680
+      ],
+      "typeVersion": 1.8,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d9072f53-0002-4fdf-8fe4-2d101fd14af0",
+      "name": "Edit Fields - chat2",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2560,
+        680
+      ],
+      "typeVersion": 3.4,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d49e7c82-c94e-4d51-a66d-4ae8eaed8321",
+      "name": "Output - chat",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        3580,
+        700
+      ],
+      "typeVersion": 3.4,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ca013f4a-830f-4759-91e3-10aaeb44ecd6",
+      "name": "Postgres PGVector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "position": [
+        3320,
+        1300
+      ],
+      "typeVersion": 1.1,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "id": "60d9ec4e-e226-4ecb-a7bc-919c02e9aa0d",
+      "name": "Get Lead",
+      "type": "n8n-nodes-base.postgres",
+      "position": [
+        1580,
+        520
+      ],
+      "typeVersion": 2.6,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "8c43ba1d-8454-4727-b78d-49c19f1d0ef9",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        2920,
+        1940
+      ],
+      "webhookId": "0e63503d-ab21-4a3d-8d29-19c5d94c24d4",
+      "typeVersion": 1.1,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "f9e8be77-5d4c-4516-98b3-5a5f6e839981",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        3040,
+        940
+      ],
+      "typeVersion": 1,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "55ab9f97-6f57-4eed-9869-bec61bdb0f63",
+      "name": "Google Gemini Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        3120,
+        1240
+      ],
+      "typeVersion": 1,
+      "disabled": false
+    },
+    {
+      "parameters": {},
+      "id": "bb85c0a0-c898-417c-a317-be3ab8e1290d",
+      "name": "Embeddings Google Gemini1",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "position": [
+        3340,
+        1440
+      ],
+      "typeVersion": 1,
+      "disabled": false
+    },
+    {
+      "parameters": {},
+      "id": "767c018e-ae6e-48f5-b6d3-70025c409fbf",
+      "name": "technical_and_sales_knowledge",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "position": [
+        3320,
+        1100
+      ],
+      "typeVersion": 1,
+      "alwaysOutputData": true,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "path": "b7e461f0-9a0d-4e27-9e86-f74a3e684e3a",
+        "options": {}
+      },
+      "id": "fa3c00ef-6dac-433e-8f09-4ec374aad9c6",
+      "name": "Facebook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        1500,
+        1120
+      ],
+      "webhookId": "b7e461f0-9a0d-4e27-9e86-f74a3e684e3a",
+      "typeVersion": 2,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "9080d598-4ca6-4bc9-8a5b-8ce53ff99787",
+      "name": "Edit Fields - facebook",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2300,
+        1200
+      ],
+      "typeVersion": 3.4,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "03fc5dfa-53f0-4a9f-a487-3c94af87cfb1",
+      "name": "Respond to Webhook - facebook post",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        1700,
+        1120
+      ],
+      "typeVersion": 1.1,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a546b0a1-da05-4f38-b0ea-eff1e310b66e",
+      "name": "Respond to Webhook - facebook get",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        1700,
+        1340
+      ],
+      "typeVersion": 1.1,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "path": "cc6546da-6f16-4546-ada3-e2c83b208997",
+        "options": {}
+      },
+      "id": "d5cb9250-cdea-4d94-81d4-0d6033c68660",
+      "name": "Instagram Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        1700,
+        1620
+      ],
+      "webhookId": "cc6546da-6f16-4546-ada3-e2c83b208997",
+      "typeVersion": 2,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0b2f9d9c-b251-4d2c-99a7-f5912e3f4e6b",
+      "name": "Respond to Webhook - instagram get",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        1880,
+        1820
+      ],
+      "typeVersion": 1.1,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "dc57f950-ae8a-43ce-819e-ae863176093f",
+      "name": "Respond to Webhook - instagram post",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        1880,
+        1620
+      ],
+      "typeVersion": 1.1,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6f3341df-4730-409c-a602-cae85cda89e3",
+      "name": "Edit Fields - instagram",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2300,
+        1580
+      ],
+      "typeVersion": 3.4,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "02473daf-2abf-470c-89de-1abaf03e91db",
+      "name": "If is not echo - facebook",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1900,
+        1120
+      ],
+      "typeVersion": 2.2,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cab39ca7-26bd-4e55-8cd7-845ff14505f0",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "e0cb57e0-fe4e-48fd-858d-450de13543e5",
+      "name": "If is not echo - instagram",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        2060,
+        1620
+      ],
+      "typeVersion": 2.2,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "bcf24f8d-fe3e-46be-9944-f4b5275befaa",
+      "name": "Sales Agent Demo - typing_on",
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "position": [
+        2280,
+        980
+      ],
+      "typeVersion": 1,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3e08b6f0-1f9a-4676-bf37-63215374d6d2",
+      "name": "Edit Fields - chat",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2880,
+        1700
+      ],
+      "typeVersion": 3.4,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6ea9cf82-7937-477d-b0a8-c24e52d2713c",
+      "name": "Facebook Graph API - Sales Agent Demo",
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "position": [
+        4220,
+        760
+      ],
+      "typeVersion": 1,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "29847321-85bf-4303-814a-090b68f91775",
+      "name": "Instagram Graph API - smb.sales.agent.demo",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        4220,
+        940
+      ],
+      "typeVersion": 4.2,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bc042569-2117-432e-89cc-7a0c2d64a43e",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        3760,
+        700
+      ],
+      "typeVersion": 3.2,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "https://primary-production-ac7f.up.railway.app/mcp/calendar"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        3260,
+        940
+      ],
+      "id": "da984b48-aa4c-4801-a1a3-370babf7aca0",
+      "name": "Calendar Agent",
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "https://primary-production-ac7f.up.railway.app/mcp/crmagent"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        3380,
+        940
+      ],
+      "id": "451110c2-4d0e-47e5-bced-3727c9a386ea",
+      "name": "Calendar Agent1",
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "https://primary-production-ac7f.up.railway.app/mcp/crmagent"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        3500,
+        940
+      ],
+      "id": "2806c72f-6c03-4c8e-8dd7-b0d1d4e9c12b",
+      "name": "Calendar Agent2",
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "={{ $json.prompt }}"
+        }
+      },
+      "id": "f3cfc0df-cde6-41c2-a214-f65fd478ba9e",
+      "name": "AI Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        2460,
+        -460
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "instagram_chat",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "7814c27e-2ffa-423c-afbe-cb8548c85284",
+      "name": "Getting message from Instagram",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        2020,
+        -460
+      ],
+      "webhookId": "68d3fbc9-6e49-4bdc-851c-2a532be911ab",
+      "typeVersion": 2,
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "id": "8c013602-3cca-4095-9b35-7388e13567ec",
+      "name": "Send respond ",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        2840,
+        -460
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6531b720-40c4-41d5-9f88-23343fac0e43",
+      "name": "ChatGPT model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        2460,
+        -260
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "KrlRCizpyaKqBMnY",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Set your system promt for AI').last().json.sessionId }}",
+        "contextWindowLength": 20
+      },
+      "id": "286cb798-83da-4106-ae21-570687284e41",
+      "name": "Local n8n memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        2600,
+        -260
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0b3c3d71-5627-4b8c-91f0-ac44eaedf196",
+              "name": "prompt",
+              "type": "string",
+              "value": "=Persona: You are a instagram influencer.\nContext: You receive a messages from your subscribers\nTask: Answer questions in your writing style and patterns according to your previous posts text. Use your post only for style and patterns reference.\nStyle rules:\nsimple answers"
+            },
+            {
+              "id": "c2a9e272-5c0d-4685-ad0e-ce6995f92a1c",
+              "name": "sessionId",
+              "type": "string",
+              "value": "={{ $json.body.session_id }}"
+            },
+            {
+              "id": "b3c20ee3-07a1-4584-b0d9-7310a2c6b723",
+              "name": "chatInput",
+              "type": "string",
+              "value": "={{ $json.body.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "10b41c29-ef69-490b-9628-58ce84fd58c7",
+      "name": "Set your system prompt for AI",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2240,
+        -460
+      ],
+      "typeVersion": 3.3,
+      "notes": "In this node in \"prompt\" variable you can set your system prompt"
+    }
+  ],
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Output - chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle Message Types": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields - chat1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields - chat1": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Get Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Business Cloud": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields - chat2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields - chat2": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres PGVector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "technical_and_sales_knowledge",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Lead": {
+      "main": [
+        [
+          {
+            "node": "Handle Message Types",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WhatsApp Business Cloud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields - chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "technical_and_sales_knowledge",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "technical_and_sales_knowledge": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facebook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook - facebook post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields - facebook": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook - facebook post": {
+      "main": [
+        [
+          {
+            "node": "If is not echo - facebook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instagram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook - instagram post",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond to Webhook - instagram get",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook - instagram post": {
+      "main": [
+        [
+          {
+            "node": "If is not echo - instagram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields - instagram": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If is not echo - facebook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields - facebook",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Sales Agent Demo - typing_on",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If is not echo - instagram": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields - instagram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sales Agent Demo - typing_on": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields - chat": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Reply To  User",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Facebook Graph API - Sales Agent Demo",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Instagram Graph API - smb.sales.agent.demo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calendar Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calendar Agent1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calendar Agent2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Output - chat": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Getting message from Instagram": {
+      "main": [
+        [
+          {
+            "node": "Set your system promt for AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Send respond ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ChatGPT model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Local n8n memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set your system promt for AI": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "66861695-b4d3-4abf-9282-2bf6967342b7",
+  "owner": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

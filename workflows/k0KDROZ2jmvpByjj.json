@@ -1,0 +1,704 @@
+{
+  "id": "k0KDROZ2jmvpByjj",
+  "name": "My workflow 5",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "*",
+          "message"
+        ],
+        "additionalFields": {
+          "download": true
+        }
+      },
+      "id": "a82fcefb-1cfd-44c6-ab1e-2f2709079a35",
+      "name": "📱 Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "position": [
+        240,
+        -1084
+      ],
+      "webhookId": "fitness-bot-webhook",
+      "typeVersion": 1.2,
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Анализ профиля пользователя\nconst userId = $input.first().json.message.from.id;\nconst userName = $input.first().json.message.from.first_name;\nconst userText = $input.first().json.message.text;\n\n// Проверяем, это первое взаимодействие или продолжение\nlet userProfile = {};\ntry {\n  // Пытаемся получить профиль из базы (здесь используем упрощенную логику)\n  userProfile = $vars.userProfiles?.[userId] || {};\n} catch (error) {\n  userProfile = {};\n}\n\n// Если профиль пустой, инициализируем\nif (!userProfile.name) {\n  userProfile = {\n    id: userId,\n    name: userName,\n    registration_date: new Date().toISOString(),\n    fitness_level: null,\n    goals: [],\n    current_weight: null,\n    target_weight: null,\n    height: null,\n    age: null,\n    gender: null,\n    medical_conditions: [],\n    workout_history: [],\n    preferences: {\n      workout_types: [],\n      equipment_available: [],\n      time_available: null,\n      intensity_preference: null\n    },\n    progress: {\n      workouts_completed: 0,\n      total_training_time: 0,\n      achievements: []\n    }\n  };\n}\n\n// Обновляем глобальные переменные\n$vars.userProfiles = $vars.userProfiles || {};\n$vars.userProfiles[userId] = userProfile;\n\n// Определяем тип запроса\nlet requestType = 'general';\nif (userText) {\n  const text = userText.toLowerCase();\n  if (text.includes('вес') || text.includes('похудеть') || text.includes('набрать')) {\n    requestType = 'weight_management';\n  } else if (text.includes('тренировка') || text.includes('упражнения') || text.includes('программа')) {\n    requestType = 'workout_request';\n  } else if (text.includes('диета') || text.includes('питание') || text.includes('калории')) {\n    requestType = 'nutrition';\n  } else if (text.includes('прогресс') || text.includes('результат') || text.includes('статистика')) {\n    requestType = 'progress';\n  }\n}\n\nreturn {\n  json: {\n    ...($input.first().json),\n    userProfile: userProfile,\n    requestType: requestType,\n    isNewUser: !userProfile.fitness_level\n  }\n};"
+      },
+      "id": "4c4a78db-693f-4c06-a866-21e7ae820be1",
+      "name": "👤 Анализатор профиля",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1136,
+        -1160
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Генерация промпта для ИИ тренера\nconst profile = $json.userProfile;\nconst requestType = $json.requestType;\nconst isNewUser = $json.isNewUser;\nconst userMessage = $json.message.text;\n\nlet basePrompt = `Ты профессиональный фитнес-тренер и коуч с 15-летним стажем. \nТвоя задача - создавать персонализированные программы тренировок и давать экспертные советы.\n\n`;\n\n// Информация о пользователе\nlet userInfo = `ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ:\n`;\nif (profile.name) userInfo += `Имя: ${profile.name}\n`;\nif (profile.age) userInfo += `Возраст: ${profile.age}\n`;\nif (profile.gender) userInfo += `Пол: ${profile.gender}\n`;\nif (profile.height) userInfo += `Рост: ${profile.height} см\n`;\nif (profile.current_weight) userInfo += `Текущий вес: ${profile.current_weight} кг\n`;\nif (profile.target_weight) userInfo += `Целевой вес: ${profile.target_weight} кг\n`;\nif (profile.fitness_level) userInfo += `Уровень подготовки: ${profile.fitness_level}\n`;\nif (profile.goals.length > 0) userInfo += `Цели: ${profile.goals.join(', ')}\n`;\nif (profile.medical_conditions.length > 0) userInfo += `Медицинские ограничения: ${profile.medical_conditions.join(', ')}\n`;\n\n// Предпочтения\nlet preferences = ``;\nif (profile.preferences.workout_types.length > 0) {\n  preferences += `Предпочтения по тренировкам: ${profile.preferences.workout_types.join(', ')}\n`;\n}\nif (profile.preferences.equipment_available.length > 0) {\n  preferences += `Доступное оборудование: ${profile.preferences.equipment_available.join(', ')}\n`;\n}\nif (profile.preferences.time_available) {\n  preferences += `Время на тренировку: ${profile.preferences.time_available} минут\n`;\n}\nif (profile.preferences.intensity_preference) {\n  preferences += `Предпочтение по интенсивности: ${profile.preferences.intensity_preference}\n`;\n}\n\n// Прогресс\nlet progressInfo = ``;\nif (profile.progress.workouts_completed > 0) {\n  progressInfo += `Выполнено тренировок: ${profile.progress.workouts_completed}\n`;\n  progressInfo += `Общее время тренировок: ${Math.round(profile.progress.total_training_time / 60)} часов\n`;\n}\n\n// Специализированные промпты по типу запроса\nlet specificPrompt = '';\n\nswitch (requestType) {\n  case 'workout_request':\n    specificPrompt = `\nЗАДАЧА: Создай персональную программу тренировок на основе профиля пользователя.\n\nТРЕБОВАНИЯ К ПРОГРАММЕ:\n1. Учти уровень подготовки и цели пользователя\n2. Включи разминку (5-10 мин)\n3. Основную часть (20-45 мин в зависимости от доступного времени)\n4. Заминку и растяжку (5-10 мин)\n5. Укажи количество подходов, повторений и время отдыха\n6. Добавь альтернативы упражнений при отсутствии оборудования\n7. Включи советы по технике безопасности\n\nФОРМАТ ОТВЕТА:\n🏋️ **ПЕРСОНАЛЬНАЯ ТРЕНИРОВКА**\n📊 Сложность: [уровень] | Время: [время] мин | Оборудование: [список]\n\n**🔥 РАЗМИНКА (5-10 мин)**\n[список упражнений]\n\n**💪 ОСНОВНАЯ ЧАСТЬ**\n[детальная программа с подходами и повторениями]\n\n**🧘 ЗАМИНКА И РАСТЯЖКА**\n[упражнения на растяжку]\n\n**⚠️ ВАЖНЫЕ СОВЕТЫ**\n[рекомендации по технике и безопасности]\n\n**📈 ПРОГРЕССИЯ**\n[как усложнить тренировку в будущем]`;\n    break;\n\n  case 'nutrition':\n    specificPrompt = `\nЗАДАЧА: Дай рекомендации по питанию с учетом целей и профиля пользователя.\n\nВКЛЮЧИ:\n1. Расчет калорий и БЖУ\n2. Рекомендации по приемам пищи\n3. Список полезных продуктов\n4. Примерное меню на день\n5. Советы по гидратации\n\nФОРМАТ:\n🍎 **ПЛАН ПИТАНИЯ**\n📊 Калории: [число] ккал | Белки: [г] | Жиры: [г] | Углеводы: [г]\n\n**🥗 РЕКОМЕНДАЦИИ**\n[детальные советы]\n\n**📋 ПРИМЕРНОЕ МЕНЮ**\n[меню на день]`;\n    break;\n\n  case 'progress':\n    specificPrompt = `\nЗАДАЧА: Проанализируй прогресс пользователя и дай рекомендации.\n\nВКЛЮЧИ:\n1. Анализ текущих достижений\n2. Области для улучшения\n3. Корректировки в программе\n4. Мотивационные советы\n\nФОРМАТ:\n📈 **АНАЛИЗ ПРОГРЕССА**\n[детальный анализ и рекомендации]`;\n    break;\n\n  default:\n    if (isNewUser) {\n      specificPrompt = `\nЗАДАЧА: Приветствуй нового пользователя и помоги ему начать фитнес-путешествие.\n\nВКЛЮЧИ:\n1. Дружелюбное приветствие\n2. Объяснение возможностей бота\n3. Просьбу заполнить базовую информацию о себе\n4. Мотивирующий призыв к действию\n\nФОРМАТ:\n👋 **ДОБРО ПОЖАЛОВАТЬ!**\n[приветствие и инструкции]`;\n    } else {\n      specificPrompt = `\nЗАДАЧА: Ответь на вопрос пользователя как профессиональный тренер.\n\nТИП ОТВЕТА: Экспертный совет с учетом профиля пользователя.`;\n    }\n}\n\n// Финальный промпт\nconst finalPrompt = basePrompt + userInfo + preferences + progressInfo + specificPrompt + `\n\nВОПРОС/ЗАПРОС ПОЛЬЗОВАТЕЛЯ: \"${userMessage}\"\n\nОтвечай на русском языке, будь дружелюбным, мотивирующим и профессиональным. Используй эмодзи для улучшения восприятия.`;\n\nreturn {\n  json: {\n    ...$json,\n    aiPrompt: finalPrompt\n  }\n};"
+      },
+      "id": "0caf7057-a286-49a8-9cde-5c0d876b7f93",
+      "name": "📝 Генератор промптов",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1360,
+        -1160
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Сбор финального сообщения из ИИ\nconst aiResponse = $json.content?.parts?.slice(-1)[0] || 'Ответ не получен.';\nconst chatId = $json.message?.chat?.id;\n\n// Возврат сообщения для отправки\nreturn [\n  {\n    json: {\n      chatId: chatId,\n      message: aiResponse,\n      parse_mode: 'Markdown' // или 'HTML', если используете HTML-теги\n    }\n  }\n];"
+      },
+      "id": "b1a23a3f-18b1-4d05-8d6a-dcc7434dd1f5",
+      "name": "✨ Форматирование ответа",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        2048,
+        -1012
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chatId }}",
+        "text": "={{ $json.message }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "disable_web_page_preview": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "5eac0401-7c02-4008-8ec0-b030d0b93e71",
+      "name": "📤 Отправка ответа",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        2896,
+        -1012
+      ],
+      "typeVersion": 1.2,
+      "webhookId": "d935679d-352a-45b7-92a3-dd5b6c4262f3",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.photo.slice(-1)[0].file_id }}"
+      },
+      "id": "f6692eee-c8a3-45e1-a187-c5890043eca7",
+      "name": "📷 Получить фото",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        912,
+        -864
+      ],
+      "typeVersion": 1.2,
+      "webhookId": "ca638036-67e6-46c3-bbee-18328deb9653",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "text": "=Ты профессиональный фитнес-тренер. Проанализируй это фото и дай рекомендации по:\n1. Оценке композиции тела\n2. Рекомендуемым упражнениям\n3. Возможным проблемным зонам\n4. Советам по позе и технике\n\nОтвечай структурированно с использованием эмодзи. Будь деликатным и мотивирующим.?",
+        "imageUrls": "={{ $json.data.url }}",
+        "options": {}
+      },
+      "id": "387dcc9c-08cd-41c5-a1a2-b34fc0827bed",
+      "name": "🔍 Анализ фото",
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "position": [
+        1704,
+        -864
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "m4SgITdaNJaQzQMi",
+          "name": "Абаксаллх"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.imgbb.com/1/upload?expiration=600&key= ed32dd04094897324bf60412a2b8c0c7",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image",
+              "value": "={{ $json.data }}"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1360,
+        -864
+      ],
+      "id": "374c758c-533e-4d0c-8046-8afea23f13d2",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        -864
+      ],
+      "id": "c5059b6c-50c5-4ba0-b2e1-11968935744d",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text || $('AI Agent').item.json.output }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=переделай текст чтобы было максимально челочеческий стиль и компактный для отправки в телеграм как текст в формате markdown. Ничего лишнего и от тебя не добавляй. Твоя задача просто переформатировать и структурировать полученный текст и всё"
+            },
+            {
+              "type": "AIMessagePromptTemplate",
+              "message": "=Формат ответа всегда должен быть в формате Markdown не превышать количество символов которые можно отправлять в одном сообщении в Telegram также соблюдать все нюансы и правила правильного форматирования текста Markdown\n"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        2272,
+        -1012
+      ],
+      "id": "e2213f92-f5d6-4a46-ac5b-2ad8f6575ac1",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2368,
+        -788
+      ],
+      "id": "665e7365-7b5d-4128-919a-f73d45a8099b",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "m4SgITdaNJaQzQMi",
+          "name": "Абаксаллх"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=Ты профессиональный фитнес-тренер и коуч с 15-летним стажем. \nТвоя задача - создавать персонализированные программы тренировок и давать экспертные советы и вести клиента от точки а к точке б где точка б это ваш поставленный план цель и его мечта.\n\n\nЗАДАЧА: делай что угодно но ты должен знать все необходимые данные о человеке чтобы сделать для него самую лучшую индивидуальную программу. Есть ли пользоваться не предоставляет нужно информация то просто откажись до тех пор пока он не предоставит\n\n\n1. Мотивирующие и жёсткая общение\n2. главный секрет в том что ты знаешь потенциал данного пользователя и веришь а он нет. Твоя цель поменяйте его жизнь и не говорить это а все сделать на деле. \n3. Приказ заполнить базовую информацию о себе, в случае если пользоваться не предоставляет информацию о себе для составления плана. Ты можешь без проблем отказать ему в дальнейшем обслуживании\n4. Мотивирующий и ругающие призыв к действию\n\nОтвечай на русском языке, будь дружелюбным, мотивирующим и профессиональным. Используй эмодзи для улучшения восприятия.",
+          "maxIterations": 10,
+          "passthroughBinaryImages": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        1616,
+        -1264
+      ],
+      "id": "4862b567-3bcf-439f-bba0-7848de02b499",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('📱 Telegram Trigger').item.json.message.chat.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryZep",
+      "typeVersion": 1.3,
+      "position": [
+        1840,
+        -1040
+      ],
+      "id": "bbea397d-e4b6-4f56-8909-127a80b1c5b5",
+      "name": "Zep",
+      "credentials": {
+        "zepApi": {
+          "id": "dg4NC8gu9VxR3vQQ",
+          "name": "Zep Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1584,
+        -1040
+      ],
+      "id": "89171b91-4ff2-46fe-8621-646f4b4d95a2",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "m4SgITdaNJaQzQMi",
+          "name": "Абаксаллх"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-preview-03-25",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1712,
+        -1040
+      ],
+      "id": "203cb6d8-4e9d-4536-b31d-1d65d2047ee0",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "m4SgITdaNJaQzQMi",
+          "name": "Абаксаллх"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const cleanMessage = $json.text\n  .replace(/[*_`[\\]()]/g, '') // удаляет Markdown-символы\n  .replace(/\\\\n/g, '\\n');\n\nreturn [{\n  json: {\n    chatId: $('📱 Telegram Trigger').item.json.message.chat.id,\n    message: cleanMessage,\n    parse_mode: 'Markdown' // или Plain Text\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2672,
+        -1012
+      ],
+      "id": "51695587-ebf1-433d-b515-45b463006cda",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "4203cad2-eb24-479a-9e10-f1bfe8c92722",
+                    "leftValue": "={{(() => {   const msg = $json.message || {};   if (msg.voice) return 'voice';   if (msg.text) return 'text';   if (msg.photo) return 'photo';   if (msg.document) return 'document';   if (msg.audio) return 'audio';   if (msg.video) return 'video';   return 'other'; })()}}",
+                    "rightValue": "voice",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "1b47915b-a6ca-4ba9-8014-ce559911744d",
+                    "leftValue": "={{(() => {   const msg = $json.message || {};   if (msg.voice) return 'voice';   if (msg.text) return 'text';   if (msg.photo) return 'photo';   if (msg.document) return 'document';   if (msg.audio) return 'audio';   if (msg.video) return 'video';   return 'other'; })()}}",
+                    "rightValue": "text",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "1a7aa69c-bcf4-4096-9ccf-00da8e99b564",
+                    "leftValue": "={{(() => {   const msg = $json.message || {};   if (msg.voice) return 'voice';   if (msg.text) return 'text';   if (msg.photo) return 'photo';   if (msg.document) return 'document';   if (msg.audio) return 'audio';   if (msg.video) return 'video';   return 'other'; })()}}",
+                    "rightValue": "photo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": true
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        464,
+        -1100
+      ],
+      "id": "e1a156a9-08ff-4792-9651-34bb565dbc3b",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"parameters\": {\n    \"values\": {\n      \"string\": [\n        {\n          \"name\": \"message.text\",\n          \"value\": \"={{ $json.text }}\"\n        }\n      ]\n    },\n    \"options\": {}\n  },\n  \"name\": \"🪄 Подставить как текст\",\n  \"type\": \"n8n-nodes-base.set\",\n  \"typeVersion\": 2\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        -1488
+      ],
+      "id": "a2f95c64-b374-4b64-9c09-ace7a0ea56c6",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        688,
+        -1232
+      ],
+      "id": "a2d9cc8f-bb38-450f-9722-438ccc04f29c",
+      "name": "Get a file",
+      "webhookId": "55776fe0-71e2-43f8-b227-49ccfeef249c",
+      "credentials": {
+        "telegramApi": {
+          "id": "bRtnxneEgvSWdsIe",
+          "name": "Ассистент по маркетингу"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "inputType": "binary"
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        912,
+        -1232
+      ],
+      "id": "ccbc31c0-5254-4a0f-896f-f99e3cd1d49a",
+      "name": "Upload a file",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "m4SgITdaNJaQzQMi",
+          "name": "Абаксаллх"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "📱 Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "👤 Анализатор профиля": {
+      "main": [
+        [
+          {
+            "node": "📝 Генератор промптов",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📝 Генератор промптов": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "✨ Форматирование ответа": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📤 Отправка ответа": {
+      "main": [
+        []
+      ]
+    },
+    "📷 Получить фото": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔍 Анализ фото": {
+      "main": [
+        [
+          {
+            "node": "✨ Форматирование ответа",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "🔍 Анализ фото",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "✨ Форматирование ответа",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zep": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "📤 Отправка ответа",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Get a file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "👤 Анализатор профиля",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "📷 Получить фото",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a file": {
+      "main": [
+        [
+          {
+            "node": "Upload a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload a file": {
+      "main": [
+        [
+          {
+            "node": "👤 Анализатор профиля",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "22c72202-526c-4bed-bc5f-b17e64752c67",
+  "owner": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

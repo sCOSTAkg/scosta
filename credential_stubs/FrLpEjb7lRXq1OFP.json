@@ -1,0 +1,16 @@
+{
+  "id": "FrLpEjb7lRXq1OFP",
+  "name": "Redis account",
+  "type": "redis",
+  "data": {
+    "password": "",
+    "user": "",
+    "host": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  }
+}

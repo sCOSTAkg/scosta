@@ -1,0 +1,244 @@
+{
+  "id": "2OB26xs6GLUdsXxL",
+  "name": "🤖 Build Your First AI Agent – Powered by Google Gemini with Memory",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {
+          "loadPreviousSession": "memory"
+        }
+      },
+      "id": "348eb0af-3b44-41f4-85be-05af1def4eb5",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        752,
+        240
+      ],
+      "webhookId": "f04048f5-3043-4250-ab36-aa282c819a69",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are my intelligent personal assistant. Your role is to help me think critically, access structured external knowledge, and solve complex numerical problems. You have access to the following tools:\n\n1. **Think** – Use this tool to reason step-by-step before giving a final answer.\n2. **SerpAPI** – Use this to access verified external knowledge, including encyclopedic or factual data.\n3. **Calculator** – Use this to perform accurate numerical or mathematical computations.\n\nYour goals:\n- Understand my task or question deeply before responding.\n- When unsure, think step-by-step using the `Think` tool.\n- For factual knowledge or concepts, use the `SerpAPI` tool.\n- For numerical tasks or financial calculations, use the `Calculator`.\n- Always explain your steps in a concise and professional way unless instructed otherwise.\n- Keep answers short and efficient unless asked for elaboration.\n\nAlways act as a helpful, private, and reliable personal assistant."
+        }
+      },
+      "id": "6c914256-d2b6-4156-99e3-d88f62bfca66",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1088,
+        240
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "85b68f2c-e656-44f2-8e2a-27066c99a0c6",
+      "name": "Think",
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "position": [
+        1392,
+        448
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-preview-06-05",
+        "options": {}
+      },
+      "id": "8791e2c2-89f7-4e40-9520-8b8f35c0c6ba",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        976,
+        448
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "m4SgITdaNJaQzQMi",
+          "name": "Абаксаллх"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "9e4704ec-e498-4d0c-a3ea-ab08fa7bf7ac",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "position": [
+        1616,
+        448
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "bcf984a7-774e-454f-a082-4fea25741e83",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        1200,
+        448
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "content": "## Author\n![Digimetalab](https://gravatar.com/avatar/8238cf8143845ac216cad8b70057892b?size=256?r=pg&d=retro&size=100)\n## Digimetalab\nAutomation consultant from Bali, with 3+ years helping Sales & Marketing streamline processes. We offer custom n8n solutions to boost efficiency. Book an initial consultation via our link for tailored automation.\n\nFor business inquiries, email we at digimetalab@gmail.com\nOr message me on [Telegram](https://t.me/digimetalab) for a faster response.\n\n### Check out my other templates\n### 👉 https://n8n.io/creators/digimetalab/\n",
+        "height": 580,
+        "width": 320,
+        "color": 6
+      },
+      "id": "e9f7eca2-5ad3-43e8-bde2-f8e7e75756f0",
+      "name": "Sticky Note10",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        368,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 👆\nThis is a short term memory. It will remember the 5 previous interactions during the chat",
+        "height": 180,
+        "width": 150,
+        "color": 7
+      },
+      "id": "d78f8043-0a68-454d-a7dd-aea9e4773432",
+      "name": "Sticky Note17",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1152,
+        592
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 👆\nYou can use  the free Google Gemini options.",
+        "height": 180,
+        "width": 170,
+        "color": 7
+      },
+      "id": "59e98d56-42ea-4251-a287-82e8643f46aa",
+      "name": "Sticky Note18",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        928,
+        592
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 👆\nThe Calculator is a tool that allows an agent to run mathematical calculations.",
+        "height": 180,
+        "width": 150,
+        "color": 7
+      },
+      "id": "a2dd7685-4702-41af-8124-e4d307317d65",
+      "name": "Sticky Note19",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1600,
+        592
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 👆\nThe Think is a tool Enables step-by-step reasoning before answering.",
+        "height": 180,
+        "width": 150,
+        "color": 7
+      },
+      "id": "8bad0027-784a-403d-b1db-149d68a6d022",
+      "name": "Sticky Note20",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1392,
+        592
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "When chat message received",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "triggerCount": 0,
+  "versionId": "9527fc13-edfb-4bdb-9267-82f12853895d",
+  "owner": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}
