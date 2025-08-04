@@ -4,38 +4,16 @@
   "nodes": [
     {
       "parameters": {
-        "model": "gpt-4.1-mini",
-        "options": {
-          "baseURL": "https://api.openai.com/v1",
-          "temperature": 0.5
-        }
-      },
-      "id": "5fba468e-160a-4ecd-8120-141848c1727f",
-      "name": "OpenAI Chat Model",
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "position": [
-        1424,
-        288
-      ],
-      "typeVersion": 1,
-      "credentials": {
-        "openAiApi": {
-          "id": "NerScIzCFdMgrtlA",
-          "name": "OpenAi account 3"
-        }
-      }
-    },
-    {
-      "parameters": {
         "resource": "file",
-        "fileId": "={{ $json.message.voice.file_id }}"
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
       },
       "id": "996ac5a1-9516-409f-b5d1-b94a655b205d",
       "name": "Get Voice File",
       "type": "n8n-nodes-base.telegram",
       "position": [
         -32,
-        -240
+        -1008
       ],
       "typeVersion": 1.1,
       "webhookId": "67a81b6b-eead-45ac-b987-28b577ace5f4",
@@ -54,7 +32,7 @@
       "typeVersion": 1,
       "position": [
         896,
-        56
+        -712
       ]
     },
     {
@@ -95,7 +73,7 @@
       "typeVersion": 2.1,
       "position": [
         1024,
-        56
+        -712
       ],
       "credentials": {
         "airtableTokenApi": {
@@ -402,7 +380,7 @@
       "typeVersion": 2.1,
       "position": [
         1152,
-        56
+        -712
       ],
       "credentials": {
         "airtableTokenApi": {
@@ -414,7 +392,7 @@
     {
       "parameters": {
         "chatId": "={{$('Telegram Trigger').first().json.message.from.id}}",
-        "text": "={{ $json.candidates.rever }}",
+        "text": "={{ $json.output.text }}",
         "additionalFields": {
           "appendAttribution": false,
           "disable_web_page_preview": false,
@@ -425,8 +403,8 @@
       "name": "Message (Text)",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        2016,
-        -528
+        2096,
+        -936
       ],
       "typeVersion": 1.1,
       "webhookId": "aaa32755-8fdd-459b-94f2-7f003a490b23",
@@ -449,7 +427,7 @@
       "typeVersion": 1,
       "position": [
         1280,
-        56
+        -712
       ]
     },
     {
@@ -465,7 +443,7 @@
       "typeVersion": 1.1,
       "position": [
         -480,
-        -168
+        -936
       ],
       "webhookId": "4e51bd17-2c51-459b-a549-7f00cfd50b62",
       "credentials": {
@@ -539,7 +517,7 @@
       "typeVersion": 3.2,
       "position": [
         -256,
-        -168
+        -936
       ]
     },
     {
@@ -553,7 +531,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "position": [
         192,
-        -240
+        -1008
       ],
       "typeVersion": 1.3,
       "credentials": {
@@ -577,8 +555,8 @@
       "name": "J.A.R.V.I.S",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        1136,
-        -256
+        1016,
+        -936
       ],
       "typeVersion": 1.6
     },
@@ -750,7 +728,7 @@
       "typeVersion": 2.1,
       "position": [
         1408,
-        56
+        -712
       ],
       "id": "3b64d6b0-f567-40d8-9d2d-be70c4d9358c",
       "name": "Save Memory",
@@ -773,7 +751,7 @@
       "typeVersion": 3,
       "position": [
         416,
-        -168
+        -936
       ],
       "id": "46135ca6-19a2-45b5-8fbd-8a8c579403fe",
       "name": "Merge",
@@ -790,7 +768,7 @@
       "typeVersion": 1.5,
       "position": [
         768,
-        56
+        -712
       ],
       "id": "31d4960e-6fa6-4b86-afaf-cf09093a86ae",
       "name": "Redis Chat Memory",
@@ -810,7 +788,7 @@
       "typeVersion": 2,
       "position": [
         -480,
-        264
+        -608
       ],
       "id": "11c6185e-5ed8-46b9-b9e4-2b821ab01c40",
       "name": "Webhook",
@@ -836,7 +814,7 @@
       "typeVersion": 1,
       "position": [
         1536,
-        56
+        -712
       ],
       "id": "eaf3d6ce-1dc1-4e97-9d14-61e8310324ea",
       "name": "SerpAPI",
@@ -857,8 +835,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserItemList",
       "typeVersion": 1,
       "position": [
-        1824,
-        264
+        -480,
+        -384
       ],
       "id": "7d62b67f-d915-4f27-bee1-0f1512ee2f0e",
       "name": "Item List Output Parser"
@@ -871,7 +849,7 @@
       "typeVersion": 2.1,
       "position": [
         1744,
-        -944
+        -936
       ],
       "id": "1f2b86a5-e176-4406-baf2-8b424f890c25",
       "name": "Summarization Chain"
@@ -883,11 +861,30 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1680,
-        -736
+        1816,
+        -712
       ],
       "id": "f246769a-8913-4314-bca6-cc94ea8f9cfa",
       "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "epFwCu4CVs447lRe",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        640,
+        -712
+      ],
+      "id": "77764a0f-479b-4291-b4ce-4478f4f0cce3",
+      "name": "Google Gemini Chat Model1",
       "credentials": {
         "googlePalmApi": {
           "id": "epFwCu4CVs447lRe",
@@ -903,17 +900,6 @@
           {
             "node": "Speech to Text",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "J.A.R.V.I.S",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -1094,6 +1080,17 @@
           }
         ]
       ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "J.A.R.V.I.S",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -1102,7 +1099,7 @@
     "callerPolicy": "workflowsFromSameOwner"
   },
   "triggerCount": 2,
-  "versionId": "90d8487c-8f70-4e1e-a9c8-2cf4101aacbe",
+  "versionId": "a8536614-e896-4abf-9b00-b8b29c20b1da",
   "owner": {
     "type": "team",
     "teamId": "Y9ptJBVPq77b0JLs",

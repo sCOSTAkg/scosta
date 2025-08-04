@@ -1,0 +1,36 @@
+{
+  "id": "Kj5PnWRtQTN9iLlq",
+  "name": "My workflow 7",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "sali",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "967fce53-a20e-4bf7-8b7b-bd9728bd197c",
+      "name": "Webhook",
+      "webhookId": "2f34206a-eb9c-43ce-ac75-461d19268be4"
+    }
+  ],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "898a42c4-6075-4b04-b48a-3045e7f2393c",
+  "owner": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}
