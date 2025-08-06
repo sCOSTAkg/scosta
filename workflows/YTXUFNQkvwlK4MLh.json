@@ -1,0 +1,2818 @@
+{
+  "id": "YTXUFNQkvwlK4MLh",
+  "name": "My workflow 13",
+  "nodes": [
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "={{ $json.content }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "12311607-a829-4161-9004-0034eb1c72d4",
+      "name": "Response",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4592,
+        240
+      ],
+      "webhookId": "af29f838-87ec-4ee5-8d85-761da9263465",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "message",
+              "value": "={{ $json.message }}"
+            },
+            {
+              "name": "username",
+              "value": "={{ $json.username }}"
+            },
+            {
+              "name": "first_name",
+              "value": "={{ $json.first_name }}"
+            },
+            {
+              "name": "last_name",
+              "value": "={{ $json.last_name }}"
+            },
+            {
+              "name": "language_code",
+              "value": "={{ $json.language_code }}"
+            },
+            {
+              "name": "id",
+              "value": "={{ $json.id.split('@')[0].toNumber() }}"
+            },
+            {
+              "name": "date",
+              "value": "={{ $json.date }}"
+            },
+            {
+              "name": "source",
+              "value": "={{ $json.source }}"
+            }
+          ],
+          "boolean": [
+            {
+              "name": "is bot"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "85155cd3-e086-41e8-88c8-c0f365bccf8d",
+      "name": "sessionData",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2544,
+        264
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=",
+        "options": {
+          "systemMessage": "={{ $json.flow }}\n\nТЕКУЩИЕ ДАННЫЕ ОТ REASONER:\n{{ $json.chat_state }}\n\nПОСЛЕДНИЕ СООБЩЕНИЯ:\n{{ $json.short_history }}",
+          "maxIterations": 5,
+          "returnIntermediateSteps": true,
+          "passthroughBinaryImages": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        3792,
+        144
+      ],
+      "id": "acdfe682-407e-45a6-9f7f-554417b65d6f",
+      "name": "Ultimate Assistant2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('sessionData').item.json.message }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=КЛАССИФИКАТОР СОСТОЯНИЯ ДИАЛОГА\nЗадача: Проанализируй последнее сообщение клиента и последний ответ агента (если есть). Чётко распредели информацию по указанным полям и дай конкретные рекомендации для следующего шага.\nСТРОГО возвращай JSON указанного формата, без лишнего текста.\nИНСТРУКЦИИ ПО ЗАПОЛНЕНИЮ ПОЛЕЙ:\n1. client_question:\n\nЧётко выпиши прямой вопрос клиента (если есть).\nЕсли вопроса нет, оставь поле пустым (\"\").\n\n2. client_answer:\n\nВыпиши ответ клиента на последний вопрос агента.\nЕсли ответа нет, оставь поле пустым (\"\").\n\n3. implied_intent:\n\nОпредели скрытый подтекст сообщения клиента: сомнение, интерес, раздражение, уклонение и пр.\nПримеры (не ограничения, просто подсказки): \"сомневается в стоимости\", \"уклоняется от ответа\", \"проявляет заинтересованность\".\nЕсли подтекста нет, оставь поле пустым (\"\").\n\n4. stage (текущее состояние диалога):\n\nINITIAL: первые два сообщения или начало разговора.\nDISCOVERY: выявляем потребности.\nQUALIFYING: проверяем целевую аудиторию и бюджет.\nPRESENTING: предлагаем решение.\nCLOSING: завершение, получение контактов или согласия.\nENDED: разговор окончен.\n\nПРАВИЛА ПЕРЕХОДА СТАДИЙ:\n\nINITIAL → DISCOVERY: когда узнали имя и бизнес\nDISCOVERY → QUALIFYING: когда подтвердили входящие лиды (10+/день)\nQUALIFYING → PRESENTING: когда нашли боль ИЛИ клиент спросил про решение/цену\nPRESENTING → CLOSING: когда клиент показал интерес + готов к консультации\nЛюбая → CLOSING: если клиент сам дает телефон\nЛюбая → ENDED: если клиент нецелевой или явный ГРУБЫЙ отказ (“не звоните”, “уберите номер”, “отстаньте”)\nНЕ переходи в ENDED при мягких отказах, если есть client_pain (см. ОСОБЫЕ СЛУЧАИ ниже!)\n\n5. flow (сценарий ответа, для дальнейшего заполнения):\n\nadaptive_qualifier:\n\n6. action_suggestion:\n\nДай конкретные пошаговые рекомендации следующему агенту (не больше 2-3 шагов).\nТОЛЬКО конкретные исполнимые шаги:\n\n✅ \"спросить сколько сообщений в день получают\"\n✅ \"уточнить через какие каналы пишут клиенты\"\n✅ \"предложить консультацию для их сферы\"\n✅ \"напомнить клиенту про его боль [укажи боль]\"\n✅ \"отработать возражение с опорой на боль\"\n❌ \"выяснить потребности\"\n❌ \"прояснить ситуацию\"\n❌ Два вопроса за раз — никогда!\n\n\nНе предлагай action_suggestion, которые повторяют уже выясненную боль (или схожую с ней) или дублируют pain/details.\nНЕ ПРЕДЛАГАЙ задать больше одного вопроса вообще блять никогда!\n\n7. action_required:\n\nsend_notification: если получен номер телефона клиента. Если уже заполнено, не очищай.\nnone: в остальных случаях.\n\n8. phone_number:\n\nЕсли в сообщении есть номер, запиши его (форматы: +7xxx, 8xxx, 10 цифр, с пробелами или дефисами).\nЕсли номера нет, оставь поле пустым (\"\").\n\n9. info_intent (категория вопроса клиента):\n\nПодставь подходящее из списка:\n\n10. client_info (накапливай и дополняй информацию, не теряй уже выясненную):\n\nname: имя клиента (если известно)\nbusiness: сфера или тип бизнеса\npain: явная проблема или потребность клиента.\ndetails: любые важные детали диалога\nadditional_info: дополнительная важная информация по твоему усмотрению\n\nОСОБЫЕ СЛУЧАИ:\n\n- Клиент сразу дает телефон → stage: CLOSING\n- Агрессия/маты → в additional_info: \"агрессивный тон\"\n- Спросил цену на старте → можно сразу QUALIFYING\n- Клиент ушел от темы → в implied_intent: \"уход от темы\"\n- Phone_number получен + любая дичь/мемы/стёб → action_suggestion: [\"пошути/поддержи и завершай\"]\n- Phone_number получен + новые возражения нет → action_suggestion: [\"поддержать и завершить диалог\"]\n- Phone_number получен → НЕ предлагай вопросы про бизнес/боли/каналы\n\nНОВАЯ ЛОГИКА ОТКАЗОВ И ДАВЛЕНИЯ НА БОЛЬ:\n\nЕсли client_pain заполнен и клиент пишет “не надо”, “не интересно”, “подумаю”, “сейчас не актуально” (и нет прямого требования прекратить диалог):\n- НЕ ставь stage: ENDED\n- implied_intent: \"возражение при наличии боли\"\n- action_suggestion: [\"напомнить клиенту про его боль [укажи боль]\", \"отработать возражение с опорой на боль\"]\n\nТолько если клиент явно требует “не звоните”, “уберите номер”, “отстаньте”:\n- stage: ENDED\n- implied_intent: \"явный отказ\"\n- action_suggestion: [\"вежливо завершить диалог\", \"не беспокоить клиента\"]\n\n##СТРОГИЙ ФОРМАТ JSON-ОТВЕТА:\n{\n\"client_question\": \"\",\n\"client_answer\": \"\",\n\"implied_intent\": \"\",\n\"stage\": \"INITIAL|DISCOVERY|QUALIFYING|PRESENTING|CLOSING|ENDED\",\n\"flow\": \"ADAPTIVE_QUALIFIER\",\n\"action_suggestion\": [\"шаг 1\", \"шаг 2\"],\n\"action_required\": \"none|send_notification\",\n\"phone_number\": \"\",\n\"info_intent\": \"{{ $json.intents }}\",\n\"client_info\": {\n\"name\": \"\",\n\"business\": \"\",\n\"pain\": \"\",\n\"details\": \"\",\n\"additional_info\": \"\"\n}\n}\n\nДОПОЛНИТЕЛЬНЫЕ ПРАВИЛА:\nВсегда возвращай только один JSON — никаких пояснений или комментирующего текста.\nЕсли информации для поля нет, ставь пустую строку, не придумывай.\nЕсли клиент в одном сообщении дал и ответ, и вопрос — раздели их чётко.\nЕсли есть номер телефона — ставь action_required = \"send_notification\" без дополнительных условий.\nНе меняй уже найденный phone_number, если в новом сообщении не указан другой.\nНе вставляй новые flow или stage, если они не обоснованы по смыслу сообщения.\nСоблюдай порядок ключей как в шаблоне JSON — это важно для стабильной работы n8n.\n\n## УТОЧНЕНИЯ ПО БИЗНЕСУ:\n- Если клиент просит \"демо\" → в action_suggestion пиши: \"предложить бесплатную консультацию вместо демо\".\n- Если клиент спрашивает только про рекламу, SEO, SMM и не проявляет интереса к автоматизации — в implied_intent: \"нецелевой запрос\".\n- НЕ меняй stage на ENDED сразу — дай Talker'у возможность уточнить и предложить свой вариант.\n\nПРОШЛЫЙ STATE:\n{{ $json.state }}\nПОСЛЕДНИЕ СООБЩЕНИЯ (ОТВЕТ ЮЗЕРА И АГЕНТА)\n{{ $json.history }}"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        2992,
+        264
+      ],
+      "id": "29bee4d8-0c0e-4169-ae56-eb282f04ea12",
+      "name": "Basic LLM Chain1",
+      "retryOnFail": true,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "JyZKPudmEz92YDCz",
+          "mode": "list",
+          "cachedResultName": "ago_db_first_step"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "is_bot": "={{ $json['is bot'] }}",
+            "user_id": "={{ $json.id }}",
+            "username": "={{ $json.username }}",
+            "first_name": "={{ $json.first_name }}",
+            "last_name": "={{ $json.last_name }}",
+            "language_code": "={{ $json.language_code }}",
+            "date": "={{ $json.date }}",
+            "message": "={{ $json.message }}",
+            "source": "={{ $json.source }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "is_bot",
+              "displayName": "is_bot",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_name",
+              "displayName": "last_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "language_code",
+              "displayName": "language_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2768,
+        264
+      ],
+      "id": "19d6d9df-0303-4cba-8a84-be602e01ac24",
+      "name": "db_first_step"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2b83e6e5-f327-4a39-8fca-c7b9457cab82",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3344,
+        192
+      ],
+      "id": "c525eaeb-b786-41ad-a45a-9a8c34dc9f44",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {
+          "temperature": 0.5
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3000,
+        488
+      ],
+      "id": "5da9cfc0-388f-4139-86c5-d5a992956ae8",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"client_question\": \"\",\n  \"client_answer\": \"\",\n  \"implied_intent\": \"\",\n  \"stage\": \"\",\n  \"flow\": \"\",\n  \"action_suggestion\": [],\n  \"action_required\": \"\",\n  \"phone_number\": \"\",\n  \"info_intent\": \"\",\n  \"client_info\": {\n    \"name\": \"\",\n    \"business\": \"\",\n    \"pain\": \"\",\n    \"details\": \"\",\n    \"additional_info\": \"\"\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        3128,
+        488
+      ],
+      "id": "982ec1e0-2656-4a0b-be7b-3cd0e13261cf",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3568,
+        360
+      ],
+      "id": "c1e9456d-f1f2-45fb-9f8f-d8373a4e7177",
+      "name": "Wait",
+      "webhookId": "b58bad95-bb3b-41b0-8cad-5d2c3669ab99"
+    },
+    {
+      "parameters": {
+        "operation": "sendChatAction",
+        "chatId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1872,
+        72
+      ],
+      "id": "482a7769-0dd9-4053-9a7e-730840db08db",
+      "name": "....1",
+      "webhookId": "6b3309ed-edf4-4598-8721-d4e9f6dc3470"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fe7ecc99-e1e8-4a5e-bdd6-6fce9757b234",
+              "name": "text",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4c96a291-1fbc-4c85-919f-20f0caf93175",
+      "name": "Set 'Text'1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        264
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.voice.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "36f0629d-d95a-4a74-811c-e5181fc17741"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Voice"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8c844924-b2ed-48b0-935c-c66a8fd0c778",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5168b13b-665c-4164-b44a-5beab1028d5e",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        304,
+        168
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
+      },
+      "id": "7cd1c84a-246f-4c35-b83b-724201e83ecd",
+      "name": "Download File1",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        528,
+        72
+      ],
+      "webhookId": "ab66f9ae-f180-4229-94cd-4c5337819b6f"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "b9cbd85b-03f9-4173-8183-53debdc458c8",
+      "name": "Transcribe1",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        752,
+        72
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combineBySql",
+        "query": "select '-' as text\nunion all\nSELECT text FROM input1\nunion all\nSELECT text FROM input2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1200,
+        168
+      ],
+      "id": "52e55936-5a8f-438c-bbc7-971bb62618b2",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fe7ecc99-e1e8-4a5e-bdd6-6fce9757b234",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0943313b-efac-43a5-b415-f64230ed71a0",
+      "name": "Set 'Text'2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        72
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "username",
+              "value": "={{$node[\"Telegram Trigger\"].json.message.from.username }}"
+            },
+            {
+              "name": "first_name",
+              "value": "={{$node[\"Telegram Trigger\"].json.message.from.first_name }}"
+            },
+            {
+              "name": "last_name",
+              "value": "={{$node[\"Telegram Trigger\"].json.message.from.last_name }}"
+            },
+            {
+              "name": "language_code",
+              "value": "={{$node[\"Telegram Trigger\"].json.message.from.language_code}}"
+            },
+            {
+              "name": "id",
+              "value": "={{ $node[\"Telegram Trigger\"].json.message.from.id.toString() }}"
+            },
+            {
+              "name": "date",
+              "value": "={{$node[\"Telegram Trigger\"].json.message.date}}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $json.combined }}"
+            },
+            {
+              "name": "source",
+              "value": "tg"
+            }
+          ],
+          "boolean": [
+            {
+              "name": "is bot",
+              "value": "={{$node[\"Telegram Trigger\"].json.message.from.is_bot}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "abd0771a-38c1-4543-a7e9-e2006e6d948a",
+      "name": "Client_data",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1648,
+        168
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        168
+      ],
+      "id": "0e546d92-f814-4452-ba79-e26ae061bd7a",
+      "name": "Telegram Trigger",
+      "webhookId": "8818f613-aa0d-40a2-8adb-22744c64e316"
+    },
+    {
+      "parameters": {
+        "jsCode": "const texts = items.map(item => item.json.text);\nconst result = texts.join(' ');\nreturn [{ json: { combined: result } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1424,
+        168
+      ],
+      "id": "1fcd7dc1-531d-40dc-8ee2-c5daeee98d75",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "OXDXeOUWTwxX9Dw5",
+          "mode": "list",
+          "cachedResultName": "ago_debouncer"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "message": "={{ $json.message }}",
+            "id": "={{ $json.id }}",
+            "username": "={{ $json.username }}",
+            "first_name": "={{ $json.first_name }}",
+            "last_name": "={{ $json.last_name }}",
+            "language_code": "={{ $json.language_code }}",
+            "date": "={{ $json.date }}",
+            "source": "={{ $json.source }}"
+          },
+          "matchingColumns": [
+            "message",
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "language_code",
+            "date",
+            ""
+          ],
+          "schema": [
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last_name",
+              "displayName": "last_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "language_code",
+              "displayName": "language_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2096,
+        264
+      ],
+      "name": "Call wait_append_new_msg",
+      "id": "7ab0ce2e-1b26-4bc7-be28-c1deb924b61f"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1872,
+        264
+      ],
+      "id": "f3d49c50-f525-409d-b11b-8d98360d74bb",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "85c040c4-7c40-4775-805e-426e01f9df70",
+                    "leftValue": "={{ $('sessionData').item.json.source }}",
+                    "rightValue": "wa",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "wa"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "279af9cb-1f66-48f6-a2cb-8d76e59ff6e3",
+                    "leftValue": "={{ $('sessionData').item.json.source }}",
+                    "rightValue": "tg",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "tg"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        4368,
+        144
+      ],
+      "id": "b724d373-6f64-4c80-92cf-6e5f034935af",
+      "name": "Switch2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.green-api.com/waInstance7105271604/sendMessage/7c4ce4f7eb784fe1bf2b4b5cf84910e6b41a23e4a30349239e",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chatId",
+              "value": "={{ $('sessionData').item.json.username }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $('Ultimate Assistant2').item.json.output }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4592,
+        48
+      ],
+      "id": "8925085e-b5c8-4328-98ff-1c831322f208",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2b83e6e5-f327-4a39-8fca-c7b9457cab82",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2320,
+        264
+      ],
+      "id": "e07c15d0-99ad-4d34-8d0c-ccb6f8922509",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3864,
+        368
+      ],
+      "id": "cb6efcbc-6ebe-4495-8b37-0fd20c168ca3",
+      "name": "OpenAI Chat Model1"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "chat_history_log",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "message_id": "=ass_msg_{{ $('sessionData').item.json.date }}",
+            "client_id": "ago",
+            "chat_id": "={{ $('db_first_step').item.json.user_id }}",
+            "content": "={{ $json.output }}",
+            "role": "assistant",
+            "tokens_used": 0,
+            "source": "={{ $('sessionData').item.json.source }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "client_id",
+              "displayName": "client_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "role",
+              "displayName": "role",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tokens_used",
+              "displayName": "tokens_used",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        4144,
+        144
+      ],
+      "id": "2f5034fe-fa21-4894-8af0-9298aa727ed6",
+      "name": "Insert rows in a table"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "xbTSU2crHfvIPQFz",
+          "mode": "list",
+          "cachedResultName": "ago_db_second_step"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "user_id": "={{ $('db_first_step').item.json.user_id }}",
+            "client_additional_info": "={{ $json.output.client_info.additional_info }}",
+            "client_details": "={{ $json.output.client_info.details }}",
+            "client_pain": "={{ $json.output.client_info.pain }}",
+            "client_business": "={{ $json.output.client_info.business }}",
+            "client_name": "={{ $json.output.client_info.name }}",
+            "info_intent": "={{ $json.output.info_intent }}",
+            "phone_number": "={{ $json.output.phone_number }}",
+            "action_required": "={{ $json.output.action_required }}",
+            "action_suggestion": "={{ $json.output.action_suggestion }}",
+            "flow": "={{ $json.output.flow }}",
+            "stage": "={{ $json.output.stage }}",
+            "implied_intent": "={{ $json.output.implied_intent }}",
+            "client_answer": "={{ $json.output.client_answer }}",
+            "client_question": "={{ $json.output.client_question }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "client_question",
+              "displayName": "client_question",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "client_answer",
+              "displayName": "client_answer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "implied_intent",
+              "displayName": "implied_intent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "stage",
+              "displayName": "stage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "flow",
+              "displayName": "flow",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "action_suggestion",
+              "displayName": "action_suggestion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "array",
+              "removed": false
+            },
+            {
+              "id": "action_required",
+              "displayName": "action_required",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "phone_number",
+              "displayName": "phone_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "info_intent",
+              "displayName": "info_intent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "client_name",
+              "displayName": "client_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "client_business",
+              "displayName": "client_business",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "client_pain",
+              "displayName": "client_pain",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "client_details",
+              "displayName": "client_details",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "client_additional_info",
+              "displayName": "client_additional_info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        3568,
+        144
+      ],
+      "id": "c621ca59-025c-46a6-8c1a-92e25d7b8b6f",
+      "name": "db_second_step"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 7
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        688
+      ],
+      "id": "9aa1e614-fc56-4944-8cc4-c77c92ca757e",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO manager_notifications (\n    client_id,\n    session_id,\n    phone_number,\n    messenger_username,\n    messenger_type,\n    first_name,\n    last_name,\n    stage,\n    flow,\n    info_intent,\n    client_name,\n    client_business,\n    client_pain,\n    client_details,\n    client_additional_info,\n    action_suggestion\n)\nSELECT \n    css.client_id,\n    css.session_id,\n    css.phone_number,\n    c.username,\n    c.source as messenger_type,\n    c.first_name,\n    c.last_name,\n    css.stage,\n    css.flow,\n    css.info_intent,\n    css.client_name,\n    css.client_business,\n    css.client_pain,\n    css.client_details,\n    css.client_additional_info,\n    css.action_suggestion\nFROM chat_script_state css\nJOIN clients c ON css.client_id = c.client_id AND css.session_id = c.chat_id\nWHERE c.client_id = 'ago'\n  AND css.client_id = 'ago'\n  AND css.action_required = 'send_notification'\n  AND css.phone_number IS NOT NULL\n  AND NOT EXISTS (\n      SELECT 1 FROM manager_notifications mn \n      WHERE mn.client_id = css.client_id \n        AND mn.session_id = css.session_id\n  );",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        304,
+        688
+      ],
+      "id": "f41ca23f-b19a-4104-b32f-6179f7bf0b7e",
+      "name": "NOTIFICATIONS_UPDATE"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "manager_notifications",
+          "mode": "list",
+          "cachedResultName": "manager_notifications"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "status",
+              "value": "pending"
+            },
+            {
+              "column": "client_id",
+              "value": "kapibara_ai"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        528,
+        688
+      ],
+      "id": "456fa000-c432-4589-9c57-063357f5af43",
+      "name": "GET_CLIENTS_LIST"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "de04c519-97c8-46e1-b22b-87981599d094",
+              "name": "chat_state",
+              "value": "=Здарова!\nНовый горячий пирожок:\n\nИмя в мессенджере: {{ $json.first_name }} {{ $json.last_name }}\nТелефон: {{ $json.phone_number }}\n\nИмя клиента: {{ $json.client_name }}\nБизнес клиента: {{ $json.client_business }}\n\nБоль клиента: {{ $json.client_pain }}\nДоп. детали: {{ $json.client_details }}\nДоп. инфо: {{ $json.client_additional_info }}\n\nIntent запроса: {{ $json.info_intent }}\nЭтап: {{ $json.stage }}\nФлоу: {{ $json.flow }}\n\nAction предложения: {{ $json.action_suggestion ? $json.action_suggestion.join(\", \") : \"нет\" }}\n\nПрочее:\nmessenger_username: {{ $json.messenger_username }}\nmessenger_type: {{ $json.messenger_type }}\nmessenger_id: {{ $json.session_id }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        784
+      ],
+      "id": "fd43a462-bad0-4340-bba8-82e7fc3981ee",
+      "name": "STATE"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "manager_notifications",
+          "mode": "list",
+          "cachedResultName": "manager_notifications"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "session_id": "={{ $json.session_id }}",
+            "client_id": "=kapibara_ai",
+            "status": "sent"
+          },
+          "matchingColumns": [
+            "client_id",
+            "session_id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "client_id",
+              "displayName": "client_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone_number",
+              "displayName": "phone_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "messenger_username",
+              "displayName": "messenger_username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "messenger_type",
+              "displayName": "messenger_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "last_name",
+              "displayName": "last_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "current_stage",
+              "displayName": "current_stage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "qualification_score",
+              "displayName": "qualification_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "urgency_level",
+              "displayName": "urgency_level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "pain_points",
+              "displayName": "pain_points",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "client_info",
+              "displayName": "client_info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "sent_at",
+              "displayName": "sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        752,
+        592
+      ],
+      "id": "113ecfaa-3837-4961-b83e-c16d761494e7",
+      "name": "GET_CLIENTS_LIST1"
+    },
+    {
+      "parameters": {
+        "chatId": "=294308738",
+        "text": "={{ $json.chat_state }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "88ca0d21-d58b-44fe-b7d5-6216a26743a2",
+      "name": "Response1",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        976,
+        784
+      ],
+      "webhookId": "76e2966c-15d2-4565-9418-78aa92aacab0",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "=6580636792",
+        "text": "={{ $json.chat_state }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "35cf4a78-b202-4dc9-bb0d-89f8b246899c",
+      "name": "Response2",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        976,
+        976
+      ],
+      "webhookId": "d480d622-0f82-4445-91a8-f918ab5b5cd9",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "=633398027",
+        "text": "={{ $json.chat_state }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "4edb0288-60c3-41c2-8585-d28f60b72835",
+      "name": "Response3",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        976,
+        592
+      ],
+      "webhookId": "340d0a2a-a951-4173-a376-e1b3a83a25df",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        528,
+        1776
+      ],
+      "id": "23befbad-0b3a-4fb8-aacd-27b1aeddaa39",
+      "name": "intents"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "history",
+        "include": "specifiedFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        528,
+        1584
+      ],
+      "id": "7e44c12b-3740-46ae-a63f-7f8fae478dc4",
+      "name": "msgs"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "=flow_promt",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        528,
+        1968
+      ],
+      "id": "08868dfd-da5c-49e0-8c7a-c5da88b25c6f",
+      "name": "flow_promt"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c503d6ba-194a-41d7-8b5a-b29d6bb88b0c",
+              "name": "history",
+              "value": "={{ $json.data[5].history }}",
+              "type": "string"
+            },
+            {
+              "id": "86aad8f9-14a4-482b-905f-fb44217a5aa4",
+              "name": "intents",
+              "value": "={{ $json.data[4].intents }}",
+              "type": "string"
+            },
+            {
+              "id": "f99e77d4-c276-4b69-8f43-444ff4021ef0",
+              "name": "flow_promt",
+              "value": "={{ $json.data[3].flow_promt }}",
+              "type": "string"
+            },
+            {
+              "id": "4e5ac3be-daf5-45fe-bbbe-16e98be19954",
+              "name": "=user_id",
+              "value": "={{ $json.data[1].chat_id }}",
+              "type": "string"
+            },
+            {
+              "id": "77223555-b096-4569-842d-d70c41251c5d",
+              "name": "message",
+              "value": "={{ $json.data[2].content }}",
+              "type": "string"
+            },
+            {
+              "id": "a0818b29-e4c2-40ae-a31b-52fb1ef777bd",
+              "name": "username",
+              "value": "={{ $json.data[1].username }}",
+              "type": "string"
+            },
+            {
+              "id": "e6ca7a84-60fc-456e-ae93-203c1857d23e",
+              "name": "state",
+              "value": "={{ $json.data[0].state }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1424,
+        1680
+      ],
+      "id": "ef804801-08f3-4d78-91f4-44bca2faf22f",
+      "name": "Return"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "is_bot",
+              "type": "any"
+            },
+            {
+              "name": "user_id",
+              "type": "any"
+            },
+            {
+              "name": "username",
+              "type": "any"
+            },
+            {
+              "name": "first_name",
+              "type": "any"
+            },
+            {
+              "name": "last_name",
+              "type": "any"
+            },
+            {
+              "name": "language_code",
+              "type": "any"
+            },
+            {
+              "name": "date",
+              "type": "any"
+            },
+            {
+              "name": "message",
+              "type": "any"
+            },
+            {
+              "name": "source"
+            }
+          ]
+        }
+      },
+      "id": "ca821c78-2e04-472f-8406-4e7b4e3feac7",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        80,
+        1680
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9e33a686-5b2c-4e58-9415-9106e280e52a",
+              "name": "history",
+              "value": "={{ \n  $json.history && Array.isArray($json.history) \n    ? $json.history.map(x => {\n        const dt = x.created_at \n          ? new Date(x.created_at).toISOString().replace('T', ' ').substring(0, 19) \n          : 'no_date';\n        return `[${x.role}] (${dt}) ${x.content?.trim?.() || ''}`;\n      }).join('\\n---\\n') \n    : '' \n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        1584
+      ],
+      "id": "7c7e6d2f-4444-44ac-a743-e301847ededa",
+      "name": "msgs_f"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9e33a686-5b2c-4e58-9415-9106e280e52a",
+              "name": "intents",
+              "value": "={{$json.data.map(x => `${x.tag.trim()}`).join('|') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        1776
+      ],
+      "id": "4ed6761d-b68a-42f4-b836-c1491dcf1831",
+      "name": "intents_f"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "568ef5b8-6b28-490b-8f84-ff4df1c1ee7d",
+              "name": "flow_promt",
+              "value": "={{ $json.flow_promt.map(x => x.tag.trim()).join('|') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        1968
+      ],
+      "id": "ab9cd695-45cc-46d0-9877-74896e21c946",
+      "name": "flow_f"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        1680
+      ],
+      "id": "314f3465-cec9-477a-9202-cbab0bdd3783",
+      "name": "msgs1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT string_agg(col || ':' || COALESCE(val, ''), ', ') AS state\nFROM (\n    SELECT unnest(ARRAY[\n        'client_question',\n        'client_answer',\n        'implied_intent',\n        'stage',\n        'flow',\n        'action_suggestion',\n        'action_required',\n        'phone_number',\n        'info_intent',\n        'client_name',\n        'client_business',\n        'client_pain',\n        'client_details',\n        'client_additional_info'\n    ]) AS col,\n    unnest(ARRAY[\n        client_question::text,\n        client_answer::text,\n        implied_intent::text,\n        stage::text,\n        flow::text,\n        array_to_string(action_suggestion, '; '),\n        action_required::text,\n        phone_number::text,\n        info_intent::text,\n        client_name::text,\n        client_business::text,\n        client_pain::text,\n        client_details::text,\n        client_additional_info::text\n    ]) AS val\n    FROM chat_script_state\n    WHERE client_id = 'ago'\n      AND session_id = '{{ $json.user_id }}'\n) t;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        752,
+        2160
+      ],
+      "id": "53c4f4a1-5e25-45e3-a72e-118bee072d43",
+      "name": "STATE_UPSERT"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "chat_history_log",
+          "mode": "list",
+          "cachedResultName": "chat_history_log"
+        },
+        "limit": 2,
+        "where": {
+          "values": [
+            {
+              "column": "client_id",
+              "value": "ago"
+            },
+            {
+              "column": "chat_id",
+              "value": "={{ $json.user_id }}"
+            }
+          ]
+        },
+        "sort": {
+          "values": [
+            {
+              "column": "id",
+              "direction": "DESC"
+            }
+          ]
+        },
+        "options": {
+          "outputColumns": [
+            "role",
+            "content",
+            "id",
+            "created_at"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        304,
+        1584
+      ],
+      "id": "7bacfce8-ee8d-433c-8b5b-77f9b964f2cc",
+      "name": "Select rows from a table"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "clients",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "is_bot": "={{ $json.is_bot }}",
+            "chat_id": "={{ $json.user_id }}",
+            "client_id": "ago",
+            "username": "={{ $json.username }}",
+            "first_name": "={{ $json.first_name }}",
+            "last_name": "={{ $json.last_name }}",
+            "language_code": "={{ $json.language_code }}",
+            "source": "={{ $json.source }}"
+          },
+          "matchingColumns": [
+            "client_id",
+            "chat_id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "client_id",
+              "displayName": "client_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false,
+              "removed": false
+            },
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false,
+              "removed": false
+            },
+            {
+              "id": "last_name",
+              "displayName": "last_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false,
+              "removed": false
+            },
+            {
+              "id": "language_code",
+              "displayName": "language_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false,
+              "removed": false
+            },
+            {
+              "id": "is_bot",
+              "displayName": "is_bot",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": false,
+              "removed": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false,
+              "removed": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        752,
+        1200
+      ],
+      "id": "02b07bb1-6fe2-4a79-b2b5-bf76cc877e0d",
+      "name": "Insert or update rows in a table"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "prompt_blocks",
+          "mode": "list",
+          "cachedResultName": "prompt_blocks"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "client_id",
+              "value": "ago"
+            },
+            {
+              "column": "block_type",
+              "value": "info"
+            },
+            {
+              "column": "scope_type",
+              "value": "info_intent"
+            }
+          ]
+        },
+        "options": {
+          "outputColumns": [
+            "tag"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        304,
+        1776
+      ],
+      "id": "7d75d72a-39d1-4c95-8a46-f9d587e35c12",
+      "name": "Select rows from a table1"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "prompt_blocks",
+          "mode": "list",
+          "cachedResultName": "prompt_blocks"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "client_id",
+              "value": "ago"
+            },
+            {
+              "column": "block_type",
+              "value": "flow"
+            },
+            {
+              "column": "scope_type",
+              "value": "flow_intent"
+            }
+          ]
+        },
+        "options": {
+          "outputColumns": [
+            "tag"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        304,
+        1968
+      ],
+      "id": "fab10ed0-2ff7-46db-9d81-204493327ea2",
+      "name": "Select rows from a table2"
+    },
+    {
+      "parameters": {
+        "mode": "combineBySql",
+        "numberInputs": 6,
+        "query": "SELECT * FROM input2\nunion\nSELECT * FROM input3\nunion\nSELECT * FROM input4\nunion\nSELECT * FROM input1\nunion\nSELECT * FROM input5\nunion\nSELECT * FROM input6",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        976,
+        1616
+      ],
+      "id": "dfdf5717-0084-4b2b-b729-a5f2fa64cf51",
+      "name": "Merge3"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "chat_history_log",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "message_id": "=auto_msg_{{ $('Start').item.json.user_id }}",
+            "client_id": "ago",
+            "chat_id": "={{ $json.user_id }}",
+            "role": "user",
+            "content": "={{ $('Start').item.json.message }}",
+            "tokens_used": 0,
+            "source": "={{ $json.source }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "client_id",
+              "displayName": "client_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "role",
+              "displayName": "role",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tokens_used",
+              "displayName": "tokens_used",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        752,
+        1392
+      ],
+      "id": "5469f5c7-1ece-45f1-ac3d-47adddba79bd",
+      "name": "Insert rows in a table1"
+    }
+  ],
+  "connections": {
+    "Response": {
+      "main": [
+        []
+      ]
+    },
+    "sessionData": {
+      "main": [
+        [
+          {
+            "node": "db_first_step",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ultimate Assistant2": {
+      "main": [
+        [
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "db_first_step": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "db_second_step",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "....1": {
+      "main": [
+        []
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Download File1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set 'Text'1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File1": {
+      "main": [
+        [
+          {
+            "node": "Transcribe1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set 'Text'1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Transcribe1": {
+      "main": [
+        [
+          {
+            "node": "Set 'Text'2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set 'Text'2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Client_data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Client_data": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "....1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call wait_append_new_msg": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Call wait_append_new_msg",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        []
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "sessionData",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Ultimate Assistant2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert rows in a table": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "db_second_step": {
+      "main": [
+        [
+          {
+            "node": "Ultimate Assistant2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "NOTIFICATIONS_UPDATE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NOTIFICATIONS_UPDATE": {
+      "main": [
+        [
+          {
+            "node": "GET_CLIENTS_LIST",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_CLIENTS_LIST": {
+      "main": [
+        [
+          {
+            "node": "STATE",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GET_CLIENTS_LIST1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "STATE": {
+      "main": [
+        [
+          {
+            "node": "Response3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Response1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Response2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_CLIENTS_LIST1": {
+      "main": [
+        []
+      ]
+    },
+    "Response1": {
+      "main": [
+        []
+      ]
+    },
+    "Response2": {
+      "main": [
+        []
+      ]
+    },
+    "Response3": {
+      "main": [
+        []
+      ]
+    },
+    "intents": {
+      "main": [
+        [
+          {
+            "node": "intents_f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "msgs": {
+      "main": [
+        [
+          {
+            "node": "msgs_f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "flow_promt": {
+      "main": [
+        [
+          {
+            "node": "flow_f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Insert or update rows in a table",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Select rows from a table",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Select rows from a table1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Select rows from a table2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Insert rows in a table1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "STATE_UPSERT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "msgs_f": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "intents_f": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "flow_f": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "msgs1": {
+      "main": [
+        [
+          {
+            "node": "Return",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "STATE_UPSERT": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Select rows from a table": {
+      "main": [
+        [
+          {
+            "node": "msgs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert or update rows in a table": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Select rows from a table1": {
+      "main": [
+        [
+          {
+            "node": "intents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows from a table2": {
+      "main": [
+        [
+          {
+            "node": "flow_promt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "msgs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert rows in a table1": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "812842ff-3171-4985-8f73-5db5f2c11dd2",
+  "owner": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

@@ -1,0 +1,12 @@
+{
+  "id": "3XjYQNyUqqxy2w4d",
+  "name": "Postgres account",
+  "type": "postgres",
+  "data": {},
+  "ownedBy": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  }
+}

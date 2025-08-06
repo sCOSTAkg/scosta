@@ -150,7 +150,8 @@
     {
       "parameters": {
         "resource": "file",
-        "fileId": "={{ $json.message.voice.file_id }}"
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
@@ -547,8 +548,8 @@
       "type": "@n8n/n8n-nodes-langchain.agentTool",
       "typeVersion": 2.2,
       "position": [
-        464,
-        816
+        704,
+        848
       ],
       "id": "19126daa-a436-4e77-a634-0e4a47cbee0f",
       "name": "AI Agent Tool"
@@ -734,7 +735,13 @@
     },
     "AI Agent Tool": {
       "ai_tool": [
-        []
+        [
+          {
+            "node": "Universal AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
       ]
     },
     "Google Gemini Chat Model": {
@@ -764,7 +771,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "00e84298-5f6d-49b0-bf6b-39877f05cea1",
+  "versionId": "ace0a4a4-3e51-4a45-b426-26b2d51b0872",
   "owner": {
     "type": "personal",
     "projectId": "4u7zt7bOYo5vK3bD",

@@ -452,8 +452,7 @@
         "text": "={{ $json.message.text || $json.transcript }}",
         "options": {
           "systemMessage": "=Ты - ЧаЛа ПЕРЕКУП, опытный перекупщик автомобилей с особым талантом находить лучшие предложения на рынке. Сегодняшняя дата: {{ $now }}.\n\nОсновные функции:\n\nПоиск автомобилей:\n\nКалькуляция расходов:\n- Используй Calculator для точного расчета стоимости доставки, растаможки и других расходов\n- Учитывай таможенные сборы Кыргызстана, логистические расходы и дополнительные платежи\n- Рассчитывай полную стоимость автомобиля \"под ключ\"\n- Актуализируй информацию с помощью SerpAPI и анализируй законы для точного расчета.\n\nПерсонализация:\n- Запоминай предпочтения пользователя (бюджет, марки автомобилей, требования)\n- Используй память для поддержания контекста разговора\n- Адаптируйся к уровню знаний пользователя о автомобилях и под стиль его разговора\n\nКоммуникация:\n- используй Агента telegram для взаимодействия и комуникации\n\nОбязательно и при кажом действии использей Агента TELEGRAM",
-          "maxIterations": 7,
-          "returnIntermediateSteps": false,
+          "returnIntermediateSteps": true,
           "passthroughBinaryImages": true
         }
       },
@@ -672,8 +671,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -480,
-        -512
+        -672,
+        -544
       ],
       "id": "11c6185e-5ed8-46b9-b9e4-2b821ab01c40",
       "name": "Webhook",
@@ -682,6 +681,7 @@
     },
     {
       "parameters": {
+        "modelName": "models/gemini-2.5-pro",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
@@ -873,8 +873,7 @@
         "text": "={{ $fromAI('Text', `текстовый и структурированный и оформленный ответ пользователю!`, 'string') }}",
         "additionalFields": {
           "appendAttribution": false,
-          "disable_web_page_preview": false,
-          "parse_mode": "Markdown"
+          "disable_web_page_preview": true
         }
       },
       "type": "n8n-nodes-base.telegramTool",
@@ -1083,12 +1082,12 @@
       "parameters": {
         "operation": "sendAndWait",
         "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', `когда пользователь просит редактировать и или преобразовать изображение , задавай вопрос на который тебе требуется помощь или ответ!`, 'string') }}",
+        "message": "={{ $fromAI('Message', `когда пользователь просит редактировать и или преобразовать изображение , задавай вопрос на который тебе требуется помощь или ответ!`, 'string') }}",
         "approvalOptions": {
           "values": {
             "approvalType": "double",
-            "approveLabel": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Approve_Button_Label', ``, 'string') }}",
-            "disapproveLabel": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Disapprove_Button_Label', ``, 'string') }}"
+            "approveLabel": "={{ $fromAI('Approve_Button_Label', ``, 'string') }}",
+            "disapproveLabel": "={{ $fromAI('Disapprove_Button_Label', ``, 'string') }}"
           }
         },
         "options": {
@@ -1545,13 +1544,12 @@
     "callerPolicy": "workflowsFromSameOwner"
   },
   "triggerCount": 1,
-  "versionId": "be0b0e4c-f86a-46d7-934a-f52e5ab702c8",
+  "versionId": "df239c5f-7d7f-404f-99c4-291e78bc8fc2",
   "owner": {
-    "type": "personal",
-    "projectId": "4u7zt7bOYo5vK3bD",
-    "projectName": "Sali Costa <withabakirov@gmail.com>",
-    "personalEmail": "withabakirov@gmail.com"
+    "type": "team",
+    "teamId": "Mt7vmpCwrBvc84W7",
+    "teamName": "AI Agency"
   },
-  "parentFolderId": null,
+  "parentFolderId": "Wh5UViuM7iwtPWTR",
   "isArchived": false
 }

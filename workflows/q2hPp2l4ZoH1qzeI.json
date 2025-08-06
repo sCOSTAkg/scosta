@@ -1,0 +1,524 @@
+{
+  "id": "q2hPp2l4ZoH1qzeI",
+  "name": "Notification",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 7
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -784,
+        96
+      ],
+      "id": "6f864a5e-a2cf-47b4-afe7-6c599d348389",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO manager_notifications (\n    client_id,\n    session_id,\n    phone_number,\n    messenger_username,\n    messenger_type,\n    first_name,\n    last_name,\n    stage,\n    flow,\n    info_intent,\n    client_name,\n    client_business,\n    client_pain,\n    client_details,\n    client_additional_info,\n    action_suggestion\n)\nSELECT \n    css.client_id,\n    css.session_id,\n    css.phone_number,\n    c.username,\n    c.source as messenger_type,\n    c.first_name,\n    c.last_name,\n    css.stage,\n    css.flow,\n    css.info_intent,\n    css.client_name,\n    css.client_business,\n    css.client_pain,\n    css.client_details,\n    css.client_additional_info,\n    css.action_suggestion\nFROM chat_script_state css\nJOIN clients c ON css.client_id = c.client_id AND css.session_id = c.chat_id\nWHERE c.client_id = 'ago'\n  AND css.client_id = 'ago'\n  AND css.action_required = 'send_notification'\n  AND css.phone_number IS NOT NULL\n  AND NOT EXISTS (\n      SELECT 1 FROM manager_notifications mn \n      WHERE mn.client_id = css.client_id \n        AND mn.session_id = css.session_id\n  );",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -528,
+        96
+      ],
+      "id": "0d560396-4ae7-40f1-b878-4db3c83840c1",
+      "name": "NOTIFICATIONS_UPDATE"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "manager_notifications",
+          "mode": "list",
+          "cachedResultName": "manager_notifications"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "status",
+              "value": "pending"
+            },
+            {
+              "column": "client_id",
+              "value": "kapibara_ai"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -288,
+        96
+      ],
+      "id": "928a5b54-5f00-4e83-8831-781855423337",
+      "name": "GET_CLIENTS_LIST"
+    },
+    {
+      "parameters": {
+        "chatId": "=633398027",
+        "text": "={{ $json.chat_state }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "a7c6b862-9ea5-4d51-a51c-34b1559fe655",
+      "name": "Response",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        96
+      ],
+      "webhookId": "340d0a2a-a951-4173-a376-e1b3a83a25df",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "de04c519-97c8-46e1-b22b-87981599d094",
+              "name": "chat_state",
+              "value": "=Здарова!\nНовый горячий пирожок:\n\nИмя в мессенджере: {{ $json.first_name }} {{ $json.last_name }}\nТелефон: {{ $json.phone_number }}\n\nИмя клиента: {{ $json.client_name }}\nБизнес клиента: {{ $json.client_business }}\n\nБоль клиента: {{ $json.client_pain }}\nДоп. детали: {{ $json.client_details }}\nДоп. инфо: {{ $json.client_additional_info }}\n\nIntent запроса: {{ $json.info_intent }}\nЭтап: {{ $json.stage }}\nФлоу: {{ $json.flow }}\n\nAction предложения: {{ $json.action_suggestion ? $json.action_suggestion.join(\", \") : \"нет\" }}\n\nПрочее:\nmessenger_username: {{ $json.messenger_username }}\nmessenger_type: {{ $json.messenger_type }}\nmessenger_id: {{ $json.session_id }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -48,
+        96
+      ],
+      "id": "5bb12b12-5866-43ea-8e63-9846ff0138b7",
+      "name": "STATE"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "manager_notifications",
+          "mode": "list",
+          "cachedResultName": "manager_notifications"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "session_id": "={{ $json.session_id }}",
+            "client_id": "=kapibara_ai",
+            "status": "sent"
+          },
+          "matchingColumns": [
+            "client_id",
+            "session_id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "client_id",
+              "displayName": "client_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone_number",
+              "displayName": "phone_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "messenger_username",
+              "displayName": "messenger_username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "messenger_type",
+              "displayName": "messenger_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "last_name",
+              "displayName": "last_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "current_stage",
+              "displayName": "current_stage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "qualification_score",
+              "displayName": "qualification_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "urgency_level",
+              "displayName": "urgency_level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "pain_points",
+              "displayName": "pain_points",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "client_info",
+              "displayName": "client_info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "sent_at",
+              "displayName": "sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -48,
+        -96
+      ],
+      "id": "58acfb2a-86a8-4a63-8204-8fda6d498620",
+      "name": "GET_CLIENTS_LIST1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        192,
+        -96
+      ],
+      "id": "0eacca9e-7750-4199-86c0-2012d2323edf",
+      "name": "No Operation, do nothing3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        464,
+        96
+      ],
+      "id": "f1f20e03-34ae-4269-a676-0f751666fe5f",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "chatId": "=294308738",
+        "text": "={{ $json.chat_state }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "5097b0ea-daa5-457e-b24f-bbdb5ecbb537",
+      "name": "Response1",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        288
+      ],
+      "webhookId": "76e2966c-15d2-4565-9418-78aa92aacab0",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        464,
+        288
+      ],
+      "id": "6f872eff-e780-415c-b5ec-6fdc62a8a4f6",
+      "name": "No Operation, do nothing4"
+    },
+    {
+      "parameters": {
+        "chatId": "=6580636792",
+        "text": "={{ $json.chat_state }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "7616c838-2b2f-4171-a407-e2742354c8c6",
+      "name": "Response2",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        512
+      ],
+      "webhookId": "d480d622-0f82-4445-91a8-f918ab5b5cd9",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        464,
+        512
+      ],
+      "id": "cfe45d81-78ef-48cd-8b95-10e2f943cb2e",
+      "name": "No Operation, do nothing5"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "NOTIFICATIONS_UPDATE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NOTIFICATIONS_UPDATE": {
+      "main": [
+        [
+          {
+            "node": "GET_CLIENTS_LIST",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_CLIENTS_LIST": {
+      "main": [
+        [
+          {
+            "node": "STATE",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GET_CLIENTS_LIST1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "STATE": {
+      "main": [
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Response1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Response2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_CLIENTS_LIST1": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Response": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Response1": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Response2": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "7773976f-46be-4841-8510-bc520e8564ad",
+  "owner": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

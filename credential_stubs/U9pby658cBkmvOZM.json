@@ -1,0 +1,14 @@
+{
+  "id": "U9pby658cBkmvOZM",
+  "name": "Google Gemini(PaLM) Api account 3",
+  "type": "googlePalmApi",
+  "data": {
+    "apiKey": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  }
+}

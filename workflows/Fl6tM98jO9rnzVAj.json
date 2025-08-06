@@ -1,0 +1,241 @@
+{
+  "id": "Fl6tM98jO9rnzVAj",
+  "name": "My workflow 11",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "nick@reprisesai.com",
+          "mode": "list",
+          "cachedResultName": "nick@reprisesai.com"
+        },
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start_Time', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End_Time', ``, 'string') }}",
+        "options": {
+          "timezone": {
+            "__rl": true,
+            "value": "EST",
+            "mode": "list",
+            "cachedResultName": "EST"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        864,
+        240
+      ],
+      "id": "373ebf0d-3f0b-4566-b996-db475ca1ba2b",
+      "name": "Google Calendar1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "d65a27d9-b8d1-4b6b-afa7-222e38492bce",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e1280a1d-55f0-4de5-b2dc-d937db312732",
+      "name": "Webhook1",
+      "webhookId": "d65a27d9-b8d1-4b6b-afa7-222e38492bce"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Current Date and Time:\n{{ $json.currentDate }} \n\nCalendar Availability Data:\n\nRequested Date: {{ $('Webhook1').item.json.body.message.toolCalls[0].function.arguments.date }} {{ $('Webhook1').item.json.body.date }}\nRequested Time: {{ $('Webhook1').item.json.body.message.toolCalls[0].function.arguments.time }} {{ $('Webhook1').item.json.body.time }}\nWorking Hours: 9:00 AM - 5:00 PM\nBuffer Time: 15 minutes\nDuration of Each Slot: 30 minutes\nProcessing Steps:\nCheck if the requested time is available for the requested date.\nIf available, confirm the booking and inform the AI.\nIf unavailable due to a conflict:\nSuggest up to 3 closest available slots while ensuring buffer time.\nIf no slots are available on that day, find the next available weekday and provide alternative slots.\nOutput Requirements:\n\n✅ If the requested time is available, confirm it:\nExample: \"The requested time of 2:00 PM on April 17, 2025, is available. Would you like to proceed with this booking?\"\n\n✅ ONLY if unavailable, suggest up to 3 alternative slots.\n\n✅ If no slots exist, suggest the next open weekday.\n\nYour output should not sound robotic (example: We have availability on (insert date))",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        528,
+        0
+      ],
+      "id": "f42e7151-f545-4fb6-8e39-9a0f359a75bd",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        448,
+        240
+      ],
+      "id": "46c6b9b5-b470-4a63-ac93-16e963cfee0c",
+      "name": "OpenAI Chat Model1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "nick@reprisesai.com",
+          "mode": "list",
+          "cachedResultName": "nick@reprisesai.com"
+        },
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        672,
+        240
+      ],
+      "id": "8e8a0c91-96bb-4bab-b526-b61ab35ed45a",
+      "name": "Google Calendar2"
+    },
+    {
+      "parameters": {
+        "options": {
+          "timezone": "America/New_York"
+        }
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        288,
+        0
+      ],
+      "id": "bd053f66-3553-428a-8727-9e7cc431c6ba",
+      "name": "Date & Time1"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        240
+      ],
+      "id": "756fad5f-3e9d-47a9-9e79-bf7e734e6c0a",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"results\": [\n    {\n      \"toolCallId\": \"{{ $('Webhook1').item.json.body.message.toolCallList[0].id }}\",\n      \"result\": \"{{ $json.output.replaceAll(\"\\n\",\"\") }}\"\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        944,
+        0
+      ],
+      "id": "482146e9-3910-45f4-ba19-6a06071554a1",
+      "name": "Respond to Webhook1"
+    }
+  ],
+  "connections": {
+    "Google Calendar1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Date & Time1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "38748feb-9dfb-4bb3-806d-c2b00a1c6837",
+  "owner": {
+    "type": "team",
+    "teamId": "vzDIuU5dvQKLL0aD",
+    "teamName": "Call agency"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

@@ -1,0 +1,209 @@
+{
+  "id": "1qaVumqKjawWZE2a",
+  "name": "My workflow 10",
+  "nodes": [
+    {
+      "parameters": {
+        "query": "={{ $fromAI('Query', ``, 'string') }}",
+        "options": {}
+      },
+      "id": "c7cb3ec1-c0f5-4bc1-9cda-ca4148de70e5",
+      "name": "Search in Tavily",
+      "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+      "position": [
+        704,
+        352
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "tavilyApi": {
+          "id": "4ZjFQzUSn4RT33MH",
+          "name": "Tavily account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "modelId": {
+          "__rl": true,
+          "value": "models/veo-3.0-fast-generate-preview",
+          "mode": "list",
+          "cachedResultName": "models/veo-3.0-fast-generate-preview"
+        },
+        "prompt": "={{ { \"prompt\": $json.message.content } }}",
+        "options": {
+          "personGeneration": "allow_all",
+          "binaryPropertyOutput": "data"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        224
+      ],
+      "id": "18c86315-d4e4-4a5f-873a-f98ee1465372",
+      "name": "Generate a video",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "U9pby658cBkmvOZM",
+          "name": "Google Gemini(PaLM) Api account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-pro",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-pro"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $('Telegram Trigger').item.json.message.text }}"
+            },
+            {
+              "content": "={{ $json.content.parts[0].text }}",
+              "role": "model"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {
+          "systemMessage": "=You are a creative video concept generator trained to write highly effective prompts for Veo3, an AI video generation tool."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        944,
+        128
+      ],
+      "id": "6e583695-c645-4544-a931-6411e8d5de52",
+      "name": "PROMT",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "m4SgITdaNJaQzQMi",
+          "name": "Абаксаллх"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash-lite",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash-lite"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.message.text }}"
+            },
+            {
+              "content": "Create an impactful marketing video instraction for promt generate",
+              "role": "model"
+            }
+          ]
+        },
+        "options": {
+          "systemMessage": "=You are a prompt strategist for Veo 3. Analyze the Tavily search results to identify top prompt libraries, techniques, and formatting styles. Then generate a detailed instruction set for creating high-quality Veo 3 prompts, including:\n- Structure (scene, emotion, camera angle, tone)\n- Sensory language tips\n- Common mistakes to avoid\n- Examples from top libraries"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        560,
+        128
+      ],
+      "id": "75962ded-77a9-4c36-9dd2-67e423325e68",
+      "name": "Message a strategist",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "U9pby658cBkmvOZM",
+          "name": "Google Gemini(PaLM) Api account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "download": true,
+          "imageSize": "extraLarge"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        272,
+        128
+      ],
+      "id": "0b5d76fc-f90d-4abb-ac9f-5919d3d8400d",
+      "name": "Telegram Trigger",
+      "webhookId": "0617adbf-43af-4166-833f-99fffeb9fdba",
+      "credentials": {
+        "telegramApi": {
+          "id": "FzIRIQdbYya7bAU3",
+          "name": "sali"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Search in Tavily": {
+      "ai_tool": [
+        [
+          {
+            "node": "Message a strategist",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a strategist": {
+      "main": [
+        [
+          {
+            "node": "PROMT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Message a strategist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Bishkek",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "triggerCount": 0,
+  "versionId": "3c78d37d-845d-4231-a588-77fb28b4e1f0",
+  "owner": {
+    "type": "personal",
+    "projectId": "4u7zt7bOYo5vK3bD",
+    "projectName": "Sali Costa <withabakirov@gmail.com>",
+    "personalEmail": "withabakirov@gmail.com"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

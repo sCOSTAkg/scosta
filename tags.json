@@ -3,12 +3,20 @@
     {
       "id": "wPC6l2qWJwcNG603",
       "name": "111"
+    },
+    {
+      "id": "LkAD71BBYjYnPGr9",
+      "name": "ago"
     }
   ],
   "mappings": [
     {
       "workflowId": "FYDSIfLtkumebEF9",
       "tagId": "wPC6l2qWJwcNG603"
+    },
+    {
+      "workflowId": "YTXUFNQkvwlK4MLh",
+      "tagId": "LkAD71BBYjYnPGr9"
     }
   ]
 }

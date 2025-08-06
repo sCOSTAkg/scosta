@@ -1,0 +1,76 @@
+{
+  "folders": [
+    {
+      "id": "MUlDCNO43p9eRATe",
+      "name": "Voice Agent",
+      "parentFolderId": null,
+      "homeProjectId": "Mt7vmpCwrBvc84W7",
+      "createdAt": "2025-08-05T10:58:39.818Z",
+      "updatedAt": "2025-08-05T10:58:39.818Z"
+    },
+    {
+      "id": "BttFmEqftzMWa75T",
+      "name": "11.labs",
+      "parentFolderId": "MUlDCNO43p9eRATe",
+      "homeProjectId": "Mt7vmpCwrBvc84W7",
+      "createdAt": "2025-08-05T10:58:53.624Z",
+      "updatedAt": "2025-08-05T10:58:53.624Z"
+    },
+    {
+      "id": "fJnaE4Ydpcnh41UV",
+      "name": "vapi",
+      "parentFolderId": "MUlDCNO43p9eRATe",
+      "homeProjectId": "Mt7vmpCwrBvc84W7",
+      "createdAt": "2025-08-05T10:58:58.759Z",
+      "updatedAt": "2025-08-05T10:58:58.759Z"
+    },
+    {
+      "id": "D4fioSp6n31IO9Lg",
+      "name": "Whisper",
+      "parentFolderId": "MUlDCNO43p9eRATe",
+      "homeProjectId": "Mt7vmpCwrBvc84W7",
+      "createdAt": "2025-08-05T10:59:03.914Z",
+      "updatedAt": "2025-08-05T10:59:03.914Z"
+    },
+    {
+      "id": "DZx3egNJ9bm2wx6M",
+      "name": "Gemini Voice",
+      "parentFolderId": "MUlDCNO43p9eRATe",
+      "homeProjectId": "Mt7vmpCwrBvc84W7",
+      "createdAt": "2025-08-05T10:59:41.407Z",
+      "updatedAt": "2025-08-05T10:59:41.407Z"
+    },
+    {
+      "id": "Rw1h3kGkCCqA0yZ4",
+      "name": "Heygen",
+      "parentFolderId": null,
+      "homeProjectId": "Mt7vmpCwrBvc84W7",
+      "createdAt": "2025-08-05T11:00:08.494Z",
+      "updatedAt": "2025-08-05T11:00:08.494Z"
+    },
+    {
+      "id": "Y9nhJJzrldhxY1m1",
+      "name": "Veo",
+      "parentFolderId": null,
+      "homeProjectId": "Mt7vmpCwrBvc84W7",
+      "createdAt": "2025-08-05T11:00:25.425Z",
+      "updatedAt": "2025-08-05T11:00:25.425Z"
+    },
+    {
+      "id": "oLK9sIjvH1V8FV5G",
+      "name": "Marketing managment",
+      "parentFolderId": null,
+      "homeProjectId": "Mt7vmpCwrBvc84W7",
+      "createdAt": "2025-08-05T11:02:01.968Z",
+      "updatedAt": "2025-08-05T11:02:01.968Z"
+    },
+    {
+      "id": "Wh5UViuM7iwtPWTR",
+      "name": "Any",
+      "parentFolderId": null,
+      "homeProjectId": "Mt7vmpCwrBvc84W7",
+      "createdAt": "2025-08-05T11:02:18.927Z",
+      "updatedAt": "2025-08-05T11:02:18.927Z"
+    }
+  ]
+}
