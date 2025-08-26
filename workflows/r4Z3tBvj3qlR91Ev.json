@@ -1,0 +1,832 @@
+{
+  "name": "ФОТО OCR",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "data",
+              "type": "any"
+            },
+            {
+              "name": "chat_id"
+            }
+          ]
+        }
+      },
+      "id": "651a3777-d3c7-4c2e-af76-ef8889158dcf",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        1260,
+        3240
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.data }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1420,
+        3240
+      ],
+      "id": "ab4af362-3aa8-49c7-b528-73e549922a5d",
+      "name": "Download Document2",
+      "webhookId": "0b2f070f-4c1d-41f4-b8fe-72c30a626e48",
+      "credentials": {
+        "telegramApi": {
+          "id": "RwWnhGk0JWbjQw5o",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3480,
+        3240
+      ],
+      "id": "ed12a42a-b99a-4e25-96d7-cd12fded953d",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "TG9yIT8gKIsbMYRx",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "=sCOSTA-{{ $json.result.file_path }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1M7hoOkabHECo5vVoMpGWcPgPaFIUBHhX",
+          "mode": "list",
+          "cachedResultName": "image",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1M7hoOkabHECo5vVoMpGWcPgPaFIUBHhX"
+        },
+        "options": {
+          "keepRevisionForever": true,
+          "useContentAsIndexableText": true
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1560,
+        3240
+      ],
+      "id": "866dc03c-9e07-4ef9-9145-60febf5aefba",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VZ5403fkk9AyUWth",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.data }}\n{{ $json.metadata }}",
+        "needsFallback": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Структурируй и дай мне в формате для телеграм красиво формленном и понятном виде\nФормат ответа короткий, не упуская ключевых моментов и выделяя их\nБез твоих реплик и аннотаций. Сразу нужен текст структурированный текст"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        3480,
+        3060
+      ],
+      "id": "4aeb67dc-2be9-463d-a825-28d75c576364",
+      "name": "Basic LLM Chain",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appUylF3gyrYbjDC4",
+          "mode": "list",
+          "cachedResultName": "Long-term Memory Base"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblUtxOfYWfedCDbY",
+          "mode": "list",
+          "cachedResultName": "Memory Records"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.result.chat.username }}",
+            "Related Memory Records": "={{ $json.result.text }}",
+            "Date Recorded": "={{ $now }}",
+            "Reference Image": "={{ $('Upload file').item.json.webViewLink }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Memory Description",
+              "displayName": "Memory Description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Date Recorded",
+              "displayName": "Date Recorded",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Importance Level",
+              "displayName": "Importance Level",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Low",
+                  "value": "Low"
+                },
+                {
+                  "name": "Medium",
+                  "value": "Medium"
+                },
+                {
+                  "name": "High",
+                  "value": "High"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Reference Image",
+              "displayName": "Reference Image",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Related Memory Records",
+              "displayName": "Related Memory Records",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Days Since Recorded",
+              "displayName": "Days Since Recorded",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Importance Score",
+              "displayName": "Importance Score",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "user",
+              "displayName": "user",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        4020,
+        3060
+      ],
+      "id": "02f895cc-13ef-4664-8afa-94531afab90c",
+      "name": "Save Conversation",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "xK7oPNKdtfcjwy63",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Start').item.json.chat_id }}",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3800,
+        3060
+      ],
+      "id": "bed71281-477d-4194-afe0-3aae5bc7ae8c",
+      "name": "Send a text message",
+      "webhookId": "267e316c-8403-4f9d-aff3-bb1431f9d24f",
+      "credentials": {
+        "telegramApi": {
+          "id": "RwWnhGk0JWbjQw5o",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "information"
+      },
+      "id": "5080380b-e887-4608-8eea-3e4ba5576504",
+      "name": "Get Color Information",
+      "type": "n8n-nodes-base.editImage",
+      "position": [
+        2040,
+        3060
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "resize",
+        "width": 512,
+        "height": 512,
+        "resizeOption": "onlyIfLarger",
+        "options": {}
+      },
+      "id": "c29620b0-fe03-422f-8f46-8cce56c0f541",
+      "name": "Resize Image",
+      "type": "n8n-nodes-base.editImage",
+      "position": [
+        2040,
+        3440
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "source",
+                "value": "={{ $('Document for Embedding').item.json.metadata.source }}"
+              },
+              {
+                "name": "format",
+                "value": "={{ $('Document for Embedding').item.json.metadata.format }}"
+              },
+              {
+                "name": "backgroundColor",
+                "value": "={{ $('Document for Embedding').item.json.metadata.backgroundColor }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "5ee3beb1-df85-4961-b612-e42c80ca4b98",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "position": [
+        3140,
+        3240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "72469a48-461d-4369-a0e0-024397328040",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "position": [
+        3140,
+        3360
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Get Color Channels\n[Source: https://www.pinecone.io/learn/series/image-search/color-histograms/](https://www.pinecone.io/learn/series/image-search/color-histograms/)",
+        "height": 288,
+        "width": 372,
+        "color": 7
+      },
+      "id": "27a57723-ae78-4dea-8e7b-65d7e5745f15",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1980,
+        2960
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Generate Image Keywords\n[Source: https://www.pinecone.io/learn/series/image-search/bag-of-visual-words/](https://www.pinecone.io/learn/series/image-search/bag-of-visual-words/)\n\nNote, OpenAI Image models work best when image is resized to 512x512.",
+        "height": 335.30166772984643,
+        "width": 376.4067897296865,
+        "color": 7
+      },
+      "id": "189ccba1-e026-49a0-b987-73456692550e",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1980,
+        3280
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "a8ad3f74-c471-424e-a9d0-2789c5e3561a",
+      "name": "Combine Image Analysis",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        2540,
+        3120
+      ],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8204b731-24e2-4993-9e6d-4cea80393580",
+              "name": "data",
+              "type": "string",
+              "value": "=## keywords\\n\n{{ $json.content }}\\n\n## color information:\\n\n{{ JSON.stringify($json[\"Channel Statistics\"]) }}"
+            },
+            {
+              "id": "ca49cccf-ea4e-4362-bf49-ac836c8758d3",
+              "name": "metadata",
+              "type": "object",
+              "value": "={ \"format\": \"{{ $json.format }}\", \"backgroundColor\": \"{{ $json[\"Background Color\"] }}\", \"source\": \"{{ $binary.data.fileName }}\" } "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f10a1e2f-44de-4ab1-a987-033931a2668a",
+      "name": "Document for Embedding",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2700,
+        3120
+      ],
+      "typeVersion": 3.3
+    },
+    {
+      "parameters": {
+        "content": "## 3. Generate Embedding Doc\nIt is important to define your metadata for later filtering and retrieval purposes.\n\n",
+        "height": 343.6004071339855,
+        "width": 418.6907913057789,
+        "color": 7
+      },
+      "id": "ad3e1735-b310-4058-9af2-cc690d551959",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2440,
+        2980
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 3. Store in Vector Store\n[Read more about vector stores](https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.vectorstoreinmemory)\n\nOnce our document is ready, we can just insert into any vector store to make it ready for searching. When searching, be sure to defined the same vector store index used here!\nNote: Metadata is defined in the document loader which must be mapped manually.\n\n",
+        "height": 665.9365418117011,
+        "width": 532.5269726975372,
+        "color": 7
+      },
+      "id": "255d2c55-41c9-4768-bb2b-8c64dea7864c",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2900,
+        2840
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": "image_embeddings"
+      },
+      "id": "059710a9-c762-44a8-8848-e611a72b5e55",
+      "name": "In-Memory Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "position": [
+        3020,
+        3060
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "5f5e87e0-dd64-4bf4-a779-94322724b6e2",
+      "name": "Embeddings OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "position": [
+        3020,
+        3280
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "KrlRCizpyaKqBMnY",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "654fe41e-0006-4b51-bfdb-a8b7e9d20ba5",
+      "name": "Download file",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        1700,
+        3240
+      ],
+      "typeVersion": 3,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VZ5403fkk9AyUWth",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o",
+          "cachedResultName": "GPT-4O"
+        },
+        "text": "=Опишите что на изображение\nИзвлеките все возможные семантические ключевые слова, описывающие изображение. Опишите изображение подробно и обязательно укажите темы (если применимо), такие как биологические и небиологические объекты, освещение, настроение, тон, цвет, спецэффекты, использованную камеру и/или технику, если они известны. Перечислите их через запятую.",
+        "inputType": "base64",
+        "options": {}
+      },
+      "id": "d3287734-2b22-4446-bed9-c04a835778f2",
+      "name": "Get Image Keywords1",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        2200,
+        3440
+      ],
+      "typeVersion": 1.8,
+      "credentials": {
+        "openAiApi": {
+          "id": "KrlRCizpyaKqBMnY",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "separator": "\\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserItemList",
+      "typeVersion": 1,
+      "position": [
+        3700,
+        3280
+      ],
+      "id": "1ff21de1-6bfc-4fd1-b66b-ec3a8dcca173",
+      "name": "Item List Output Parser"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3580,
+        3240
+      ],
+      "id": "adddf98a-7d2f-4cb7-bdd0-46f5d2755c80",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "KrlRCizpyaKqBMnY",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download Document2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Document2": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Save Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Color Information": {
+      "main": [
+        [
+          {
+            "node": "Combine Image Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resize Image": {
+      "main": [
+        [
+          {
+            "node": "Get Image Keywords1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "In-Memory Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine Image Analysis": {
+      "main": [
+        [
+          {
+            "node": "Document for Embedding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Document for Embedding": {
+      "main": [
+        [
+          {
+            "node": "In-Memory Vector Store",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "In-Memory Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Get Color Information",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Resize Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Image Keywords1": {
+      "main": [
+        [
+          {
+            "node": "Combine Image Analysis",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "In-Memory Vector Store": {
+      "main": [
+        []
+      ]
+    },
+    "Item List Output Parser": {
+      "ai_outputParser": [
+        []
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "be5a5846-310e-44ec-9c6f-487aeb31c2fb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "576d4a2cf0586874c52480fdcfafcdb1b3887a6461bd309e383e1bb88195a4ec"
+  },
+  "id": "r4Z3tBvj3qlR91Ev",
+  "tags": []
+}
